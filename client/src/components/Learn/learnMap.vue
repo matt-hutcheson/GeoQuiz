@@ -35,6 +35,6 @@ export default {
 }
 .svg-map__location > :focus, :hover {
             fill: #5FC43B;
-					}
+}
 
 </style>
