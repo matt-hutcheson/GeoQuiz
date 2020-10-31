@@ -1,5 +1,7 @@
 <template>
-  <h1>{{countries[0].name}}</h1>
+  <main>
+    <h1>Geo Quiz!</h1>
+  </main>
 </template>
 
 <script>
