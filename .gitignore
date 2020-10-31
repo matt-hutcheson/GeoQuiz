@@ -1,5 +1,6 @@
 .DS_Store
 client/node_modules
+server/node_modules
 /dist
 
 /client/tests/e2e/videos/
