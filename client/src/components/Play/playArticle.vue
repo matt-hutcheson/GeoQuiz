@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import playMap from './playMap';
+
 export default {
     name: 'playArticle',
     props: ['currentMode', 'countries']

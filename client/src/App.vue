@@ -11,8 +11,8 @@
 
 <script>
 import geoNav from './components/geoNav';
-import learnArticle from './components/learnArticle';
-import playArticle from './components/playArticle';
+import learnArticle from './components/Learn/learnArticle';
+import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 
 export default {
