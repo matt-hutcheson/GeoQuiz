@@ -1,5 +1,5 @@
 <template>
-<h1>You are currently in Play mode.</h1>
+<h1>You are now in Play mode.</h1>
 </template>
 
 <script>
