@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .svg-map {
    stroke: #b6b6b6;
@@ -35,6 +35,6 @@ export default {
 }
 .svg-map__location > :focus, :hover {
             fill: #5FC43B;
-					}
+}
 
 </style>
