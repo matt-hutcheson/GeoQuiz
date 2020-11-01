@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="flag-image" :style=" { backgroundImage: 'url(' + randomCountry.flag + ')'}"></div>
+    <div v-if="randomCountry" class="flag-image" :style=" { backgroundImage: 'url(' + randomCountry.flag + ')'}"></div>
   </section>
 </template>
 
