@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .svg-map {
    stroke: #b6b6b6;
