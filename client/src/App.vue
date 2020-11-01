@@ -3,8 +3,8 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'"></play-article>
-        <learn-article v-if="currentMode==='learn'"></learn-article>
+        <play-article v-if="currentMode==='play'" :countries="countries"></play-article>
+        <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
 </template>
@@ -14,6 +14,7 @@ import geoNav from './components/geoNav';
 import learnArticle from './components/Learn/learnArticle';
 import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
+
 
 export default {
   name: 'App',
@@ -25,7 +26,7 @@ export default {
     },
 
     mounted(){
-        fetch('https://restcountries.eu/rest/v2/all') // API
+        fetch('https://restcountries.eu/rest/v2/all') //API
             .then(res => res.json())
             .then((countries) => (this.countries = countries))
 
