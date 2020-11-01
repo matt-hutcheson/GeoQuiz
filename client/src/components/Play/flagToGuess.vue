@@ -7,24 +7,12 @@
 <script>
 export default {
   name: "flag-to-guess",
-  props: ["countries"],
+  props: ["randomCountry"],
   data () {
     return {
-      currentFlag: null,
-      randomCountry: null,
-      countriesRemaining: [],
-      contriesCorrect: []
+
     }
   },
-  mounted() {
-    this.countriesRemaining = this.countries
-    this.randomiseList(this.countriesRemaining)
-  },
-  methods: {
-    randomiseList (array) {
-      this.randomCountry = array[Math.floor(Math.random() * array.length)]
-    }
-  }
 }
 </script>
 
