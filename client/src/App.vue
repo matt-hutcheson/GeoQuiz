@@ -3,8 +3,8 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'"></play-article>
-        <learn-article v-if="currentMode==='learn'"></learn-article>
+        <play-article v-if="currentMode==='play'" :countries="countries"></play-article>
+        <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
 </template>
