@@ -3,7 +3,7 @@
         <p>This is the learn Map</p>
         <radio-svg-map @click='getCountryDetails()' v-model='mapSelectedCountry'
             :map='World'/>
-        <div class='country_name'>{{ this.apiSelectedCountry }}</div>    
+        <div v-if='apiSelectedCountry' class='country_name'>{{ this.apiSelectedCountry.name }}</div>    
     </section>
 </template>
 
@@ -61,7 +61,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 
 
 .svg-map {
