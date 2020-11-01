@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div v-if="randomCountry" class="flag-image" :style=" { backgroundImage: 'url(' + randomCountry.flag + ')'}"></div>
+    <img v-if="randomCountry" :src="randomCountry.flag" :alt="randomCountry.name + 'flag'">
   </section>
 </template>
 
@@ -18,10 +18,10 @@ export default {
 
 <style scoped>
 
-.flag-image {
-  width: 100px;
-  height: 100px;
-  background-size: cover;
+img {
+  height: 20vh;
+  background: no-repeat contain;
+  border: solid black 2px;
 }
 
 </style>
