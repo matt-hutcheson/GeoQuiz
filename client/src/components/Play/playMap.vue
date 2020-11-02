@@ -48,5 +48,28 @@ export default {
 </script>
 
 <style>
+.svg-map {
+  stroke: #b6b6b6;
+  stroke-width: 1;
+  width: 100%;
+  height: auto;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  outline: 0;
+}
 
+
+.svg-map__location {
+  fill: #FFBDED;
+}
+.svg-map__location > :focus, :hover{
+  
+  fill: #f4bc44;
+  outline: 0;
+}
+
+[aria-checked="true"] {
+  fill: #5FC43B;
+  outline: 0;
+}
 </style>
