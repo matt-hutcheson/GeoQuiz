@@ -1,37 +1,50 @@
 <template>
     <section>
-        <p>This is the play Map</p>
-        <checkbox-svg-map @click="getCountryDetails()" v-model="mapSelectedCountry" :map="World"/>
+        <p>Currently hovering: {{ tooltip }}</p>
+        <checkbox-svg-map @click="selectCountry" @mouseenter="hoverCountry" :location-class="isCorrect" :map="world"/>
     </section>
 </template>
 
 <script>
 import { CheckboxSvgMap } from "vue-svg-map";
 import World from "@svg-maps/world"
+import { eventBus } from "@/main.js"
 
 export default {
     name: 'play-map',
-    props: ['countries'],
+    props: ['countries', 'correctAnswers'],
     components: {
         'checkbox-svg-map': CheckboxSvgMap
     },
     data() {
         return {
-            World,
-            mapSelectedCountry: [],
-            apiSelectedCountry: null,
-            // selectedCountries: []
+          selectedCountries: [],
+          world: World,
+          tooltip: ""
         }
     },
+    computed: {
+      apiSelectedCountries: function() {
+        return this.selectedCountries.map(alpha2Code => this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code.toLowerCase()))
+      }
+    },
     methods: {
-      getCountryDetails() {
-        for (const country of this.countries) {
-          if (country.alpha2Code.toLowerCase() === this.mapSelectedCountry) {
-            console.log(country.alpha2Code.toLowerCase())
-            console.log(this.mapSelectedCountry)
-            this.apiSelectedCountry = country
-          }
+      isCorrect: function(location) {
+        if (this.correctAnswers.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
+          return "correct"
         }
+      },
+      selectCountry(event) {
+        const selectedAlpha2Code = event.target.id
+        eventBus.$emit('map-country-selected', selectedAlpha2Code)
+      },
+      hoverCountry(event) {
+        const alpha2Code = event.target.id
+        const country = this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code)
+        if (country) {
+          this.tooltip = country.name
+        }
+
       }
     }
 }
@@ -48,17 +61,24 @@ export default {
   outline: 0;
 }
 
-
 .svg-map >>> .svg-map__location {
   fill: #FFBDED;
-}
-.svg-map >>> .svg-map__location:focus, .svg-map >>> .svg-map__location:hover{
-  fill: #f4bc44;
   outline: 0;
 }
 
-[aria-checked="true"] {
-  fill: #5FC43B;
+.svg-map >>> .svg-map__location:hover{
+  fill: blue;
+  opacity: 0.8;
+  outline: 0;
+}
+
+.svg-map >>> [aria-checked="true"] {
+  fill: palevioletred;
+  outline: 0
+}
+
+.svg-map >>> .correct {
+  fill: lightgreen;
   outline: 0
 }
 </style>
