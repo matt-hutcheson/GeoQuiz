@@ -19,7 +19,8 @@ export default {
         return {
             World,
             mapSelectedCountry: [],
-            apiSelectedCountry: null,
+            apiSelectedCountry: null
+
             // selectedCountries: []
         }
     },
@@ -47,7 +48,6 @@ export default {
   stroke-linejoin: round;
   outline: 0;
 }
-
 
 .svg-map >>> .svg-map__location {
   fill: #FFBDED;

@@ -47,7 +47,7 @@ export default {
                 this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             }
-    }
+      }
 
     },
 
