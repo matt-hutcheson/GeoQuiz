@@ -1,93 +1,70 @@
 <template>
-    <section>
-        <p>This is the learn Map</p>
+    <section id='left-side'>
         <radio-svg-map @click='getCountryDetails()' v-model='mapSelectedCountry'
-            :map='World'/>
-        <div v-if='apiSelectedCountry' class='country_name'>{{ this.apiSelectedCountry.name }}</div>    
+            :map='World'/>  
     </section>
 </template>
 
 <script>
 import { RadioSvgMap } from "vue-svg-map";
-import World from "@svg-maps/world"
+import World from "@svg-maps/world";
+import { eventBus } from '@/main.js'
 
 export default {
-    name:'learn-map',
+    name: 'learn-map',
     props: ['countries'],
     components: {
-        'radio-svg-map': RadioSvgMap
+        'radio-svg-map': RadioSvgMap,
     },
     data() {
         return {
-            World,
-            // pointedLocation: null,
-            // selectedLocation: null,
-            tooltipStyle: null, 
+            World, 
             mapSelectedCountry: null,
             apiSelectedCountry: null
-        }
+        } 
     },
     methods: {
-        // getPointLocation(event) {
-        //     this.pointedLocation = getLocationName(event.target)
-        // },
-        // unpointLocation(event) {
-        //     this.pointedLocation = null
-        //     this.tooltipStyle = { display: 'none' }
-    
-        // },
-        // moveOnLocation(event) {
-		// 	this.tooltipStyle = {
-		// 		display: 'block',
-		// 		top: `${event.clientY + 10}px`,
-		// 		left: `${event.clientX - 100}px`,
-		// 	}
-        // },
         getCountryDetails() {
             for (const country of this.countries) {
                 if(country.alpha2Code.toLowerCase() === this.mapSelectedCountry) {
-                    console.log( country.alpha2Code)
                     this.apiSelectedCountry = country
+                    eventBus.$emit('learn-country-selected', this.apiSelectedCountry)
                 }
             }
         }
-    },    
+    }, 
+}
 
-} 
-
-// @mouseover='pointLocation'
-// @mouseout='unpointLocation'
-// @mousemove='moveOnLocation'
 
 </script>
 
 <style>
 
+.container {
+    display: flex;
+    justify-content: space-between;
+    display: flex-wrap;
+    cursor: pointer;
+  }
+
+#left-side {
+    width: 80%;
+    padding: 10px;
+    border: solid black 1px;
+    margin-right: 5px;
+    background-color: rgb(172,237,243);
+}  
 
 .svg-map {
-   stroke: #b6b6b6;
-  stroke-width: 1;
+    stroke: #b6b6b6;
+    stroke-width: 1;
 }
-
 
 .svg-map__location {
   fill: #FFBDED;
 }
 .svg-map__location > :focus, :hover {
-            fill: #5FC43B;
-}
-
-* {
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-#tooltip {
-    position: fixed;
-				width: 200px;
-				padding: 10px;
-				border: 1px solid darkgray;
-				background-color: white;
+    fill: yellow;
 }
 </style>
 

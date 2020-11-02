@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class='main-container' >
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
