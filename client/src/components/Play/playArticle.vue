@@ -9,13 +9,14 @@
 
             </select>
 
-        <play-map :countries="countries"></play-map>
+        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
     </section>
 </template>
 
 <script>
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
+import { eventBus } from '@/main.js'
 
 export default {
     name: 'playArticle',
@@ -26,27 +27,27 @@ export default {
     },
     data () {
         return {
-        currentFlag: null,
-        randomCountry: null,
-        countriesRemaining: [],
-        countriesCorrect: [],
-        countryListSelected: null
+            currentFlag: null,
+            randomCountry: null,
+            countriesRemaining: [],
+            countriesCorrect: [],
+            countryListSelected: null
         }
     },
     methods: {
-        getRandomCountry (array) {
-            this.randomCountry = array[Math.floor(Math.random() * array.length)]
-            },
+    getRandomCountry (array) {
+        this.randomCountry = array[Math.floor(Math.random() * array.length)]
+    },
 
-        checkAnswer () {
-            console.log(this.countryListSelected.alpha3Code)
-            if (this.randomCountry.alpha3Code === this.countryListSelected.alpha3Code) {
-                this.countriesCorrect.push(this.countryListSelected)
-                const index = this.countriesRemaining.indexOf(this.countryListSelected)
-                this.countriesRemaining.splice(index, 1)
-                this.getRandomCountry(this.countriesRemaining)
-                this.countryListSelected = null
-            }
+    checkAnswer () {
+        console.log(this.countryListSelected.alpha3Code)
+        if (this.randomCountry.alpha3Code === this.countryListSelected.alpha3Code) {
+            this.countriesCorrect = [...this.countriesCorrect, this.countryListSelected]
+            const index = this.countriesRemaining.indexOf(this.countryListSelected)
+            this.countriesRemaining.splice(index, 1)
+            this.getRandomCountry(this.countriesRemaining)
+            this.countryListSelected = null
+        }
       }
 
     },
@@ -55,6 +56,12 @@ export default {
     mounted() {
         this.countriesRemaining = this.countries
         this.getRandomCountry(this.countriesRemaining)
+
+        eventBus.$on('map-country-selected', (alpha2Code) => {
+            const selectedCountry = this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code)
+            this.countryListSelected = selectedCountry
+            this.checkAnswer();
+        })
     }
 
 }
