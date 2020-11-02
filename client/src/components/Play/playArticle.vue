@@ -1,16 +1,16 @@
 <template>
-<section>
-    <h1>You are now in Play mode.</h1>
-    <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
-    <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
-        <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
-            <option selected disabled value="">--Select A Country--</option>
-            <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
+    <section>
+        <h1>You are now in Play mode.</h1>
+        <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
+        <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
+            <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
+                <option selected disabled value="">--Select A Country--</option>
+                <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
 
-        </select>
+            </select>
 
-    <play-map :countries="countries"></play-map>
-</section>
+        <play-map :countries="countries"></play-map>
+    </section>
 </template>
 
 <script>
