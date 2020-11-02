@@ -10,7 +10,7 @@
 
             <label>Currency(ies) :</label>
                 <ul>
-                    <li v-for='(currency, index) of selectedCountry.currencies' :key='index'>
+                    <li v-if='currency.name' v-for='(currency, index) of selectedCountry.currencies' :key='index'>
                     {{ currency.name }} ({{ currency.symbol }})</li>
                 </ul>
             <!-- zimbabwe has a null which creates an issue -->
