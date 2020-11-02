@@ -3,12 +3,14 @@
         <h1>You are now in Play mode.</h1>
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
-            <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
-                <option selected disabled :value="null">--Select A Country--</option>
-                <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
-            </select>
-        <section v-if="result==='correct'" id="flag-results">
-            <p>Correct! This is {{ randomCountry.name }}'s flag</p>
+        <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
+            <option selected disabled :value="null">--Select A Country--</option>
+            <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
+        </select>
+        <section id="flag-results">
+            <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+            <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+            <button v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
         </section>
         <play-map :countries="countries"></play-map>
     </section>
@@ -30,12 +32,14 @@ export default {
         randomCountry: null,
         countriesRemaining: [],
         countriesCorrect: [],
-        countryListSelected: null
+        countryListSelected: null,
+        result: null
         }
     },
     methods: {
         getRandomCountry (array) {
             this.randomCountry = array[Math.floor(Math.random() * array.length)]
+            this.result = null
             },
 
         checkAnswer () {
@@ -43,9 +47,10 @@ export default {
                 this.countriesCorrect.push(this.countryListSelected)
                 const index = this.countriesRemaining.indexOf(this.countryListSelected)
                 this.countriesRemaining.splice(index, 1)
-                this.getRandomCountry(this.countriesRemaining)
+                this.result = "correct"
+                // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
-            }
+            } else {this.result = "incorrect"}
     }
 
     },
@@ -59,6 +64,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
