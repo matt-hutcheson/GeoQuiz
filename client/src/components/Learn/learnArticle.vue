@@ -5,7 +5,8 @@
         <div class='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
-        </div>
+        </div>  
+
     </article>
 </template>
 
