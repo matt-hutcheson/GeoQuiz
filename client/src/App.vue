@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class='main-container' >
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
@@ -15,6 +15,7 @@ import learnArticle from './components/Learn/learnArticle';
 import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 
+
 export default {
   name: 'App',
     data(){
@@ -25,7 +26,7 @@ export default {
     },
 
     mounted(){
-        fetch('https://restcountries.eu/rest/v2/all') // API
+        fetch('https://restcountries.eu/rest/v2/all') //API
             .then(res => res.json())
             .then((countries) => (this.countries = countries))
 
