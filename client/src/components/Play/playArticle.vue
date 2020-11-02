@@ -4,11 +4,12 @@
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
             <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
-                <option selected disabled value="">--Select A Country--</option>
+                <option selected disabled :value="null">--Select A Country--</option>
                 <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
-
             </select>
-
+        <section v-if="result==='correct'" id="flag-results">
+            <p>Correct! This is {{ randomCountry.name }}'s flag</p>
+        </section>
         <play-map :countries="countries"></play-map>
     </section>
 </template>
@@ -26,7 +27,6 @@ export default {
     },
     data () {
         return {
-        currentFlag: null,
         randomCountry: null,
         countriesRemaining: [],
         countriesCorrect: [],
@@ -39,7 +39,6 @@ export default {
             },
 
         checkAnswer () {
-            console.log(this.countryListSelected.alpha3Code)
             if (this.randomCountry.alpha3Code === this.countryListSelected.alpha3Code) {
                 this.countriesCorrect.push(this.countryListSelected)
                 const index = this.countriesRemaining.indexOf(this.countryListSelected)
