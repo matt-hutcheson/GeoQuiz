@@ -49,10 +49,10 @@ export default {
 }
 
 
-.svg-map__location {
+.svg-map >>> .svg-map__location {
   fill: #FFBDED;
 }
-.svg-map__location > :focus, :hover{
+.svg-map >>> .svg-map__location:focus, .svg-map >>> .svg-map__location:hover{
   fill: #f4bc44;
   outline: 0;
 }
