@@ -19,7 +19,7 @@
             </section>
             <div v-if="result==='correct'" id="correct-next-flag">
                 <p v-if="result==='correct'">Great job!</p>
-                <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
+                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); topFunction();">Next Flag</button>
             </div>
         </div>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
@@ -68,6 +68,14 @@ export default {
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
+        },
+
+        topFunction () {
+            window.scrollTo({
+                top: 400, 
+                left: 100, 
+                behavior: 'smooth'
+            });
         }
     },
         
@@ -121,11 +129,12 @@ export default {
 #correct-next-flag {
     border: solid;
     position: absolute;
-    margin: 25% 20% 40% 40%;
+    margin: 50vh 41vw;
     padding: 6px 25px;
     text-align: center;
     border-radius: 10px;
-    background-color: rgba(76, 175, 80, 0.5) ;
+    background-color: rgba(255, 255, 255, 0.5) ;
+    /* margin: 0 auto; */
 
     
 }
@@ -136,8 +145,8 @@ export default {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
-    background-color: #62cae4;
-    border: #71aee7 solid 1px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
 }
 
 </style>
