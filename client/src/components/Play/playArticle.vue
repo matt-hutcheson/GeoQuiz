@@ -13,13 +13,15 @@
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-            <div>
-                <section id="flag-results">
-                    <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
-                    <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
-                </section>
+            <div id="correct-next-container">
+                <div>
+                    <section id="flag-results">
+                        <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+                        <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+                    </section>
+                </div>
+                <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
             </div>
-            <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
             <div id="counters-container">
                 <div id="counter-correct">
                     <p class="text-correct-answers">Correct answers: </p> 
@@ -33,7 +35,6 @@
         </div>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
         <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
-        
 
     </section>
 </template>
@@ -135,6 +136,10 @@ export default {
     border: #ebb810 solid 2px;
 }
 
+#correct-next-container {
+    margin-top: 50px;
+    
+}
 #counter-remaining, #counter-correct {
     display: flex;
     margin: -10px;

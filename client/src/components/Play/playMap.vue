@@ -59,7 +59,7 @@ section {
 }
 
 section > p {
-    margin-top: 50px;
+    margin-top: 20px;
     position: absolute;
 }
 .svg-map {
