@@ -12,7 +12,7 @@
             <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
             <button v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
         </section>
-        <!-- <p>Correct answers: </p> -->
+        <p>Correct answers: {{correctAnswers}} </p>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
 
     </section>
@@ -54,12 +54,17 @@ export default {
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
-        },
-
-        correctAnswers () {
-
         }
     },
+
+    computed: {
+        correctAnswers: function () {
+            this.countriesCorrect
+            return this.countriesCorrect.length
+        }
+    },
+        
+    
     mounted() {
         this.countriesRemaining = this.countries
         this.getRandomCountry(this.countriesRemaining)
