@@ -2,11 +2,10 @@
     <article>
         <h1>You are currently in Learn mode</h1>
         <p>Click on a country to display some information</p>
-        <div class='container'>
+        <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
-        </div>  
-
+        </div>
     </article>
 </template>
 
@@ -41,7 +40,12 @@ export default {
 </script>
 
 <style>
-.main-container {
-    height: 100vh;
-}
+
+#container {
+    display: flex;
+    justify-content: space-between;
+    display: flex-wrap;
+    cursor: pointer;
+  }
+
 </style>
