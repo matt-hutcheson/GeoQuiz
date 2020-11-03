@@ -51,6 +51,12 @@ export default {
 </script>
 
 <style scoped>
+section {
+    padding: 10px;
+    border: solid black 1px;
+    margin-right: 5px;
+    background-color: rgb(172,237,243);
+}
 .svg-map {
   stroke: #b6b6b6;
   stroke-width: 1;
@@ -67,9 +73,8 @@ export default {
 }
 
 .svg-map >>> .svg-map__location:hover{
-  fill: blue;
-  opacity: 0.8;
-  outline: 0;
+    fill: palevioletred;
+    outline: 0;
 }
 
 .svg-map >>> [aria-checked="true"] {
@@ -78,7 +83,7 @@ export default {
 }
 
 .svg-map >>> .correct {
-  fill: lightgreen;
+  fill: #34e734;
   outline: 0
 }
 </style>
