@@ -54,22 +54,25 @@ export default {
 section {
     padding: 10px;
     border: solid black 1px;
-    margin-right: 5px;
+    margin: 5px 20px;
     background-color: rgb(172,237,243);
+    width: 95%;
+
 }
 
 section > p {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     position: absolute;
 }
 .svg-map {
-  stroke: #b6b6b6;
-  stroke-width: 1;
-  width: 100%;
-  height: auto;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  outline: 0;
+    stroke: #b6b6b6;
+    stroke-width: 1;
+    width: 90%;
+    height: auto;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    outline: 0;
+    margin-left: 5%;
 }
 
 .svg-map >>> .svg-map__location {
