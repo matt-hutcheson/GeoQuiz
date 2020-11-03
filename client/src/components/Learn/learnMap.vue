@@ -1,6 +1,6 @@
 <template>
     <section id='left-side'>
-        <radio-svg-map @click='getCountryDetails()' v-model='mapSelectedCountry'
+        <radio-svg-map @clickgaa='getCountryDetails()' v-model='mapSelectedCountry'
             :map='World'/>  
     </section>
 </template>
@@ -40,12 +40,6 @@ export default {
 
 <style>
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    display: flex-wrap;
-    cursor: pointer;
-  }
 
 #left-side {
     width: 80%;
@@ -62,6 +56,7 @@ export default {
 
 .svg-map__location {
   fill: #FFBDED;
+  outline: 0;
 }
 .svg-map__location > :focus, :hover {
     fill: yellow;
