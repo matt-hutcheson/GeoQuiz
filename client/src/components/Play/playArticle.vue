@@ -23,6 +23,7 @@ import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js';
 import userForm from './userForm'
 import User from '../../assets/user'
+import UserService from '../../services/UserService';
 
 export default {
     name: 'playArticle',
@@ -72,7 +73,13 @@ export default {
             if (this.result != 'correct') {
                 this.checkAnswer();
             }
-        })
+        });
+
+        eventBus.$on('add-user', (user) => {
+            UserService.addUser(user)
+            .then(userWithId => this.allUsers.push(userWithId));
+        });
+        
     }
 }
 </script>
