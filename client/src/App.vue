@@ -1,5 +1,5 @@
 <template>
-  <main class='main-container' >
+  <main id='main-container'>
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
@@ -43,5 +43,10 @@ export default {
 </script>
 
 <style>
+
+#main-container {
+  
+  
+} 
 
 </style>
