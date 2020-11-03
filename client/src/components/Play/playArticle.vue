@@ -19,7 +19,8 @@
 <script>
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
-import { eventBus } from '@/main.js'
+import { eventBus } from '@/main.js';
+import User from '../../assets/user'
 
 export default {
     name: 'playArticle',
@@ -52,6 +53,9 @@ export default {
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
+        },
+        createUser (username) {
+            return newUser = new User(username, countries)
         }
     },
     mounted() {
