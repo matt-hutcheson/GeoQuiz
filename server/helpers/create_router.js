@@ -46,6 +46,37 @@ const createRouter = function (collection) {
     });
   });
 
+  // UPDATE
+  router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const updatedData = req.body;
+    delete updatedData._id;
+
+    collection
+    .findOneAndUpdate({ _id: ObjectID(id) }, { $set: updatedData })
+    .then(result => {
+      res.json(result.value);
+    })
+    .catch((err) => {
+      res.status(500);
+      res.json({ status: 500, error: err });
+    });
+  });
+
+  // DELETE
+  router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    collection
+    .deleteOne({ _id: ObjectID(id) })
+    .then(result => {
+      res.json(result);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.json({ status: 500, error: err });
+    });
+  });
   return router;
 };
 module.exports = createRouter;
