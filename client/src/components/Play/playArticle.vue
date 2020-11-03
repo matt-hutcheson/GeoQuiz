@@ -1,6 +1,7 @@
 <template>
     <section>
         <h1>You are now in Play mode.</h1>
+        <user-form></user-form>
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
@@ -19,14 +20,16 @@
 <script>
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
-import { eventBus } from '@/main.js'
+import { eventBus } from '@/main.js';
+import userForm from './userForm'
 
 export default {
     name: 'playArticle',
     props: ['currentMode', 'countries'],
     components: {
         'play-map': playMap,
-        'flag-to-guess': flagToGuess
+        'flag-to-guess': flagToGuess,
+        'user-form': userForm,
     },
     data () {
         return {
