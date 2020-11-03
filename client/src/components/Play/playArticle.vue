@@ -1,7 +1,7 @@
 <template>
     <section>
         <h1>You are now in Play mode.</h1>
-        <user-form></user-form>
+        <user-form :countries='countries'></user-form>
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
@@ -60,11 +60,7 @@ export default {
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
         },
-        createUser() {
-            const newUser = new User(this.username, this.countries)
-            this.currentUser = newUser
-            // add user to database
-        }
+       
     },
     mounted() {
         this.countriesRemaining = this.countries
