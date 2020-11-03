@@ -1,6 +1,7 @@
 <template>
     <section>
         <h1>You are now in Play mode.</h1>
+        <user-select :allUsers="allUsers"></user-select>
         <user-form :countries='countries'></user-form>
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
@@ -21,8 +22,9 @@
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js';
-import userForm from './userForm'
-import User from '../../assets/user'
+import userForm from './userForm';
+import userSelect from './userSelect';
+import User from '../../assets/user';
 import UserService from '../../services/UserService';
 
 export default {
@@ -32,6 +34,7 @@ export default {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
         'user-form': userForm,
+        'user-select': userSelect
     },
     data () {
         return {
@@ -41,8 +44,7 @@ export default {
         countryListSelected: null,
         result: null,
         currentUser: null,
-        username: "",
-        allUsers: null
+        username: ""
         }
     },
     methods: {
