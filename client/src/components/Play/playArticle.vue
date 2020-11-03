@@ -42,7 +42,6 @@ export default {
         result: null,
         currentUser: null,
         username: "",
-        allUsers: null
         }
     },
     methods: {
@@ -57,11 +56,14 @@ export default {
                 const index = this.countriesRemaining.indexOf(this.countryListSelected)
                 this.countriesRemaining.splice(index, 1)
                 this.result = "correct"
+                this.currentUser[this.randomCountry.alpha3Code]["flagGame"] = true
+                UserService.updateUser(this.currentUser)
+                .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
         },
-       
+
     },
     mounted() {
         this.countriesRemaining = this.countries
@@ -77,9 +79,9 @@ export default {
 
         eventBus.$on('add-user', (user) => {
             UserService.addUser(user)
-            .then(userWithId => this.allUsers.push(userWithId));
+            .then(userWithId => this.currentUser = userWithId)
         });
-        
+
     }
 }
 </script>

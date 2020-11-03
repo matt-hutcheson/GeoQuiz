@@ -30,14 +30,23 @@ export default {
 
     mounted(){
         fetch('https://restcountries.eu/rest/v2/all') //API
-            .then(res => res.json())
-            .then((countries) => (this.countries = countries));
-        
+          .then(res => res.json())
+          .then((countries) => (this.countries = countries));
+
         this.fetchUsers();
 
         eventBus.$on('mode-changed', (change) => {
           this.currentMode = change;
-        })
+        }),
+
+        eventBus.$on('add-user', (user) => {
+          UserService.addUser(user)
+          .then(userWithId => this.allUsers.push(userWithId))
+        });
+
+        eventBus.$on('country-correct', (currentUser) => {
+          this.fetchUsers();
+        });
     },
 
     methods: {
@@ -58,8 +67,8 @@ export default {
 <style>
 
 #main-container {
-  
-  
-} 
+
+
+}
 
 </style>
