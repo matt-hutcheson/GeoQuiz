@@ -35,7 +35,10 @@ export default {
         countriesRemaining: [],
         countriesCorrect: [],
         countryListSelected: null,
-        result: null
+        result: null,
+        currentUser: null,
+        username: "",
+        allUsers: null
         }
     },
     methods: {
@@ -54,8 +57,10 @@ export default {
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
         },
-        createUser (username) {
-            return newUser = new User(username, countries)
+        createUser() {
+            const newUser = new User(this.username, this.countries)
+            this.currentUser = newUser
+            // add user to database
         }
     },
     mounted() {
