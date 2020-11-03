@@ -13,12 +13,12 @@
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-        <div>
-            <section id="flag-results">
-                <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
-                <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
-            </section>
-        </div>
+            <div>
+                <section id="flag-results">
+                    <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+                    <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+                </section>
+            </div>
             <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
             <div id="counters-container">
                 <div id="counter-correct">
@@ -32,6 +32,7 @@
             </div>
         </div>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
+        <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
         
 
     </section>
@@ -42,6 +43,7 @@ import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js'
 import instructions from './instructions'
+import listCountries from './listCountries'
 
 export default {
     name: 'playArticle',
@@ -49,7 +51,8 @@ export default {
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
-        'instructions' : instructions
+        'instructions' : instructions,
+        'list-countries': listCountries
     },
     data () {
         return {
