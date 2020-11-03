@@ -1,13 +1,7 @@
 <template>
     <section>
         <h1>Flag Game!</h1>
-        <article>
-            <p><b>How to play:</b></p>
-            <p> You’ll see a flag in the top left of your screen. <br>
-            All you need to do next is click on the part of the map where that country is.<br>
-            If you’re right the country will go green on the map and then you can click “next flag” and continue playing. <br>
-            Keep going until you paint the whole globe green!! </p>
-        </article>
+        <instructions></instructions>
         <div id="container">
             <div id="container-flag">
                 <div id="change-flag-button">
@@ -47,13 +41,15 @@
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js'
+import instructions from './instructions'
 
 export default {
     name: 'playArticle',
     props: ['currentMode', 'countries'],
     components: {
         'play-map': playMap,
-        'flag-to-guess': flagToGuess
+        'flag-to-guess': flagToGuess,
+        'instructions' : instructions
     },
     data () {
         return {
@@ -182,12 +178,6 @@ export default {
     padding: 8px 10px;
     background-color: #62cae4;
     border: #71aee7 solid 1px;
-}
-article {
-    border: solid;
-    padding: 10px 20px;
-    margin: 30px;
-    width: 500px;
 }
 
 </style>
