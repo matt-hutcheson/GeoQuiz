@@ -1,9 +1,13 @@
 <template>
     <section>
         <h1>You are now in Play mode.</h1>
-        <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <div id="container">
-            <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
+            <div id="container-flag">
+                <div id="change-flag-button">
+                    <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
+                </div>
+                <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
+            </div>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
@@ -88,15 +92,34 @@ export default {
 </script>
 
 <style scoped>
-#flag {
-    margin: 30px 10%;
-}
 #container {
     display:flex;
+    height: 250px;
 }
 #correct-answer-container{
-    width: 40%;
+    width: 30%;
 }
+#container-flag {
+    width: 60%;
+    display: flex;
+}
+
+#flag{
+    position: relative;
+    margin: 20px 50px;
+}
+
+#change-flag-button > button {
+    margin: 20px auto auto 50px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+}
+
 #counter {
     display: flex;
     padding: 4px;
@@ -111,7 +134,7 @@ export default {
 }
 #text-correct-answers {
     background-color: #47b647;
-    color: seashell;
+    color: black;
     border-radius: 5px 0 0 5px;
     text-align: center;
     padding: 8px 10px;
@@ -120,8 +143,7 @@ export default {
     margin: -20px auto auto 5px;
 }
 #next-flag {
-    background-color: blue;
-    margin: 30px auto auto 10px;
+    margin: 40px auto auto 10px;
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
