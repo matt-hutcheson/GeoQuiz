@@ -19,19 +19,26 @@
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-            <div id="correct-answer-container">
-                <div id="counter">
-                    <p id="text-correct-answers">Correct answers: </p> 
+        <div>
+            <section id="flag-results">
+                <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+                <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+            </section>
+        </div>
+            <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
+            <div id="counters-container">
+                <div id="counter-correct">
+                    <p class="text-correct-answers">Correct answers: </p> 
                     <p class="num-correct-answers">{{correctAnswers}}</p>  
                 </div>
-                <section id="flag-results">
-                    <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
-                    <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
-                </section>
-                <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
+                <div id="counter-remaining">
+                    <p class="text-remaining">Countries Remaining: </p> 
+                    <p class="num-remaining">{{countriesRemaining.length}}</p>  
+                </div>
             </div>
         </div>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
+        
 
     </section>
 </template>
@@ -101,10 +108,11 @@ export default {
 <style scoped>
 #container {
     display:flex;
-    height: 200px;
+    height: 25vh;
 }
-#correct-answer-container{
-    width: 30%;
+#counters-container{
+    float: right;
+    margin: 27vh 40px auto auto;
 }
 #container-flag {
     width: 60%;
@@ -113,11 +121,12 @@ export default {
 
 #flag{
     position: relative;
-    margin: 20px 50px;
+    margin: 20px auto auto 50px;
 }
 
 #change-flag-button > button {
-    margin: 20px auto auto 50px;
+    width: 10em;
+    margin: 20px 25px 0 40px;
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -127,20 +136,35 @@ export default {
     border: #ebb810 solid 2px;
 }
 
-#counter {
+#counter-remaining, #counter-correct {
     display: flex;
-    padding: 4px;
-    /* margin: 20px auto auto ; */
+    margin: -10px;
+    /* padding: 2px; */
     /* position: absolute */
 }
 .num-correct-answers{
     padding: 8px 10px;
     border: solid #47b647 1px;
     border-radius: 0 5px 5px 0;
-    text-align: center;  
+    text-align: center; 
+    /* margin: 0;  */
+
 }
-#text-correct-answers {
+.num-remaining {
+    padding: 8px 10px;
+    border: solid #5c64cf 1px;
+    border-radius: 0 5px 5px 0;
+    text-align: center; 
+}
+.text-correct-answers {
     background-color: #47b647;
+    color: black;
+    border-radius: 5px 0 0 5px;
+    text-align: center;
+    padding: 8px 10px;
+}
+.text-remaining {
+    background-color: #5c64cf;
     color: black;
     border-radius: 5px 0 0 5px;
     text-align: center;

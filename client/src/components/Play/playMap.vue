@@ -57,6 +57,11 @@ section {
     margin-right: 5px;
     background-color: rgb(172,237,243);
 }
+
+section > p {
+    margin-top: 50px;
+    position: absolute;
+}
 .svg-map {
   stroke: #b6b6b6;
   stroke-width: 1;
