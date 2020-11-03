@@ -1,6 +1,11 @@
 <template>
     <section>
-        <h1>You are now in Play mode.</h1>
+        <h1>Flag Game!</h1>
+        <article>
+            <p>All you need to do is click on the part of the map where the country matching that flag is.<br>
+            If you are right the country will change to green, then click ‘next flag’ button and continue playing. <br>
+            Keep going until you paint the whole globe green! </p>
+        </article>
         <div id="container">
             <div id="container-flag">
                 <div id="change-flag-button">
@@ -94,7 +99,7 @@ export default {
 <style scoped>
 #container {
     display:flex;
-    height: 250px;
+    height: 200px;
 }
 #correct-answer-container{
     width: 30%;
@@ -151,6 +156,12 @@ export default {
     padding: 8px 10px;
     background-color: #62cae4;
     border: #71aee7 solid 1px;
+}
+article {
+    border: solid;
+    padding: 10px 20px;
+    margin: 30px;
+    width: 500px;
 }
 
 </style>
