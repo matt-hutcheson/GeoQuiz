@@ -2,7 +2,8 @@
     <section>
         <h1>Flag Game!</h1>
         <article>
-            <p>All you need to do is click on the part of the map where the country matching that flag is.<br>
+            <p><b>How to play:</b></p>
+            <p> All you need to do is click on the part of the map where the country matching that flag is.<br>
             If you are right the country will change to green, then click ‘next flag’ button and continue playing. <br>
             Keep going until you paint the whole globe green! </p>
         </article>
