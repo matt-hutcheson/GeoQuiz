@@ -13,13 +13,12 @@
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-            <div id="correct-next-container">
-                <div>
-                    <section id="flag-results">
-                        <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
-                        <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
-                    </section>
-                </div>
+            <section id="flag-results">
+                <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+                <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+            </section>
+            <div v-if="result==='correct'" id="correct-next-flag">
+                <p v-if="result==='correct'">Great job!</p>
                 <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
             </div>
         </div>
@@ -94,7 +93,7 @@ export default {
 }
 
 #container-flag {
-    width: 60%;
+    width: 40%;
     display: flex;
 }
 
@@ -115,17 +114,23 @@ export default {
     border: #ebb810 solid 2px;
 }
 
-#correct-next-container {
-    margin-top: 50px;
+#flag-results {
+    margin: auto;
+}
+
+#correct-next-flag {
+    border: solid;
+    position: absolute;
+    margin: 25% 20% 40% 40%;
+    padding: 6px 25px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(76, 175, 80, 0.5) ;
+
     
 }
-
-#flag-results {
-    margin: -20px auto auto 5px;
-}
-
 #next-flag {
-    margin: 40px auto auto 10px;
+    margin: 10px;
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
