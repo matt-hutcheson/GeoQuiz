@@ -34,8 +34,8 @@ li  {
     border: solid 2px;
     background-color: #ffae00;
     padding: 10px;
-    width: 20vw;
-    border-radius: 5%;
+    width: 17vw;
+    border-radius: 5px;
     margin: 10px 20px;
 }
 </style>

@@ -22,18 +22,8 @@
                 </div>
                 <button id= "next-flag" v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
             </div>
-            <div id="counters-container">
-                <div id="counter-correct">
-                    <p class="text-correct-answers">Correct answers: </p> 
-                    <p class="num-correct-answers">{{correctAnswers}}</p>  
-                </div>
-                <div id="counter-remaining">
-                    <p class="text-remaining">Countries Remaining: </p> 
-                    <p class="num-remaining">{{countriesRemaining.length}}</p>  
-                </div>
-            </div>
         </div>
-        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
+        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
         <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
 
     </section>
@@ -81,15 +71,7 @@ export default {
             } else {this.result = "incorrect"}
         }
     },
-
-    computed: {
-        correctAnswers: function () {
-            this.countriesCorrect
-            return this.countriesCorrect.length
-        }
-    },
         
-    
     mounted() {
         this.countriesRemaining = this.countries
         this.getRandomCountry(this.countriesRemaining)
@@ -110,10 +92,7 @@ export default {
     display:flex;
     height: 25vh;
 }
-#counters-container{
-    float: right;
-    margin: 27vh 40px auto auto;
-}
+
 #container-flag {
     width: 60%;
     display: flex;
@@ -140,43 +119,11 @@ export default {
     margin-top: 50px;
     
 }
-#counter-remaining, #counter-correct {
-    display: flex;
-    margin: -10px;
-    /* padding: 2px; */
-    /* position: absolute */
-}
-.num-correct-answers{
-    padding: 8px 10px;
-    border: solid #47b647 1px;
-    border-radius: 0 5px 5px 0;
-    text-align: center; 
-    /* margin: 0;  */
 
-}
-.num-remaining {
-    padding: 8px 10px;
-    border: solid #5c64cf 1px;
-    border-radius: 0 5px 5px 0;
-    text-align: center; 
-}
-.text-correct-answers {
-    background-color: #47b647;
-    color: black;
-    border-radius: 5px 0 0 5px;
-    text-align: center;
-    padding: 8px 10px;
-}
-.text-remaining {
-    background-color: #5c64cf;
-    color: black;
-    border-radius: 5px 0 0 5px;
-    text-align: center;
-    padding: 8px 10px;
-}
 #flag-results {
     margin: -20px auto auto 5px;
 }
+
 #next-flag {
     margin: 40px auto auto 10px;
     border-radius: 5px;
