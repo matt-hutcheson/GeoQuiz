@@ -22,6 +22,7 @@ import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js';
 import userForm from './userForm'
+import User from '../../assets/user'
 
 export default {
     name: 'playArticle',
@@ -37,7 +38,10 @@ export default {
         countriesRemaining: [],
         countriesCorrect: [],
         countryListSelected: null,
-        result: null
+        result: null,
+        currentUser: null,
+        username: "",
+        allUsers: null
         }
     },
     methods: {
@@ -55,6 +59,11 @@ export default {
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
+        },
+        createUser() {
+            const newUser = new User(this.username, this.countries)
+            this.currentUser = newUser
+            // add user to database
         }
     },
     mounted() {
