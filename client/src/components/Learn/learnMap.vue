@@ -1,7 +1,6 @@
 <template>
     <section id='left-side'>
-        <radio-svg-map @clickgaa='getCountryDetails()' v-model='mapSelectedCountry'
-            :map='World'/>  
+        <radio-svg-map @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>  
     </section>
 </template>
 
@@ -39,7 +38,6 @@ export default {
 </script>
 
 <style>
-
 
 #left-side {
     width: 80%;
