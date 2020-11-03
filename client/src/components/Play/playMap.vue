@@ -109,7 +109,7 @@ section > p {
 
 #counters {
     position:absolute;
-    right:50px;
+    right:5%;
 }
 #counter-remaining, #counter-correct {
     display: flex;
