@@ -1,7 +1,7 @@
 <template>
     <section>
         <h1>You are now in Play mode.</h1>
-        <user-select :allUsers="allUsers"></user-select>
+        <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
         <user-form :countries='countries'></user-form>
         <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
         <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
@@ -29,7 +29,7 @@ import UserService from '../../services/UserService';
 
 export default {
     name: 'playArticle',
-    props: ['currentMode', 'countries', 'allUsers'],
+    props: ['currentMode', 'countries', 'allUsers', 'currentUser'],
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
@@ -43,7 +43,6 @@ export default {
         countriesCorrect: [],
         countryListSelected: null,
         result: null,
-        currentUser: null,
         username: ""
         }
     },
