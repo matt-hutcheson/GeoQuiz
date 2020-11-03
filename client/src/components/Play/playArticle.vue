@@ -27,7 +27,7 @@ import UserService from '../../services/UserService';
 
 export default {
     name: 'playArticle',
-    props: ['currentMode', 'countries'],
+    props: ['currentMode', 'countries', 'allUsers'],
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,

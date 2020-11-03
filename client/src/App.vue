@@ -3,7 +3,7 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'" :countries="countries"></play-article>
+        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
@@ -31,14 +31,22 @@ export default {
     mounted(){
         fetch('https://restcountries.eu/rest/v2/all') //API
             .then(res => res.json())
-            .then((countries) => (this.countries = countries))
-            .then(() => this.allUsers = UserService.getUsers())
-            .then(() => console.log(this.allUsers));
+            .then((countries) => (this.countries = countries));
+        
+        this.fetchUsers();
 
         eventBus.$on('mode-changed', (change) => {
           this.currentMode = change;
         })
     },
+
+    methods: {
+      fetchUsers() {
+        UserService.getUsers()
+        .then((users) => this.allUsers = users)
+      }
+    },
+
     components: {
       'geo-nav': geoNav,
       'play-article': playArticle,

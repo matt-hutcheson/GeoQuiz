@@ -17,6 +17,17 @@ export default {
         .then(res => res.json());
     },
 
+    updateUser(user) {
+        return fetch(baseURL + user._id, {
+            method: 'PUT',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json());
+    },
+
     deleteUser(id) {
         return fetch(baseURL + id, {
             method: 'DELETE'
