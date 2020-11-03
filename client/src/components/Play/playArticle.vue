@@ -18,8 +18,9 @@
                 <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
             </section>
             <div v-if="result==='correct'" id="correct-next-flag">
-                <p v-if="result==='correct'">Great job!</p>
-                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); topFunction();">Next Flag</button>
+                <p v-if="result==='correct'">Great job!!</p>
+                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
+                <button id= "details-answers" v-on:click="scrollBottom()">Check your answers:</button>
             </div>
         </div>
         <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
@@ -69,16 +70,21 @@ export default {
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
         },
-
-        topFunction () {
+        scrollTop () {
             window.scrollTo({
                 top: 400, 
                 left: 100, 
                 behavior: 'smooth'
-            });
+            })
+        },
+        scrollBottom () {
+            window.scrollTo({
+                top: 800, 
+                left: 100, 
+                behavior: 'smooth'
+            })
         }
     },
-        
     mounted() {
         this.countriesRemaining = this.countries
         this.getRandomCountry(this.countriesRemaining)
@@ -129,7 +135,7 @@ export default {
 #correct-next-flag {
     border: solid;
     position: absolute;
-    margin: 50vh 41vw;
+    margin: 50vh 35vw;
     padding: 6px 25px;
     text-align: center;
     border-radius: 10px;
@@ -138,7 +144,7 @@ export default {
 
     
 }
-#next-flag {
+#next-flag, #details-answers {
     margin: 10px;
     border-radius: 5px;
     text-align: center;
