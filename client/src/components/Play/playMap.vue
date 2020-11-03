@@ -38,7 +38,7 @@ export default {
     computed: {
       apiSelectedCountries: function() {
         return this.selectedCountries.map(alpha2Code => this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code.toLowerCase()))
-      }
+        }
     },
 
     methods: {
@@ -57,7 +57,6 @@ export default {
         if (country) {
           this.tooltip = country.name
         }
-
       }
     }
 }
