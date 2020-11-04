@@ -1,8 +1,13 @@
 <template>
-  <nav>
-    <button v-if="currentMode!=='learn'" v-on:click='handleClick("learn")'>Learn</button>
-    <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Play</button>
+<nav id='img-and-btn-container'>
+  <nav id='btn-container'>
+    <button v-if="currentMode!=='learn'" v-on:click='handleClick("learn")'>Learn Mode</button>
+    <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Play Mode</button>
+    <nav id='img-container'>
+     <img v-if='!imageIsHidden' src='@/components/pexels-suzy-hazelwood.jpg' alt='map'>
+    </nav>  
   </nav>
+</nav>  
 </template>
 
 <script>
@@ -14,12 +19,57 @@ export default {
   methods: {
     handleClick: function(change) {
       eventBus.$emit('mode-changed', change);
+      this.imageIsHidden = true;
     },
   },
-
+  data() {
+    return {
+      imageIsHidden: false
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
+
+* {
+  font-family: 'Grandstander', cursive;
+  font-size: 20px;
+  margin: 0;
+}
+
+button {
+  font-size: 25px;
+  padding: 15px;
+  margin: 10px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  width: 30vh;
+  position: center;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+img {
+  height: 60vh;
+  width: auto;
+  display: block;
+  
+/* Photo by Suzy Hazelwood from Pexels https://www.pexels.com/photo/shallow-focus-photo-of-world-globe-1098515/ */
+}
+
+#img-and-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+#btn-container {
+  text-align: center;
+}
 
 </style>
+
+

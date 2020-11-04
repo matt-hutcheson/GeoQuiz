@@ -1,7 +1,8 @@
 <template>
     <article>
-        <h1>You are currently in Learn mode</h1>
-        <p>Click on a country to display some information</p>
+        <h2>You are currently in Learn mode</h2>
+        <p>Instruction: Click on a country to display some information</p>
+        
         <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
@@ -31,15 +32,11 @@ export default {
         eventBus.$on('learn-country-selected', (selectedCountry) => {
             this.apiSelectedCountry = selectedCountry
         })
-    },
-    methods: {
-
-    }  
-                                                    
+    },                                                    
 }           
 </script>
 
-<style>
+<style scoped>
 
 #container {
     display: flex;
@@ -48,4 +45,17 @@ export default {
     cursor: pointer;
   }
 
+* {
+  font-family: 'Grandstander', cursive;
+  font-size: 20px;
+  margin: 0;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+}
 </style>

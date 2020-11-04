@@ -13,7 +13,6 @@
                     <li v-if='currency.name' v-for='(currency, index) of selectedCountry.currencies' :key='index'>
                     {{ currency.name }} ({{ currency.symbol }})</li>
                 </ul>
-            <!-- zimbabwe has a null which creates an issue -->
             
             <label>Time-Zone(s) :</label>
                 <ul>
