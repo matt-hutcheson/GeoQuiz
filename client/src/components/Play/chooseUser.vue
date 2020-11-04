@@ -4,9 +4,9 @@
         <button id="played-before-button" v-on:click="selectIsHidden = !selectIsHidden && (newUserFormIsHidden)">Yes: I've played before!</button>
         <button id="new-user-button" v-on:click="newUserFormIsHidden = !newUserFormIsHidden && (selectIsHidden)">No: create username!</button>
         <user-select v-if="!selectIsHidden" :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form v-if="!newUserFormIsHidden" :countries='countries'></user-form>
+        <user-form v-if="!newUserFormIsHidden" :currentUser="currentUser" :countries='countries'></user-form>
     <div>
-        <p v-if="currentUser" id="display-user">Current user: {{ currentUser.username}}</p>
+        <p v-if="currentUser" id="display-user">Current user: {{ currentUser.username }}</p>
     </div>
 </section>
 </template>
