@@ -1,7 +1,7 @@
 <template>
     <section>
         <h1>Flag Game!</h1>
-        <choose-user></choose-user>
+        <choose-user :currentUser="currentUser" :allUsers="allUsers"></choose-user>
         <instructions></instructions>
         <div id="container">
             <div id="container-flag">
@@ -148,20 +148,6 @@ button {
     background-color: #ffd30d;
     border: #ebb810 solid 2px;
 }
-
-#played-before-button {
-    
-    background-color: #19E657;
-    border: #16cf4e solid 2px;
-}
-
-#new-user-button {
-    
-    background-color: #E97EF1;
-    border: #E463EE solid 2px;
-}
-
-
 
 #flag-results {
     margin: auto;
