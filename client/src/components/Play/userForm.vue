@@ -3,7 +3,7 @@
         <form v-on:submit.prevent='handleSubmit'>
             <title>Create new user</title>
             <label for='username'>Username: </label>
-            <input v-model='username' name='username' id='username' type='text' placeholder='Enter username' required></input>
+            <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required></input>
             <input type='submit' name='submit' value='Add Username'/>
         </form>
     </section>
@@ -18,19 +18,21 @@ export default {
     props: ['countries'],
     data () {
         return {
-            username: "",
+            newUser: null,
+            userName: "",
             currentUser: null,
-            allUsers: null
         }
     },
     methods: {
         handleSubmit() {
             this.createUser()
             eventBus.$emit('add-user', this.currentUser);
-            this.username='';
+            this.userName='';
         },
         createUser() {
-            const newUser = new User(this.username, this.countries)
+            const newUser = {
+                username: this.userName
+            }
             this.currentUser = newUser
             // add user to database
         }
