@@ -20,6 +20,8 @@ import UserService from '../../services/UserService';
 import instructions from './instructions'
 import listCountries from './listCountries'
 import chooseUser from './chooseUser'
+import userForm from './userForm'
+import userSelect from './userSelect'
 
 export default {
     name: 'playArticle',
@@ -72,7 +74,7 @@ export default {
                     }
                 }
             }
-        }, 
+        },
         handleClick: function(change) {
             eventBus.$emit('mode-changed', change);
         }
