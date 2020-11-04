@@ -1,8 +1,7 @@
 <template>
     <section>
-        <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form  :countries='countries'></user-form>
         <h1>Flag Game!</h1>
+        <choose-user :currentUser="currentUser" :allUsers="allUsers"></choose-user>
         <button v-on:click='handleClick("intructions")'>Instructions</button>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
             <option selected disabled :value="null">--Select A Country--</option>
@@ -16,12 +15,11 @@
 <script>
 import playMap from './playMap';
 import { eventBus } from '@/main.js';
-import userForm from './userForm';
-import userSelect from './userSelect';
 import User from '../../assets/user';
 import UserService from '../../services/UserService';
 import instructions from './instructions'
 import listCountries from './listCountries'
+import chooseUser from './chooseUser'
 
 export default {
     name: 'playArticle',
@@ -31,7 +29,8 @@ export default {
         'user-form': userForm,
         'user-select': userSelect,
         'instructions' : instructions,
-        'list-countries': listCountries
+        'list-countries': listCountries,
+        'choose-user': chooseUser
     },
     data () {
         return {
@@ -41,8 +40,7 @@ export default {
         countryListSelected: null,
         result: null,
         currentUser: null,
-        username: "",
-
+        username: ""
         }
     },
     methods: {
