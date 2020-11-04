@@ -69,29 +69,23 @@ export default {
 </script>
 
 <style scoped>
-
-#main-container {
-
-}
-
-
 @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,400;1,300&display=swap');
 
 * {
-  font-family: 'Grandstander', cursive;
-  font-size: 20px;
+  font-family: Tahoma, Verdana;
+  /* font-family: 'Grandstander', cursive; */
+  /* font-size: 20px;  */
   margin: 0;
-
 }
-
 
 h1 {
     font-family: 'Fredericka the Great', cursive;
     font-size: 60px;
     text-align: center;
-    padding: 15px;
+    padding: 10px;
 }
+
 
 
 </style>
