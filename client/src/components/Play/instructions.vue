@@ -8,12 +8,22 @@
                 <li>Click 'next flag' to continue playing</li>
             </ul>
         <p>Keep going until you paint the whole globe green!</p>        
+        <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Back to the game</button>
     </article>
 </template>
 
 <script>
+import { eventBus } from '@/main'
+
 export default {
     name: 'instructions',
+    props: ['currentMode'],
+
+    methods: {
+        handleClick: function(change) {
+            eventBus.$emit('mode-changed', change);
+        }
+    }
 }
 </script>
 
@@ -22,7 +32,7 @@ export default {
     border: solid;
     padding: 10px 20px;
     margin: 30px;
-    width: 500px;
+    
 }
 
 </style>

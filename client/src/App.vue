@@ -1,11 +1,14 @@
 <template>
   <main id='main-container'>
-    <h1>Geo Quiz!</h1>
+   <h1>GeoQuiz</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
+        <instructions v-if="currentMode==='intructions'"></instructions>
         <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
+    
+     
   </main>
 </template>
 
@@ -16,7 +19,7 @@ import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-
+import Intructions from "./components/Play/instructions"
 
 export default {
   name: 'App',
@@ -59,16 +62,36 @@ export default {
     components: {
       'geo-nav': geoNav,
       'play-article': playArticle,
-      'learn-article': learnArticle
+      'learn-article': learnArticle,
+      'instructions': Intructions
     }
   }
 </script>
 
-<style>
+<style scoped>
 
 #main-container {
 
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,400;1,300&display=swap');
+
+* {
+  font-family: 'Grandstander', cursive;
+  font-size: 20px;
+  margin: 0;
 
 }
+
+
+h1 {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 60px;
+    text-align: center;
+    padding: 15px;
+}
+
 
 </style>
