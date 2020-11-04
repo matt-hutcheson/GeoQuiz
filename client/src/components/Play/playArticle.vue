@@ -3,7 +3,7 @@
         <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
         <user-form  :countries='countries'></user-form>
         <h1>Flag Game!</h1>
-        <button v-on:click='handleClick("intructions")'>Instructions</button>
+        <button v-on:click='handleClick("intructions")'>Intruccions</button>
         <div id="container">
             <div id="container-flag">
                 <div id="change-flag-button">
