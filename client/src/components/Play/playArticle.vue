@@ -103,6 +103,10 @@ export default {
             this.getRandomCountry(this.countriesRemaining)
         });
 
+        eventBus.$on('request-user-change', (previousUser) => {
+            this.currentUser = null
+        })
+
     }
 }
 </script>
