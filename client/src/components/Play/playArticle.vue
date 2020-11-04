@@ -1,18 +1,31 @@
 <template>
     <section>
-        <h1>You are now in Play mode.</h1>
-        <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
-        <flag-to-guess v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
+        <h1>Flag Game!</h1>
+        <instructions></instructions>
+        <div id="container">
+            <div id="container-flag">
+                <div id="change-flag-button">
+                    <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
+                </div>
+                <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
+            </div>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-        <section id="flag-results">
-            <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
-            <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
-            <button v-if="result==='correct'" v-on:click.prevent="getRandomCountry(countriesRemaining)">Next Flag</button>
-        </section>
-        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect"></play-map>
+            <section id="flag-results">
+                <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
+                <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
+            </section>
+            <div v-if="result==='correct'" id="correct-next-flag">
+                <p v-if="result==='correct'">Great job!!</p>
+                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
+                <button id= "details-answers" v-on:click="scrollBottom()">Check your answers:</button>
+            </div>
+        </div>
+        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
+        <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
+
     </section>
 </template>
 
@@ -20,13 +33,17 @@
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js'
+import instructions from './instructions'
+import listCountries from './listCountries'
 
 export default {
     name: 'playArticle',
     props: ['currentMode', 'countries'],
     components: {
         'play-map': playMap,
-        'flag-to-guess': flagToGuess
+        'flag-to-guess': flagToGuess,
+        'instructions' : instructions,
+        'list-countries': listCountries
     },
     data () {
         return {
@@ -52,6 +69,20 @@ export default {
                 // this.getRandomCountry(this.countriesRemaining)
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
+        },
+        scrollTop () {
+            window.scrollTo({
+                top: 400, 
+                left: 100, 
+                behavior: 'smooth'
+            })
+        },
+        scrollBottom () {
+            window.scrollTo({
+                top: 800, 
+                left: 100, 
+                behavior: 'smooth'
+            })
         }
     },
     mounted() {
@@ -70,5 +101,58 @@ export default {
 </script>
 
 <style scoped>
+#container {
+    display:flex;
+    height: 25vh;
+}
+
+#container-flag {
+    width: 40%;
+    display: flex;
+}
+
+#flag{
+    position: relative;
+    margin: 20px auto auto 50px;
+}
+
+#change-flag-button > button {
+    width: 10em;
+    margin: 20px 25px 0 40px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+}
+
+#flag-results {
+    margin: auto;
+}
+
+#correct-next-flag {
+    border: solid;
+    position: absolute;
+    margin: 50vh 35vw;
+    padding: 6px 25px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5) ;
+    /* margin: 0 auto; */
+
+    
+}
+#next-flag, #details-answers {
+    margin: 10px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+}
 
 </style>
