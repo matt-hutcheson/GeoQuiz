@@ -1,16 +1,12 @@
 <template>
     <section>
-        <h2>Have you played before?</h2>
-        <button v-on:click="selectIsHidden = !selectIsHidden && newUserFormIsHidden">Yes, I've played before!</button>
-        <button v-on:click="newUserFormIsHidden = !newUserFormIsHidden && selectIsHidden">No - let me create a username!</button>
-        <user-select v-if="!selectIsHidden" :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form v-if="!newUserFormIsHidden" :countries='countries'></user-form>
         <h1>Flag Game!</h1>
+        <choose-user></choose-user>
         <instructions></instructions>
         <div id="container">
             <div id="container-flag">
                 <div id="change-flag-button">
-                    <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
+                    <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change flag</button>
                 </div>
                 <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
             </div>
@@ -20,7 +16,7 @@
             </section>
             <div v-if="result==='correct'" id="correct-next-flag">
                 <p v-if="result==='correct'">Great job!!</p>
-                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
+                <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next flag</button>
                 <button id= "details-answers" v-on:click="scrollBottom()">Check your answers:</button>
             </div>
         </div>
@@ -34,12 +30,11 @@
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
 import { eventBus } from '@/main.js';
-import userForm from './userForm';
-import userSelect from './userSelect';
 import User from '../../assets/user';
 import UserService from '../../services/UserService';
 import instructions from './instructions'
 import listCountries from './listCountries'
+import chooseUser from './chooseUser'
 
 export default {
     name: 'playArticle',
@@ -47,10 +42,9 @@ export default {
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
-        'user-form': userForm,
-        'user-select': userSelect,
         'instructions' : instructions,
-        'list-countries': listCountries
+        'list-countries': listCountries,
+        'choose-user': chooseUser
     },
     data () {
         return {
@@ -60,9 +54,7 @@ export default {
         countryListSelected: null,
         result: null,
         currentUser: null,
-        username: "",
-        selectIsHidden: true,
-        newUserFormIsHidden: true
+        username: ""
         }
     },
     methods: {
@@ -142,7 +134,7 @@ export default {
     margin: 20px auto auto 50px;
 }
 
-#change-flag-button > button {
+button {
     width: 10em;
     margin: 20px 25px 0 40px;
     border-radius: 5px;
@@ -150,9 +142,26 @@ export default {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
+}
+
+#change-flag-button > button {
     background-color: #ffd30d;
     border: #ebb810 solid 2px;
 }
+
+#played-before-button {
+    
+    background-color: #19E657;
+    border: #16cf4e solid 2px;
+}
+
+#new-user-button {
+    
+    background-color: #E97EF1;
+    border: #E463EE solid 2px;
+}
+
+
 
 #flag-results {
     margin: auto;
