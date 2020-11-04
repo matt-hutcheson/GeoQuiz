@@ -3,6 +3,7 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
+        <instructions v-if="currentMode==='intructions'"></instructions>
         <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
@@ -16,7 +17,7 @@ import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-
+import Intructions from "./components/Play/instructions"
 
 export default {
   name: 'App',
@@ -59,7 +60,8 @@ export default {
     components: {
       'geo-nav': geoNav,
       'play-article': playArticle,
-      'learn-article': learnArticle
+      'learn-article': learnArticle,
+      'instructions': Intructions
     }
   }
 </script>
