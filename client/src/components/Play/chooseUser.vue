@@ -1,10 +1,10 @@
 <template>
 <section>
    <h2>Have you played before?</h2>
-        <button id="played-before-button" v-on:click="selectIsHidden = !selectIsHidden && (newUserFormIsHidden)">Yes: I've played before!</button>
-        <button id="new-user-button" v-on:click="newUserFormIsHidden = !newUserFormIsHidden && (selectIsHidden)">No: create username!</button>
-        <user-select v-if="!selectIsHidden" :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form v-if="!newUserFormIsHidden" :currentUser="currentUser" :countries='countries'></user-form>
+        <button id="played-before-button" v-on:click="changeNewUserFormIsHidden">Yes: I've played before!</button>
+        <button id="new-user-button" v-on:click="changeNewUserFormIsHidden">No: create username!</button>
+        <user-select v-if="newUserFormIsHidden === true" :currentUser="currentUser" :allUsers="allUsers"></user-select>
+        <user-form v-if="newUserFormIsHidden === false" :currentUser="currentUser" :countries='countries'></user-form>
     <div>
         <p v-if="currentUser" id="display-user">Current user: {{ currentUser.username }}</p>
     </div>
@@ -24,8 +24,16 @@ export default {
     },
     data() {
         return {
-        selectIsHidden: true,
-        newUserFormIsHidden: true
+            newUserFormIsHidden: null
+        }
+    },
+    methods: {
+        changeNewUserFormIsHidden () {
+            if (this.newUserFormIsHidden) {
+                this.newUserFormIsHidden = false
+            } else {
+                this.newUserFormIsHidden = true
+            }
         }
     }
 }
@@ -38,7 +46,7 @@ export default {
 section {
     font-family: 'Grandstander', cursive;
 }
-    
+
 
 button {
     width: 10em;
@@ -53,13 +61,13 @@ button {
 }
 
 #played-before-button {
-    
+
     background-color: #19E657;
     border: #16cf4e solid 2px;
 }
 
 #new-user-button {
-    
+
     background-color: #E97EF1;
     border: #E463EE solid 2px;
 }

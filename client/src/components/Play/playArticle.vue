@@ -1,14 +1,14 @@
 <template>
     <section>
         <h1>Flag Game!</h1>
-        <choose-user :currentUser="currentUser" :allUsers="allUsers"></choose-user>
-        <button v-on:click='handleClick("intructions")'>Instructions</button>
+        <choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers"></choose-user>
+        <button v-if="currentUser" v-on:click='handleClick("intructions")'>Instructions</button>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
         </select> -->
-        <play-map :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining" :randomCountry="randomCountry" :result="result"></play-map>
-        <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
+        <play-map v-if="currentUser" :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining" :randomCountry="randomCountry" :result="result"></play-map>
+        <list-countries v-if="currentUser" :countriesCorrect="countriesCorrect" ></list-countries>
     </section>
 </template>
 
@@ -20,16 +20,12 @@ import UserService from '../../services/UserService';
 import instructions from './instructions'
 import listCountries from './listCountries'
 import chooseUser from './chooseUser'
-import userForm from './userForm'
-import userSelect from './userSelect'
 
 export default {
     name: 'playArticle',
     props: ['currentMode', 'countries', 'allUsers'],
     components: {
         'play-map': playMap,
-        'user-form': userForm,
-        'user-select': userSelect,
         'instructions' : instructions,
         'list-countries': listCountries,
         'choose-user': chooseUser
