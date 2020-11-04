@@ -1,8 +1,8 @@
 <template>
 <section>
    <h2>Have you played before?</h2>
-        <button id="played-before-button" v-on:click="changeNewUserFormIsHidden">Yes: I've played before!</button>
-        <button id="new-user-button" v-on:click="changeNewUserFormIsHidden">No: create username!</button>
+        <button id="played-before-button" v-on:click="changeNewUserFormIsHidden(true)">Yes: I've played before!</button>
+        <button id="new-user-button" v-on:click="changeNewUserFormIsHidden(false)">No: create username!</button>
         <user-select v-if="newUserFormIsHidden === true" :currentUser="currentUser" :allUsers="allUsers"></user-select>
         <user-form v-if="newUserFormIsHidden === false" :currentUser="currentUser" :countries='countries'></user-form>
     <div>
@@ -28,12 +28,8 @@ export default {
         }
     },
     methods: {
-        changeNewUserFormIsHidden () {
-            if (this.newUserFormIsHidden) {
-                this.newUserFormIsHidden = false
-            } else {
-                this.newUserFormIsHidden = true
-            }
+        changeNewUserFormIsHidden (result) {
+            this.newUserFormIsHidden = result
         }
     }
 }
