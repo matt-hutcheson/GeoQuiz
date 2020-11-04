@@ -1,7 +1,10 @@
 <template>
     <section>
-        <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form  :countries='countries'></user-form>
+        <h2>Have you played before?</h2>
+        <button v-on:click="selectIsHidden = !selectIsHidden && newUserFormIsHidden">Yes, I've played before!</button>
+        <button v-on:click="newUserFormIsHidden = !newUserFormIsHidden && selectIsHidden">No - let me create a username!</button>
+        <user-select v-if="!selectIsHidden" :currentUser="currentUser" :allUsers="allUsers"></user-select>
+        <user-form v-if="!newUserFormIsHidden" :countries='countries'></user-form>
         <h1>Flag Game!</h1>
         <instructions></instructions>
         <div id="container">
@@ -11,10 +14,6 @@
                 </div>
                 <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
             </div>
-        <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
-            <option selected disabled :value="null">--Select A Country--</option>
-            <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
-        </select> -->
             <section id="flag-results">
                 <p v-if="result==='correct'">Correct! This is {{ randomCountry.name }}'s flag.</p>
                 <p v-if="result==='incorrect'">Sorry, that's the wrong country. Please try again.</p>
@@ -62,7 +61,8 @@ export default {
         result: null,
         currentUser: null,
         username: "",
-
+        selectIsHidden: true,
+        newUserFormIsHidden: true
         }
     },
     methods: {
