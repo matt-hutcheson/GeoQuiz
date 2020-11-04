@@ -1,38 +1,61 @@
 <template>
-  <main>
+  <main id='main-container'>
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'"></play-article>
-        <learn-article v-if="currentMode==='learn'"></learn-article>
+        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
+        <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
 </template>
 
 <script>
 import geoNav from './components/geoNav';
-import learnArticle from './components/learnArticle';
-import playArticle from './components/playArticle';
+import learnArticle from './components/Learn/learnArticle';
+import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
+import UserService from '../../client/src/services/UserService';
+import User from './assets/user';
+
 
 export default {
   name: 'App',
     data(){
         return{
           currentMode: null,
-          countries: []
+          countries: [],
+          allUsers: []
         }
     },
 
     mounted(){
-        fetch('https://restcountries.eu/rest/v2/all') // API
-            .then(res => res.json())
-            .then((countries) => (this.countries = countries))
+        fetch('https://restcountries.eu/rest/v2/all') //API
+          .then(res => res.json())
+          .then((countries) => (this.countries = countries));
+
+        this.fetchUsers();
 
         eventBus.$on('mode-changed', (change) => {
           this.currentMode = change;
-        })
+        }),
+
+        eventBus.$on('add-user', (user) => {
+          UserService.addUser(user)
+          .then(userWithId => this.allUsers.push(userWithId))
+        });
+
+        eventBus.$on('country-correct', (currentUser) => {
+          this.fetchUsers();
+        });
     },
+
+    methods: {
+      fetchUsers() {
+        UserService.getUsers()
+        .then((users) => this.allUsers = users)
+      }
+    },
+
     components: {
       'geo-nav': geoNav,
       'play-article': playArticle,
@@ -42,5 +65,10 @@ export default {
 </script>
 
 <style>
+
+#main-container {
+
+
+}
 
 </style>
