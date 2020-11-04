@@ -1,5 +1,7 @@
 <template>
     <section>
+        <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
+        <user-form :countries='countries'></user-form>
         <h1>Flag Game!</h1>
         <instructions></instructions>
         <div id="container">
@@ -32,16 +34,22 @@
 <script>
 import playMap from './playMap';
 import flagToGuess from './flagToGuess';
-import { eventBus } from '@/main.js'
+import { eventBus } from '@/main.js';
+import userForm from './userForm';
+import userSelect from './userSelect';
+import User from '../../assets/user';
+import UserService from '../../services/UserService';
 import instructions from './instructions'
 import listCountries from './listCountries'
 
 export default {
     name: 'playArticle',
-    props: ['currentMode', 'countries'],
+    props: ['currentMode', 'countries', 'allUsers', 'currentUser'],
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
+        'user-form': userForm,
+        'user-select': userSelect,
         'instructions' : instructions,
         'list-countries': listCountries
     },
@@ -51,7 +59,8 @@ export default {
         countriesRemaining: [],
         countriesCorrect: [],
         countryListSelected: null,
-        result: null
+        result: null,
+        username: ""
         }
     },
     methods: {
@@ -70,6 +79,7 @@ export default {
                 this.countryListSelected = null
             } else {this.result = "incorrect"}
         },
+
         scrollTop () {
             window.scrollTo({
                 top: 400, 
@@ -95,7 +105,13 @@ export default {
             if (this.result != 'correct') {
                 this.checkAnswer();
             }
-        })
+        });
+
+        eventBus.$on('add-user', (user) => {
+            UserService.addUser(user)
+            .then(userWithId => this.allUsers.push(userWithId));
+        });
+        
     }
 }
 </script>

@@ -3,7 +3,7 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'" :countries="countries"></play-article>
+        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
@@ -14,6 +14,8 @@ import geoNav from './components/geoNav';
 import learnArticle from './components/Learn/learnArticle';
 import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
+import UserService from '../../client/src/services/UserService';
+import User from './assets/user';
 
 
 export default {
@@ -21,19 +23,35 @@ export default {
     data(){
         return{
           currentMode: null,
-          countries: []
+          countries: [],
+          allUsers: [],
+          currentUser: null
         }
     },
 
     mounted(){
         fetch('https://restcountries.eu/rest/v2/all') //API
             .then(res => res.json())
-            .then((countries) => (this.countries = countries))
+            .then((countries) => (this.countries = countries));
+        
+        this.fetchUsers();
 
         eventBus.$on('mode-changed', (change) => {
           this.currentMode = change;
-        })
+        });
+
+        eventBus.$on('user-selected', (user) => {
+      this.currentUser = user;
+    })
     },
+
+    methods: {
+      fetchUsers() {
+        UserService.getUsers()
+        .then((users) => this.allUsers = users)
+      }
+    },
+
     components: {
       'geo-nav': geoNav,
       'play-article': playArticle,
