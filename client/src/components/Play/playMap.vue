@@ -85,7 +85,7 @@ export default {
 
       scrollTop () {
         window.scrollTo({
-            top: 200,
+            top: 300,
             left: 100,
             behavior: 'smooth'
         })
@@ -218,6 +218,7 @@ export default {
 }
 
 #change-flag-button > button {
+    font-size: 15px;
     width: 10em;
     margin: 20px 25px 0 80px;
     border-radius: 5px;
@@ -246,6 +247,7 @@ export default {
     padding: 6px 25px;
     text-align: center;
     border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5)
     /* margin: 0 auto; */
 
 
@@ -258,6 +260,11 @@ export default {
     padding: 8px 10px;
     background-color: #ffd30d;
     border: #ebb810 solid 2px;
+}
+
+#next-flag:hover, #details-answers:hover {
+    background-color: #ffc811;
+    border: #ffdb12 solid 2px;
 }
 
 </style>
