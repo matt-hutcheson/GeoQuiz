@@ -29,7 +29,7 @@ export default {
     border: solid;
     padding: 10px 20px;
     margin: 30px;
-    width: 500px;
+    
 }
 
 </style>
