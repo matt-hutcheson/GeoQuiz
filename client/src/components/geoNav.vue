@@ -56,7 +56,7 @@ button:hover {
 
 #world-map{
   margin-top: 15px;
-  height: 70vh;
+  height: 65vh;
   width: auto;
   display: block;
   
