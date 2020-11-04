@@ -1,6 +1,5 @@
 <template>
     <section>
-        <h1>Flag Game!</h1>
         <choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers"></choose-user>
         <button v-if="currentUser" v-on:click='handleClick("intructions")'>Instructions</button>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">

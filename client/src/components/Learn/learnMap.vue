@@ -46,6 +46,10 @@ export default {
 
 <style>
 
+* {
+    font-family: Tahoma, Verdana;
+}
+
 #left-side {
     width: 80%;
     padding: 10px;

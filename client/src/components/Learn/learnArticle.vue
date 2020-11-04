@@ -1,6 +1,5 @@
 <template>
     <article>
-        <h2>You are currently in Learn mode</h2>
         <p>Instruction: Click on a country to display some information</p>
         
         <div id='container'>
@@ -46,14 +45,11 @@ export default {
   }
 
 * {
-  font-family: 'Grandstander', cursive;
+  font-family: Tahoma, Verdana;
   font-size: 20px;
   margin: 0;
 }
 
-h2 {
-    margin-bottom: 20px;
-}
 
 p {
     margin-bottom: 20px;

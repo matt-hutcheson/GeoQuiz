@@ -1,8 +1,8 @@
 <template>
-<section>
-   <h2>Have you played before?</h2>
-        <button id="played-before-button" v-on:click="changeNewUserFormIsHidden(true)">Yes: I've played before!</button>
-        <button id="new-user-button" v-on:click="changeNewUserFormIsHidden(false)">No: create username!</button>
+<section id='centered'>
+   <p>Have you played before?</p>
+        <button id="played-before-button" v-on:click="changeNewUserFormIsHidden(true)">Yes</button>
+        <button id="new-user-button" v-on:click="changeNewUserFormIsHidden(false)">No</button>
         <user-select v-if="newUserFormIsHidden === true" :currentUser="currentUser" :allUsers="allUsers"></user-select>
         <user-form v-if="newUserFormIsHidden === false" :currentUser="currentUser" :countries='countries'></user-form>
     <div>
@@ -39,33 +39,45 @@ export default {
 
 @import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
 
+* {
+    font-family: Tahoma, Verdana;
+    font-size: 20px;
+}
+
+
 section {
     font-family: 'Grandstander', cursive;
 }
 
+#centered {
+    text-align: center;
+}
 
 button {
     width: 10em;
     margin: 20px 25px 0 40px;
     border-radius: 5px;
     text-align: center;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
-    font-family: 'Grandstander', cursive;
-     font-size: 1.5em;
+    font-family: Tahoma, Verdana;
+    font-size: 1em;
 }
 
 #played-before-button {
 
-    background-color: #19E657;
-    border: #16cf4e solid 2px;
+    background-color: yellow;
+    border: solid 2px;
+}
+
+#played-before-button:hover, #new-user-button:hover {
+    background-color: rgb(242,188,236);
 }
 
 #new-user-button {
 
-    background-color: #E97EF1;
-    border: #E463EE solid 2px;
+    background-color:  #34e734;
+    border: solid 2px;
 }
 
 </style>

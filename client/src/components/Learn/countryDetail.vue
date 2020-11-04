@@ -3,7 +3,7 @@
                        
         <img alt='flag' :src='selectedCountry.flag'>
                 
-            <h3><span>Name</span>: {{ selectedCountry.name }}</h3>
+            <p id='country-name'><span>Name</span>: {{ selectedCountry.name }}</p>
             <p><span>Capital</span>: {{ selectedCountry.capital }}</p>
             <p><span>Region</span>: {{ selectedCountry.region }}</p>
             <p><span>Sub-Region</span>: {{ selectedCountry.subregion }}</p>
@@ -43,6 +43,15 @@ export default {
 </script>
 
 <style scoped>
+
+*{
+    font-family: Tahoma, Verdana;
+}
+
+#country-name {
+    font-weight: bold;
+}
+
 img {
   width: 30vh;
   background: no-repeat contain;
