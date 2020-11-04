@@ -1,7 +1,7 @@
 <template>
   <main id='main-container'>
     <h1>Geo Quiz!</h1>
-    <geo-nav :currentMode= currentMode></geo-nav>
+    <geo-nav id="nav" :currentMode= currentMode></geo-nav>
     <article>
         <instructions v-if="currentMode==='intructions'"></instructions>
         <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
@@ -66,11 +66,6 @@ export default {
   }
 </script>
 
-<style>
-
-#main-container {
-
-
-}
+<style scoped>
 
 </style>
