@@ -40,9 +40,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
 
 section {
-    font-family: 'Grandstander', cursive;
+    font-family: Tahoma, Verdana;
 }
-
 
 button {
     width: 10em;
@@ -52,8 +51,8 @@ button {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
-    font-family: 'Grandstander', cursive;
-     font-size: 1.5em;
+    font-family: Tahoma, Verdana;
+    font-size: 1.5em;
 }
 
 #played-before-button {

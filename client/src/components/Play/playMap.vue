@@ -214,20 +214,24 @@ export default {
 
 #flag{
     position: relative;
-    margin: 20px auto auto 50px;
+    margin: 20px auto auto 7em;
 }
 
 #change-flag-button > button {
     width: 10em;
-    margin: 20px 25px 0 40px;
+    margin: 20px 25px 0 80px;
     border-radius: 5px;
     text-align: center;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
     background-color: #ffd30d;
     border: #ebb810 solid 2px;
 }
+#change-flag-button > button:hover {
+    background-color: #ffc811;
+    border: #ffdb12 solid 2px;
+}
+
 #button-result {
     order: -1;
 }
@@ -242,7 +246,6 @@ export default {
     padding: 6px 25px;
     text-align: center;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5) ;
     /* margin: 0 auto; */
 
 
@@ -251,7 +254,6 @@ export default {
     margin: 10px;
     border-radius: 5px;
     text-align: center;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
     background-color: #ffd30d;
