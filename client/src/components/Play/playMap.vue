@@ -4,12 +4,12 @@
         <div id="counters">
             <div id="counters-container">
                 <div id="counter-correct">
-                    <p class="text-correct-answers">Correct answers: </p> 
-                    <p class="num-correct-answers">{{correctAnswers.length}}</p>  
+                    <p class="text-correct-answers">Correct answers: </p>
+                    <p class="num-correct-answers">{{correctAnswers.length}}</p>
                 </div>
                 <div id="counter-remaining">
-                    <p class="text-remaining">Countries Remaining: </p> 
-                    <p class="num-remaining">{{countriesRemaining.length}}</p>  
+                    <p class="text-remaining">Countries Remaining: </p>
+                    <p class="num-remaining">{{countriesRemaining.length}}</p>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@ import { eventBus } from "@/main.js"
 
 export default {
     name: 'play-map',
-    props: ['countries', 'correctAnswers', 'countriesRemaining'],
+    props: ['countries', 'correctAnswers', 'countriesRemaining', 'currentUser'],
     components: {
         'checkbox-svg-map': CheckboxSvgMap
     },
@@ -119,13 +119,13 @@ section > p {
     padding: 8px 10px;
     border: solid #47b647 1px;
     border-radius: 0 5px 5px 0;
-    text-align: center; 
+    text-align: center;
 }
 .num-remaining {
     padding: 8px 10px;
     border: solid #5c64cf 1px;
     border-radius: 0 5px 5px 0;
-    text-align: center; 
+    text-align: center;
 }
 .text-correct-answers {
     background-color: #47b647;

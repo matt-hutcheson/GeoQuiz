@@ -21,8 +21,8 @@ export default {
     props: ['countries'],
     data () {
         return {
-            currentUser: null,
             username: "",
+            currentUser: null,
             allUsers: null
         }
     },

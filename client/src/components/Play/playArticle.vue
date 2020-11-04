@@ -1,7 +1,7 @@
 <template>
     <section>
         <user-select :currentUser="currentUser" :allUsers="allUsers"></user-select>
-        <user-form :countries='countries'></user-form>
+        <user-form  :countries='countries'></user-form>
         <h1>Flag Game!</h1>
         <instructions></instructions>
         <div id="container">
@@ -25,7 +25,7 @@
                 <button id= "details-answers" v-on:click="scrollBottom()">Check your answers:</button>
             </div>
         </div>
-        <play-map :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
+        <play-map :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
         <list-countries :countriesCorrect="countriesCorrect" ></list-countries>
 
     </section>
@@ -44,7 +44,7 @@ import listCountries from './listCountries'
 
 export default {
     name: 'playArticle',
-    props: ['currentMode', 'countries', 'allUsers', 'currentUser'],
+    props: ['currentMode', 'countries', 'allUsers'],
     components: {
         'play-map': playMap,
         'flag-to-guess': flagToGuess,
@@ -87,15 +87,15 @@ export default {
 
         scrollTop () {
             window.scrollTo({
-                top: 400, 
-                left: 100, 
+                top: 400,
+                left: 100,
                 behavior: 'smooth'
             })
         },
         scrollBottom () {
             window.scrollTo({
-                top: 800, 
-                left: 100, 
+                top: 800,
+                left: 100,
                 behavior: 'smooth'
             })
         }
@@ -116,6 +116,10 @@ export default {
         eventBus.$on('add-user', (user) => {
             UserService.addUser(user)
             .then(userWithId => this.currentUser = userWithId)
+        });
+
+        eventBus.$on('user-selected', (user) => {
+          this.currentUser = user;
         });
 
     }
@@ -164,7 +168,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.5) ;
     /* margin: 0 auto; */
 
-    
+
 }
 #next-flag, #details-answers {
     margin: 10px;

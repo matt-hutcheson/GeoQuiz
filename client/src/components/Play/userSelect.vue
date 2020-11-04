@@ -2,7 +2,7 @@
   <div>
       <p>Select from current users</p>
       <select name="username" id="username" v-model="selectedUser" v-on:change="handleSelect">
-          <option v-for="(user, index) in allUsers" :key="index">{{ user.username }}</option>
+          <option v-for="(user, index) in allUsers" :key="index" :value="user">{{ user.username }}</option>
       </select>
 
 

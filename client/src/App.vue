@@ -3,7 +3,7 @@
     <h1>Geo Quiz!</h1>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
-        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser"></play-article>
+        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
@@ -24,8 +24,7 @@ export default {
         return{
           currentMode: null,
           countries: [],
-          allUsers: [],
-          currentUser: null
+          allUsers: []
         }
     },
 
@@ -47,10 +46,6 @@ export default {
 
         eventBus.$on('country-correct', (currentUser) => {
           this.fetchUsers();
-        });
-
-        eventBus.$on('user-selected', (user) => {
-          this.currentUser = user;
         });
     },
 
