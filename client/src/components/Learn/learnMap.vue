@@ -1,6 +1,7 @@
 <template>
     <section id='left-side'>
-        <radio-svg-map @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>  
+        <p>Currently hovering: {{ tooltip }}</p>
+        <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>  
     </section>
 </template>
 
@@ -19,7 +20,8 @@ export default {
         return {
             World, 
             mapSelectedCountry: null,
-            apiSelectedCountry: null
+            apiSelectedCountry: null,
+            tooltip: ""
         } 
     },
     methods: {
@@ -30,11 +32,16 @@ export default {
                     eventBus.$emit('learn-country-selected', this.apiSelectedCountry)
                 }
             }
+        },
+        hoverCountry(event) {
+            const alpha2Code = event.target.id
+            const country = this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code)
+            if (country) {
+                this.tooltip = country.name
+            }
         }
     }
 }
-
-
 </script>
 
 <style>
@@ -58,6 +65,11 @@ export default {
 }
 .svg-map__location > :focus, :hover {
     fill: yellow;
+}
+
+.svg-map__location[aria-checked='true'] {
+  fill: #34e734;
+  outline: 0
 }
 </style>
 
