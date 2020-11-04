@@ -98,11 +98,21 @@ export default {
                 left: 100,
                 behavior: 'smooth'
             })
-        }
+        },
 
+        setCorrectCountries () {
+            for (const country of this.countries) {
+                if (this.currentUser[country.alpha3Code]["flagGame"] === "true") {
+                    const index = this.countriesRemaining.indexOf(country)
+                    if (index > -1) {
+                        this.countriesCorrect.push(this.countriesRemaining.splice(index, 1)[0])
+                    }
+                }
+            }
+        }
     },
     mounted() {
-        this.countriesRemaining = this.countries
+        this.countriesRemaining = this.countries.slice()
         this.getRandomCountry(this.countriesRemaining)
 
         eventBus.$on('map-country-selected', (alpha2Code) => {
@@ -119,7 +129,10 @@ export default {
         });
 
         eventBus.$on('user-selected', (user) => {
-          this.currentUser = user;
+            this.currentUser = user;
+            this.countriesCorrect = [];
+            this.countriesRemaining = this.countries.slice()
+            this.setCorrectCountries();
         });
 
     }

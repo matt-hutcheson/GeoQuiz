@@ -57,7 +57,7 @@ export default {
         if (country) {
           this.tooltip = country.name
         }
-      }
+      },
     }
 }
 </script>

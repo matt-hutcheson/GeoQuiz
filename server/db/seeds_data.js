@@ -21,7 +21,7 @@ db.results.insertMany(
         capitalGame: "false"
         },
         DZA:{
-        flagGame: "false",
+        flagGame: "true",
         allGame: "false",
         capitalGame: "false"
         },
