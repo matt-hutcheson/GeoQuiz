@@ -1,14 +1,12 @@
 <template>
-
-    <div>
-        <h1>Create your username</h1>
+    <section>
         <form v-on:submit.prevent='handleSubmit'>
             <title>Create new user</title>
-            <label for='username'>Username:</label>
-            <input v-model='username' name='username' id='username' type='text' placeholder='Type your username here' required></input>
+            <label for='username'>Username: </label>
+            <input v-model='username' name='username' id='username' type='text' placeholder='Enter username' required></input>
             <input type='submit' name='submit' value='Add Username'/>
         </form>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -42,6 +40,28 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
+
+section {
+    font-family: 'Grandstander', cursive;
+     font-size: 1.1em;
+}
+
+input {
+  padding: 10px;
+  margin:10px 5px;
+  border-radius: 3%;
+}
+
+input[type='submit'] {
+    padding: 10px;
+    margin:10px 5px;
+    border-radius: 3%;
+    background-color: #19E657;
+    border: #16cf4e solid 2px;
+}
+
 
 </style>

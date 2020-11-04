@@ -5,6 +5,9 @@
         <button id="new-user-button" v-on:click="newUserFormIsHidden = !newUserFormIsHidden && (selectIsHidden)">No: create username!</button>
         <user-select v-if="!selectIsHidden" :currentUser="currentUser" :allUsers="allUsers"></user-select>
         <user-form v-if="!newUserFormIsHidden" :countries='countries'></user-form>
+    <div>
+        <p v-if="currentUser" id="display-user">Current user: {{ currentUser.username}}</p>
+    </div>
 </section>
 </template>
 
@@ -30,6 +33,13 @@ export default {
 
 <style scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
+
+section {
+    font-family: 'Grandstander', cursive;
+}
+    
+
 button {
     width: 10em;
     margin: 20px 25px 0 40px;
@@ -38,6 +48,8 @@ button {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     outline: none;
     padding: 8px 10px;
+    font-family: 'Grandstander', cursive;
+     font-size: 1.5em;
 }
 
 #played-before-button {

@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <section>
       <p>Select from current users</p>
       <select name="username" id="username" v-model="selectedUser" v-on:change="handleSelect">
           <option v-for="(user, index) in allUsers" :key="index" :value="user">{{ user.username }}</option>
       </select>
 
 
-  </div>
+  </section>
 </template>
 
 <script>
@@ -29,6 +29,20 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
+
+section {
+    font-family: 'Grandstander', cursive;
+    font-size: 1.1em;
+}
+
+select {
+  display: block;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 15%;
+}
 
 </style>
