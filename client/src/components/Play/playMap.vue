@@ -1,6 +1,5 @@
 <template>
     <section>
-        <p>Currently hovering: {{ tooltip }}</p>
         <div id="counters">
             <div id="counters-container">
                 <div id="counter-correct">
@@ -14,6 +13,7 @@
             </div>
         </div>
         <checkbox-svg-map @click="selectCountry" @mouseenter="hoverCountry" :location-class="isCorrect" :map="world"/>
+        <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
     </section>
 </template>
 
@@ -140,5 +140,15 @@ section > p {
     border-radius: 5px 0 0 5px;
     text-align: center;
     padding: 8px 10px;
+}
+
+.tooltip {
+    position: relative;
+    width: fit-content;
+    border: solid 1px;
+    padding: 5px 20px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5) ;
 }
 </style>

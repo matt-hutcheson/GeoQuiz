@@ -1,6 +1,6 @@
 <template>
     <article>
-        <p>Correct countries:</p>
+        <h2>Correct countries:</h2>
         <ul>
             <li id="countries" v-for="(country, index) in countriesCorrect" :key="index">
                 <ul class="mini-country">
@@ -24,8 +24,8 @@ export default {
 
 <style scoped>
 
-article > p {
-    margin-left: 2em;
+article > h2 {
+    margin-left: 1em;
 }
 
 img{

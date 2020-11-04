@@ -22,7 +22,7 @@
             <div v-if="result==='correct'" id="correct-next-flag">
                 <p v-if="result==='correct'">Great job!!</p>
                 <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
-                <button id= "details-answers" v-on:click="scrollBottom()">Check your answers:</button>
+                <button id= "details-answers" v-on:click="scrollBottom()">Check your answers</button>
             </div>
         </div>
         <play-map :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining"></play-map>
