@@ -32,7 +32,6 @@ ul {
 
 li  {
     border: solid 2px;
-    background-color: #ffae00;
     padding: 10px;
     width: 17vw;
     border-radius: 5px;
