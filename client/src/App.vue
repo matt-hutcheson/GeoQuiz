@@ -1,14 +1,14 @@
 <template>
   <main id='main-container'>
-   <h1>GeoQuiz</h1>
+    <h1>GeoQuiz</h1>
+    <p v-if="currentUser && currentMode==='play'">User: {{ currentUser.username }}</p>
+    <button v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change User</button>
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
         <instructions v-if="currentMode==='intructions'"></instructions>
         <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
-    
-     
   </main>
 </template>
 
@@ -27,7 +27,8 @@ export default {
         return{
           currentMode: null,
           countries: [],
-          allUsers: []
+          allUsers: [],
+          currentUser: null
         }
     },
 
@@ -40,6 +41,7 @@ export default {
 
         eventBus.$on('mode-changed', (change) => {
           this.currentMode = change;
+          this.currentUser = null
         }),
 
         eventBus.$on('add-user', (user) => {
@@ -50,12 +52,21 @@ export default {
         eventBus.$on('country-correct', (currentUser) => {
           this.fetchUsers();
         });
+
+        eventBus.$on('user-selected', (selectedUser) => {
+          this.currentUser = selectedUser
+        })
     },
 
     methods: {
       fetchUsers() {
         UserService.getUsers()
         .then((users) => this.allUsers = users)
+      },
+
+      changeUser() {
+        eventBus.$emit('request-user-change', this.currentUser)
+        this.currentUser = null
       }
     },
 
@@ -74,8 +85,7 @@ export default {
 
 * {
   font-family: Tahoma, Verdana;
-  /* font-family: 'Grandstander', cursive; */
-  /* font-size: 20px;  */
+  font-size: 20px;
   margin: 0;
 }
 
