@@ -90,7 +90,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,400;1,300&display=swap');
 
 * {
-  font-family: 'Grandstander', cursive;
+  font-family: Tahoma, Verdana;
   font-size: 20px;
   margin: 0;
 

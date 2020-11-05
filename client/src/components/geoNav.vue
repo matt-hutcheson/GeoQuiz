@@ -34,8 +34,8 @@ export default {
 <style scoped>
 
 * {
-  font-family: 'Grandstander', cursive;
-  font-size: 20px;
+  font-family: Tahoma, Verdana;
+  font-size: 15px;
   margin: 0;
 }
 

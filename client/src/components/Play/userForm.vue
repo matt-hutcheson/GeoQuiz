@@ -4,7 +4,7 @@
             <title>Create new user</title>
             <label for='username'>Username: </label>
             <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required></input>
-            <input type='submit' name='submit' value='Add Username'/>
+            <input type='submit' name='submit' value='Add'/>
         </form>
     </section>
 </template>
@@ -46,24 +46,34 @@ export default {
 
 @import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
 
+* {
+    font-family: Tahoma, Verdana;
+    font-size: 20px;
+}
+
 section {
-    font-family: 'Grandstander', cursive;
-     font-size: 1.1em;
+    font-family: Tahoma, Verdana;
+    font-size: 1.1em;
 }
 
 input {
-  padding: 10px;
-  margin:10px 5px;
+  padding: 8px;
+  margin:30px 5px;
   border-radius: 3%;
 }
 
 input[type='submit'] {
-    padding: 10px;
-    margin:10px 5px;
-    border-radius: 3%;
-    background-color: #19E657;
-    border: #16cf4e solid 2px;
+    padding: 8px 10px;
+    margin:5px px;
+    border-radius: 5%;
+    border: solid 2px;
+    width: 20vh;
 }
 
+input[type='submit']:hover {
+    background-color: black;
+    color: white;
+
+}
 
 </style>
