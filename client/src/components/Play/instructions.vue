@@ -8,7 +8,7 @@
                 <li>Click 'next flag' to continue playing</li>
             </ul>
         <p>Keep going until you paint the whole globe green!</p>        
-        <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Back to the game</button>
+        <button id="back" v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Back to the game</button>
     </article>
 </template>
 
@@ -29,10 +29,26 @@ export default {
 
 <style scoped>
 #instructions {
-    border: solid;
-    padding: 10px 20px;
-    margin: 30px;
-    
+    margin: auto;
+    width: 30%;
+    padding: 10px;
 }
+#back {
+    display: block;
+    margin: 50px auto;
+    width: 10em;
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+}
+
+#back:hover {
+    background-color: #ffc811;
+    border: #ffdb12 solid 2px;
+}
+
 
 </style>

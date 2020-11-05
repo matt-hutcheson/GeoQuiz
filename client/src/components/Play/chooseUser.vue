@@ -46,7 +46,7 @@ export default {
 
 
 section {
-    font-family: 'Grandstander', cursive;
+    font-family: Tahoma, Verdana;
 }
 
 #centered {
@@ -62,6 +62,7 @@ button {
     padding: 8px 10px;
     font-family: Tahoma, Verdana;
     font-size: 1em;
+
 }
 
 #played-before-button {

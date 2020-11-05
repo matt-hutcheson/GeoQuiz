@@ -4,7 +4,7 @@
     <button v-if="currentMode!=='learn'" v-on:click='handleClick("learn")'>Learn Mode</button>
     <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Play Mode</button>
     <nav id='img-container'>
-     <img v-if='!imageIsHidden' src='@/components/pexels-suzy-hazelwood.jpg' alt='map'>
+     <img id="world-map" v-if='!imageIsHidden' src='@/components/world_map.png' alt='world_map'>
     </nav>  
   </nav>
 </nav>  
@@ -35,13 +35,13 @@ export default {
 
 * {
   font-family: Tahoma, Verdana;
-  font-size: 15px;
+  font-size: 18px;
   margin: 0;
 }
 
 button {
-  font-size: 25px;
-  padding: 15px;
+  font-size: 20px;
+  padding: 10px;
   margin: 10px;
   margin-bottom: 30px;
   border-radius: 5px;
@@ -54,8 +54,9 @@ button:hover {
   color: white;
 }
 
-img {
-  height: 60vh;
+#world-map{
+  margin-top: 1em;
+  height: 65vh;
   width: auto;
   display: block;
   

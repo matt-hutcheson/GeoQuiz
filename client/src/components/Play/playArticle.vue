@@ -1,7 +1,9 @@
 <template>
     <section>
+        <div >
+            <button class="button-instructions" v-if="currentUser" v-on:click='handleClick("intructions")'>Instructions</button>
+        </div>
         <choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers"></choose-user>
-        <button v-if="currentUser" v-on:click='handleClick("intructions")'>Instructions</button>
         <!-- <select v-if="countriesRemaining" @change="checkAnswer()" name="flagCountry" id="" v-model="countryListSelected">
             <option selected disabled :value="null">--Select A Country--</option>
             <option v-for="(country, alpha3Code) in countriesRemaining" :key="alpha3Code" :value="country">{{ country.name }}</option>
@@ -111,5 +113,24 @@ export default {
 </script>
 
 <style scoped>
+.button-instructions {
+    background-color: chartreuse;
+    position: relative;
+    left: 90%;
+    margin: 5px 20px;
+    /* width: 10em; */
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+    padding: 5px 8px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+    
+}
+
+.button-instructions:hover {
+    background-color: #ebb810;
+    border: #ebb810 solid 2px;
+}
 
 </style>
