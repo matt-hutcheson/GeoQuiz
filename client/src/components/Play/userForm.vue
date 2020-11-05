@@ -1,15 +1,12 @@
 <template>
-
-    <div>
-        <h1>You are in the user form</h1>
-  <!-- list of username is not just name but object with username -->
+    <section>
         <form v-on:submit.prevent='handleSubmit'>
             <title>Create new user</title>
-            <label for='username'>Username:</label>
-            <input v-model='username' name='username' id='username' type='text' placeholder='Type your username here' required></input>
-            <input type='submit' name='submit' value='Add Username'/>
+            <label for='username'>Username: </label>
+            <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required></input>
+            <input type='submit' name='submit' value='Add'/>
         </form>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -21,19 +18,21 @@ export default {
     props: ['countries'],
     data () {
         return {
-            username: "",
+            newUser: null,
+            userName: "",
             currentUser: null,
-            allUsers: null
         }
     },
     methods: {
         handleSubmit() {
             this.createUser()
             eventBus.$emit('add-user', this.currentUser);
-            this.username='';
+            this.userName='';
         },
         createUser() {
-            const newUser = new User(this.username, this.countries)
+            const newUser = {
+                username: this.userName
+            }
             this.currentUser = newUser
             // add user to database
         }
@@ -43,6 +42,38 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Grandstander&display=swap');
+
+* {
+    font-family: Tahoma, Verdana;
+    font-size: 20px;
+}
+
+section {
+    font-family: Tahoma, Verdana;
+    font-size: 1.1em;
+}
+
+input {
+  padding: 8px;
+  margin:30px 5px;
+  border-radius: 3%;
+}
+
+input[type='submit'] {
+    padding: 8px 10px;
+    margin:5px px;
+    border-radius: 5%;
+    border: solid 2px;
+    width: 20vh;
+}
+
+input[type='submit']:hover {
+    background-color: black;
+    color: white;
+
+}
 
 </style>

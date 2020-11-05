@@ -3,7 +3,7 @@
                        
         <img alt='flag' :src='selectedCountry.flag'>
                 
-            <h3><span>Name</span>: {{ selectedCountry.name }}</h3>
+            <p id='country-name'><span>Name</span>: {{ selectedCountry.name }}</p>
             <p><span>Capital</span>: {{ selectedCountry.capital }}</p>
             <p><span>Region</span>: {{ selectedCountry.region }}</p>
             <p><span>Sub-Region</span>: {{ selectedCountry.subregion }}</p>
@@ -13,7 +13,6 @@
                     <li v-if='currency.name' v-for='(currency, index) of selectedCountry.currencies' :key='index'>
                     {{ currency.name }} ({{ currency.symbol }})</li>
                 </ul>
-            <!-- zimbabwe has a null which creates an issue -->
             
             <label>Time-Zone(s) :</label>
                 <ul>
@@ -44,6 +43,15 @@ export default {
 </script>
 
 <style scoped>
+
+*{
+    font-family: Tahoma, Verdana;
+}
+
+#country-name {
+    font-weight: bold;
+}
+
 img {
   width: 30vh;
   background: no-repeat contain;
