@@ -114,7 +114,6 @@ export default {
 
 <style scoped>
 .button-instructions {
-    background-color: chartreuse;
     position: relative;
     left: 90%;
     margin: 5px 20px;
@@ -122,9 +121,10 @@ export default {
     border-radius: 5px;
     text-align: center;
     outline: none;
-    padding: 5px 8px;
+    padding: 8px 10px;
     background-color: #ffd30d;
     border: #ebb810 solid 2px;
+    font-size: 15px;
     
 }
 
