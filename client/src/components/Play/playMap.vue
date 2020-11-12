@@ -79,8 +79,8 @@ export default {
           this.tooltip = country.name
         }
       },
-      getRandomCountry (array) {
-        eventBus.$emit('change-flag-pressed', array)
+      getRandomCountry (countriesRemaining) {
+        eventBus.$emit('change-flag-pressed', countriesRemaining)
       },
 
       scrollTop () {

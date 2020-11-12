@@ -6,7 +6,7 @@
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
         <instructions v-if="currentMode==='intructions'"></instructions>
-        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries"></play-article>
+        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
@@ -24,38 +24,67 @@ import Intructions from "./components/Play/instructions"
 export default {
   name: 'App',
     data(){
-        return{
-          currentMode: null,
-          countries: [],
-          allUsers: [],
-          currentUser: null
-        }
+      return{
+        currentMode: null,
+        countries: [],
+        allUsers: [],
+        currentUser: null,
+        randomCountry: null,
+        countriesRemaining: [],
+        countriesCorrect: [],
+        countryListSelected: null,
+        result: null,
+      }
     },
 
     mounted(){
-        fetch('https://restcountries.eu/rest/v2/all') //API
-          .then(res => res.json())
-          .then((countries) => (this.countries = countries));
+      fetch('https://restcountries.eu/rest/v2/all') //API
+        .then(res => res.json())
+        .then((countries) => (this.countries = countries))
 
+      this.fetchUsers();
+
+      eventBus.$on('mode-changed', (change) => {
+        this.currentMode = change;
+        this.currentUser = null
+      }),
+
+      eventBus.$on('add-user', (user) => {
+        UserService.addUser(user)
+        .then(userWithId => this.currentUser = userWithId)
+        .then( () => this.allUsers.push(this.currentUser))
+        .then( () => this.countriesCorrect = [])
+        .then( () => this.countriesRemaining = this.countries.slice())
+        .then( () => this.getRandomCountry(this.countriesRemaining))
+      });
+
+      eventBus.$on('country-correct', (currentUser) => {
         this.fetchUsers();
+      });
 
-        eventBus.$on('mode-changed', (change) => {
-          this.currentMode = change;
-          this.currentUser = null
-        }),
+      eventBus.$on('map-country-selected', (alpha2Code) => {
+        const selectedCountry = this.countries.find(country => country.alpha2Code.toLowerCase() === alpha2Code)
+        this.countryListSelected = selectedCountry
+        if (this.result != 'correct') {
+          this.checkAnswer();
+        }
+      });
 
-        eventBus.$on('add-user', (user) => {
-          UserService.addUser(user)
-          .then(userWithId => this.allUsers.push(userWithId))
-        });
+      eventBus.$on('user-selected', (user) => {
+        this.currentUser = user;
+        this.countriesCorrect = [];
+        this.countriesRemaining = this.countries.slice();
+        this.getRandomCountry(this.countriesRemaining)
+        this.setCorrectCountries();
+      });
 
-        eventBus.$on('country-correct', (currentUser) => {
-          this.fetchUsers();
-        });
+      eventBus.$on('change-flag-pressed', (array) => {
+        this.getRandomCountry(this.countriesRemaining)
+      });
 
-        eventBus.$on('user-selected', (selectedUser) => {
-          this.currentUser = selectedUser
-        })
+      eventBus.$on('request-user-change', (previousUser) => {
+        this.currentUser = null
+      });
     },
 
     methods: {
@@ -67,8 +96,37 @@ export default {
       changeUser() {
         eventBus.$emit('request-user-change', this.currentUser)
         this.currentUser = null
-      }
-    },
+      },
+
+      getRandomCountry(countriesRemaining) {
+        this.randomCountry = countriesRemaining[Math.floor(Math.random() * countriesRemaining.length)]
+        this.result = null
+      },
+
+      checkAnswer() {
+        if (this.randomCountry.alpha3Code === this.countryListSelected.alpha3Code) {
+          this.countriesCorrect = [...this.countriesCorrect, this.countryListSelected]
+          const index = this.countriesRemaining.indexOf(this.countryListSelected)
+          this.countriesRemaining.splice(index, 1)
+          this.result = "correct"
+          this.currentUser[this.randomCountry.alpha3Code]["flagGame"] = "true"
+          UserService.updateUser(this.currentUser)
+          .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+          this.countryListSelected = null
+        } else {this.result = "incorrect"}
+      },
+
+      setCorrectCountries () {
+        for (const country of this.countries) {
+          if (this.currentUser[country.alpha3Code]["flagGame"] === "true") {
+            const index = this.countriesRemaining.indexOf(country)
+            if (index > -1) {
+              this.countriesCorrect.push(this.countriesRemaining.splice(index, 1)[0])
+              }
+            }
+          }
+        }
+      },
 
     components: {
       'geo-nav': geoNav,

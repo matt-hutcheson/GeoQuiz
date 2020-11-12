@@ -30,11 +30,8 @@ export default {
             this.userName='';
         },
         createUser() {
-            const newUser = {
-                username: this.userName
-            }
+            const newUser = new User(this.userName, this.countries)
             this.currentUser = newUser
-            // add user to database
         }
     }
 }
