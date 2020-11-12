@@ -85,14 +85,14 @@ export default {
 
       scrollTop () {
         window.scrollTo({
-            top: 300,
+            top: 200,
             left: 100,
             behavior: 'smooth'
         })
     },
         scrollBottom () {
             window.scrollTo({
-                top: 800,
+                top: 1000,
                 left: 100,
                 behavior: 'smooth'
             })

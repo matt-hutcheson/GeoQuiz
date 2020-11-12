@@ -1,12 +1,16 @@
 <template>
   <main id='main-container'>
-    <h1>GeoQuiz</h1>
-    <p v-if="currentUser && currentMode==='play'">User: {{ currentUser.username }}</p>
-    <button v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change User</button>
+      <h1>GeoQuiz</h1>  
     <geo-nav :currentMode= currentMode></geo-nav>
     <article>
+      <div id="user-instructions-container"> 
+        <div id="current-user">
+          <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
+          <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
+        </div>
         <instructions v-if="currentMode==='intructions'"></instructions>
         <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
+      </div> 
         <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
     </article>
   </main>
@@ -147,6 +151,7 @@ export default {
   margin: 0;
 }
 
+
 h1 {
     font-family: 'Fredericka the Great', cursive;
     font-size: 60px;
@@ -154,4 +159,32 @@ h1 {
     padding: 10px;
 }
 
+/* #user-instructions-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+} */
+
+#current-user {
+  display: flex;
+  flex-flow: row;
+  margin: 20px 25px 0 80px;
+  align-items: center;
+}
+
+#change-user-button {
+    font-size: 15px;
+    width: 10em;
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+    margin-left: 10px;
+}
+#change-user-button:hover {
+    background-color: #ffc811;
+    border: #ffdb12 solid 2px;
+}
 </style>
