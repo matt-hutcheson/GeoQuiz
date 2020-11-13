@@ -37,7 +37,16 @@ export default {
 <style scoped>
 
 article {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+
+p {
+    text-align: center;
+    margin-top: 1em;
 }
 
 #container {

@@ -1,7 +1,5 @@
 <template>
-  <section>
-    <img v-if="randomCountry" :src="randomCountry.flag" :alt="randomCountry.name + 'flag'">
-  </section>
+  <img v-if="randomCountry" :src="randomCountry.flag" :alt="randomCountry.name + 'flag'">
 </template>
 
 <script>

@@ -1,38 +1,12 @@
 <template>
     <section id="map-section">
-      <div id="map-header">
-        <div id="container-flag">
-          <flag-to-guess id="flag" v-if="randomCountry" :randomCountry="randomCountry"></flag-to-guess>
-        <div id="button-result">
-          <div id="change-flag-button">
-              <button v-if="randomCountry" v-on:click.prevent="getRandomCountry(countriesRemaining)">Change Flag</button>
-          </div>
-          <section id="flag-results">
-            <p v-if="result==='correct'" class="result-attempt">Correct! This is {{ randomCountry.name }}'s flag.</p>
-            <p v-if="result==='incorrect'" class="result-attempt">Sorry, that's the wrong country. Please try again.</p>
-          </section>
-        </div>
-          <div v-if="result==='correct'" id="correct-next-flag">
-              <p v-if="result==='correct'">Great job!!</p>
-              <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
-              <button id= "details-answers" v-on:click="scrollBottom()">Check your answers</button>
-          </div>
-        </div>
-        <div id="counters">
-            <div id="counters-container">
-                <div id="counter-correct">
-                    <p class="text-correct-answers">Correct answers: </p>
-                    <p class="num-correct-answers">{{correctAnswers.length}}</p>
-                </div>
-                <div id="counter-remaining">
-                    <p class="text-remaining">Countries Remaining: </p>
-                    <p class="num-remaining">{{countriesRemaining.length}}</p>
-                </div>
-            </div>
-        </div>
+      <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
+      <div v-if="result==='correct'" id="correct-next-flag">
+        <p v-if="result==='correct'">Great job!!</p>
+        <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
+        <button id= "details-answers" v-on:click="scrollBottom()">Check your answers</button>
       </div>
       <checkbox-svg-map @click="selectCountry" @mouseenter="hoverCountry" :location-class="isCorrect" :map="world"/>
-      <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
     </section>
 </template>
 
@@ -40,14 +14,12 @@
 import { CheckboxSvgMap } from "vue-svg-map";
 import World from "@svg-maps/world"
 import { eventBus } from "@/main.js"
-import flagToGuess from './flagToGuess';
 
 export default {
     name: 'play-map',
     props: ['countries', 'correctAnswers', 'countriesRemaining', 'currentUser', 'randomCountry', 'result'],
     components: {
-        'checkbox-svg-map': CheckboxSvgMap,
-        'flag-to-guess': flagToGuess
+        'checkbox-svg-map': CheckboxSvgMap
     },
     data() {
         return {
@@ -79,9 +51,6 @@ export default {
           this.tooltip = country.name
         }
       },
-      getRandomCountry (countriesRemaining) {
-        eventBus.$emit('change-flag-pressed', countriesRemaining)
-      },
 
       scrollTop () {
         window.scrollTo({
@@ -103,11 +72,10 @@ export default {
 
 <style scoped>
 #map-section {
-    padding: 10px;
     border: solid black 1px;
-    margin: 5px 20px;
     background-color: rgb(172,237,243);
-    width: 95%;
+    width: 100%;
+    height:80vh;
 }
 
 /* section > p {
@@ -116,12 +84,11 @@ export default {
 .svg-map {
     stroke: #b6b6b6;
     stroke-width: 1;
-    width: 90%;
-    height: auto;
+    max-height: 90%;
+    max-width: 100%;
     stroke-linecap: round;
     stroke-linejoin: round;
     outline: 0;
-    margin: 10px 0 10px 5%;
 }
 
 .svg-map >>> .svg-map__location {
@@ -144,59 +111,6 @@ export default {
   outline: 0
 }
 
-#map-header {
-  display: flex;
-  flex-flow: row no-wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 30px;
-}
-
-#flag-results {
-  width: 20em;
-}
-
-.result-attempt {
-  width: 15em;
-  margin: 30px 40px;
-}
-/* counters */
-
-/* #counters {
-    position:absolute;
-    right:5%;
-} */
-#counter-remaining, #counter-correct {
-    display: flex;
-    margin: -10px;
-}
-.num-correct-answers{
-    padding: 8px 10px;
-    border: solid #47b647 1px;
-    border-radius: 0 5px 5px 0;
-    text-align: center;
-}
-.num-remaining {
-    padding: 8px 10px;
-    border: solid #5c64cf 1px;
-    border-radius: 0 5px 5px 0;
-    text-align: center;
-}
-.text-correct-answers {
-    background-color: #47b647;
-    color: black;
-    border-radius: 5px 0 0 5px;
-    text-align: center;
-    padding: 8px 10px;
-}
-.text-remaining {
-    background-color: #5c64cf;
-    color: black;
-    border-radius: 5px 0 0 5px;
-    text-align: center;
-    padding: 8px 10px;
-}
-
 .tooltip {
     position: relative;
     width: fit-content;
@@ -204,42 +118,10 @@ export default {
     padding: 5px 20px;
     text-align: center;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.5) ;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 10px;
 }
 
-#container-flag {
-    width: 40%;
-    display: flex;
-}
-
-#flag{
-    position: relative;
-    margin: 20px auto auto 7em;
-}
-
-#change-flag-button > button {
-    font-size: 15px;
-    width: 10em;
-    margin: 20px 25px 0 80px;
-    border-radius: 5px;
-    text-align: center;
-    outline: none;
-    padding: 8px 10px;
-    background-color: #ffd30d;
-    border: #ebb810 solid 2px;
-}
-#change-flag-button > button:hover {
-    background-color: #ffc811;
-    border: #ffdb12 solid 2px;
-}
-
-#button-result {
-    order: -1;
-}
-
-#flag-results {
-    margin: auto;
-}
 #correct-next-flag {
     border: solid;
     position: absolute;
@@ -249,9 +131,8 @@ export default {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5)
     /* margin: 0 auto; */
-
-
 }
+
 #next-flag, #details-answers {
     margin: 10px;
     border-radius: 5px;
