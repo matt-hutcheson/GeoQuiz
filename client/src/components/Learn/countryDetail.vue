@@ -1,8 +1,8 @@
 <template>
-    <section id="right-side" v-if='selectedCountry'>
-                       
+    <section id="right-side" >
+
         <img alt='flag' :src='selectedCountry.flag'>
-                
+
             <p id='country-name'><span>Name</span>: {{ selectedCountry.name }}</p>
             <p><span>Capital</span>: {{ selectedCountry.capital }}</p>
             <p><span>Region</span>: {{ selectedCountry.region }}</p>
@@ -13,18 +13,18 @@
                     <li v-if='currency.name' v-for='(currency, index) of selectedCountry.currencies' :key='index'>
                     {{ currency.name }} ({{ currency.symbol }})</li>
                 </ul>
-            
+
             <label>Time-Zone(s) :</label>
                 <ul>
                     <li v-for='(timezone, index) of selectedCountry.timezones' :key='index'>{{ timezone }} </li>
                 </ul>
-                           
+
             <label>Language(s):</label>
-                <ul>   
+                <ul>
                     <li v-for='(language, index) of selectedCountry.languages' :key='index'>{{ language.name }}</li>
                 </ul>
-                    
-            <p><span>Demonym</span>: {{ selectedCountry.demonym }}</p>                  
+
+            <p><span>Demonym</span>: {{ selectedCountry.demonym }}</p>
     </section>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 
         }
     },
-    
+
 
 }
 </script>

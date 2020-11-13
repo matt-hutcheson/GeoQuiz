@@ -1,7 +1,7 @@
 <template>
     <section id='left-side'>
         <p>Currently hovering: {{ tooltip }}</p>
-        <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>  
+        <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
     </section>
 </template>
 
@@ -18,11 +18,11 @@ export default {
     },
     data() {
         return {
-            World, 
+            World,
             mapSelectedCountry: null,
             apiSelectedCountry: null,
             tooltip: ""
-        } 
+        }
     },
     methods: {
         getCountryDetails() {
@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 * {
     font-family: Tahoma, Verdana;
@@ -56,22 +56,28 @@ export default {
     border: solid black 1px;
     margin-right: 5px;
     background-color: rgb(172,237,243);
-}  
+}
 
 .svg-map {
     stroke: #b6b6b6;
     stroke-width: 1;
+    width: 90%;
+    height: auto;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    outline: 0;
+    margin: 10px 0 10px 5%;
 }
 
-.svg-map__location {
+.svg-map >>> .svg-map__location {
   fill: #FFBDED;
   outline: 0;
 }
-.svg-map__location > :focus, :hover {
+.svg-map >>> .svg-map__location > :focus, :hover {
     fill: yellow;
 }
 
-.svg-map__location[aria-checked='true'] {
+.svg-map >>> .svg-map__location[aria-checked='true'] {
   fill: #34e734;
   outline: 0
 }

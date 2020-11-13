@@ -1,7 +1,6 @@
 <template>
     <article>
         <p>Instruction: Click on a country to display some information</p>
-        
         <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
@@ -21,8 +20,8 @@ export default {
         return {
             mapSelectedCountry: null,
             apiSelectedCountry: null
-        } 
-    },   
+        }
+    },
     components: {
         'learn-map': learnMap,
         'country-detail': countryDetail,
@@ -31,16 +30,16 @@ export default {
         eventBus.$on('learn-country-selected', (selectedCountry) => {
             this.apiSelectedCountry = selectedCountry
         })
-    },                                                    
-}           
+    },
+}
 </script>
 
 <style scoped>
 
 #container {
     display: flex;
-    justify-content: space-between;
-    display: flex-wrap;
+    flex-flow: row nowrap;
+    justify-content: space-around;
     cursor: pointer;
   }
 

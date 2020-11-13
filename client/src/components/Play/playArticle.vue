@@ -1,12 +1,12 @@
 <template>
-    <section>
+    <article>
         <div >
             <button class="button-instructions" v-if="currentUser" v-on:click='handleClick("intructions")'>Instructions</button>
         </div>
         <choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers" :countries='countries'></choose-user>
         <play-map v-if="currentUser" :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining" :randomCountry="randomCountry" :result="result"></play-map>
         <list-countries v-if="currentUser" :countriesCorrect="countriesCorrect" ></list-countries>
-    </section>
+    </article>
 </template>
 
 <script>

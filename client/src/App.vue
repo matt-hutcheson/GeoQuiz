@@ -1,29 +1,29 @@
 <template>
   <main id='main-container'>
-      <h1>GeoQuiz</h1>  
-    <geo-nav :currentMode= currentMode></geo-nav>
-    <article>
-      <div id="user-instructions-container"> 
-        <div id="current-user">
-          <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
-          <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
-        </div>
-        <instructions v-if="currentMode==='intructions'"></instructions>
-        <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
-      </div> 
-        <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
-    </article>
+    <div id="nav-container" class="modeActive">
+      <h1 v-on:click="returnHomepageClick">GeoQuiz</h1>
+      <geo-nav v-if="!currentMode"></geo-nav>
+      <swap-mode v-if="currentMode" :currentMode="currentMode"></swap-mode>
+    </div>
+    <div id="current-user">
+      <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
+      <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
+    </div>
+    <instructions v-if="currentMode==='intructions'"></instructions>
+    <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
+    <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
   </main>
 </template>
 
 <script>
 import geoNav from './components/geoNav';
+import swapMode from './components/swapMode';
 import learnArticle from './components/Learn/learnArticle';
 import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-import Intructions from "./components/Play/instructions"
+import Intructions from "./components/Play/instructions";
 
 export default {
   name: 'App',
@@ -51,6 +51,10 @@ export default {
       eventBus.$on('mode-changed', (change) => {
         this.currentMode = change;
         this.currentUser = null
+      }),
+
+      eventBus.$on('swap-mode', (mode) => {
+        this.currentMode = mode;
       }),
 
       eventBus.$on('add-user', (user) => {
@@ -97,6 +101,10 @@ export default {
         .then((users) => this.allUsers = users)
       },
 
+      returnHomepageClick() {
+        this.currentMode = null
+      },
+
       changeUser() {
         eventBus.$emit('request-user-change', this.currentUser)
         this.currentUser = null
@@ -136,7 +144,8 @@ export default {
       'geo-nav': geoNav,
       'play-article': playArticle,
       'learn-article': learnArticle,
-      'instructions': Intructions
+      'instructions': Intructions,
+      'swap-mode': swapMode
     }
   }
 </script>
@@ -155,15 +164,19 @@ export default {
 h1 {
     font-family: 'Fredericka the Great', cursive;
     font-size: 60px;
-    text-align: center;
     padding: 10px;
 }
 
-/* #user-instructions-container {
+h1:hover {
+  cursor: pointer;
+}
+
+.modeActive {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-} */
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
 
 #current-user {
   display: flex;

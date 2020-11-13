@@ -1,13 +1,13 @@
 <template>
 <nav id='img-and-btn-container'>
-  <nav id='btn-container'>
-    <button v-if="currentMode!=='learn'" v-on:click='handleClick("learn")'>Choose Learn</button>
-    <button v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Choose Play</button>
-    <nav id='img-container'>
-     <img id="world-map" v-if='!imageIsHidden' src='@/components/world_map.png' alt='world_map'>
-    </nav>  
-  </nav>
-</nav>  
+  <div id='btn-container'>
+    <button v-on:click='handleClick("learn")'>Learn About the Countries of the World!</button>
+    <button v-on:click='handleClick("play")'>Test Your Knowledge!</button>
+    <div id='img-container'>
+      <img id="world-map" v-if='!imageIsHidden' src='@/components/world_map.png' alt='world_map'>
+    </div>
+  </div>
+</nav>
 </template>
 
 <script>
@@ -46,7 +46,6 @@ button {
   margin-bottom: 30px;
   border-radius: 5px;
   width: 30vh;
-  position: center;
 }
 
 button:hover {
@@ -58,9 +57,6 @@ button:hover {
   margin-top: 1em;
   height: 65vh;
   width: auto;
-  display: block;
-  
-/* Photo by Suzy Hazelwood from Pexels https://www.pexels.com/photo/shallow-focus-photo-of-world-globe-1098515/ */
 }
 
 #img-and-btn-container {
