@@ -5,12 +5,17 @@
       <geo-nav v-if="!currentMode"></geo-nav>
       <swap-mode v-if="currentMode" :currentMode="currentMode"></swap-mode>
     </div>
-    <div id="current-user">
-      <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
-      <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
+    <div id="user-instructions-container">
+      <div id="current-user">
+        <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
+        <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
+      </div>
+      <div id="instructions-button-container">
+        <button class="button-instructions" v-if="currentUser" v-on:click='handleClick("instructions")'>Instructions</button>
+      </div>
     </div>
-    <instructions v-if="currentMode==='intructions'"></instructions>
-    <play-article v-if="currentMode==='play'" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
+    <instructions v-if="currentMode==='instructions'" :currentMode="currentMode"></instructions>
+    <play-article v-if="currentMode==='play'" :currentMode="currentMode" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
     <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
   </main>
 </template>
@@ -134,11 +139,15 @@ export default {
             const index = this.countriesRemaining.indexOf(country)
             if (index > -1) {
               this.countriesCorrect.push(this.countriesRemaining.splice(index, 1)[0])
-              }
             }
           }
         }
       },
+
+      handleClick(newMode) {
+        this.currentMode = newMode
+      }
+    },
 
     components: {
       'geo-nav': geoNav,
@@ -158,6 +167,13 @@ export default {
   font-family: Tahoma, Verdana;
   font-size: 20px;
   margin: 0;
+}
+
+#main-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -180,7 +196,6 @@ h1:hover {
 #current-user {
   display: flex;
   flex-flow: row;
-  margin: 20px 25px 0 80px;
   align-items: center;
 }
 
@@ -198,5 +213,30 @@ h1:hover {
 #change-user-button:hover {
     background-color: #ffc811;
     border: #ffdb12 solid 2px;
+}
+
+.button-instructions {
+    margin: 5px 20px;
+    /* width: 10em; */
+    border-radius: 5px;
+    text-align: center;
+    outline: none;
+    padding: 8px 10px;
+    background-color: #ffd30d;
+    border: #ebb810 solid 2px;
+    font-size: 15px;
+}
+
+.button-instructions:hover {
+    background-color: #ebb810;
+    border: #ebb810 solid 2px;
+}
+
+#user-instructions-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px;
 }
 </style>

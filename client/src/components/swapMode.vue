@@ -30,7 +30,6 @@ button {
   font-size: 20px;
   padding: 10px;
   margin: 10px;
-  margin-bottom: 30px;
   border-radius: 5px;
   width: 10em;
 }
