@@ -36,6 +36,10 @@ export default {
 
 <style scoped>
 
+article {
+    height: 100%;
+}
+
 #container {
     display: flex;
     flex-flow: row nowrap;

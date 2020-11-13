@@ -73,8 +73,8 @@ export default {
   fill: #FFBDED;
   outline: 0;
 }
-.svg-map >>> .svg-map__location > :focus, :hover {
-    fill: yellow;
+.svg-map >>> .svg-map__location:hover {
+    fill: palevioletred;
 }
 
 .svg-map >>> .svg-map__location[aria-checked='true'] {

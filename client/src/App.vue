@@ -160,7 +160,6 @@ export default {
   margin: 0;
 }
 
-
 h1 {
     font-family: 'Fredericka the Great', cursive;
     font-size: 60px;
