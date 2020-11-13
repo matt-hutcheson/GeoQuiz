@@ -1,6 +1,6 @@
 <template>
     <section id='left-side'>
-        <p>Currently hovering: {{ tooltip }}</p>
+        <p class="tooltip">Currently hovering: {{ tooltip }}</p>
         <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
     </section>
 </template>
@@ -80,6 +80,17 @@ export default {
 .svg-map >>> .svg-map__location[aria-checked='true'] {
   fill: #34e734;
   outline: 0
+}
+
+.tooltip {
+    position: relative;
+    width: fit-content;
+    border: solid 1px;
+    padding: 5px 20px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 10px;
 }
 </style>
 

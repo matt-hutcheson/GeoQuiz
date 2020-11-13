@@ -11,7 +11,7 @@
         <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
       </div>
       <div id="instructions-button-container">
-        <button class="button-instructions" v-if="currentUser" v-on:click='handleClick("instructions")'>Instructions</button>
+        <button class="button-instructions" v-if="currentMode==='play'" v-on:click='handleClick("instructions")'>Instructions</button>
       </div>
     </div>
     <instructions v-if="currentMode==='instructions'" :currentMode="currentMode"></instructions>
