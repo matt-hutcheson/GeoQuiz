@@ -1,20 +1,30 @@
 <template>
     <section id='left-side'>
         <p class="tooltip">Currently hovering: {{ tooltip }}</p>
-        <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
+        <svg-pan-zoom
+        style="width: 100%; height: 90%;"
+        :zoomEnabled="true"
+        :controlIconsEnabled="true"
+        :fit="false"
+        :center="true"
+        :minZoom="1">
+            <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
+        </svg-pan-zoom>
     </section>
 </template>
 
 <script>
 import { RadioSvgMap } from "vue-svg-map";
 import World from "@svg-maps/world";
-import { eventBus } from '@/main.js'
+import { eventBus } from '@/main.js';
+import SvgPanZoom from "vue-svg-pan-zoom";
 
 export default {
     name: 'learn-map',
     props: ['countries'],
     components: {
         'radio-svg-map': RadioSvgMap,
+        'svg-pan-zoom': SvgPanZoom
     },
     data() {
         return {
@@ -52,6 +62,7 @@ export default {
 
 #left-side {
     width: 80%;
+    min-height: 100vh;
     padding: 10px;
     border: solid black 1px;
     margin-right: 5px;
@@ -61,12 +72,11 @@ export default {
 .svg-map {
     stroke: #b6b6b6;
     stroke-width: 1;
-    width: 90%;
-    height: auto;
+    width: 100%;
+    height: 100%;
     stroke-linecap: round;
     stroke-linejoin: round;
     outline: 0;
-    margin: 10px 0 10px 5%;
 }
 
 .svg-map >>> .svg-map__location {
