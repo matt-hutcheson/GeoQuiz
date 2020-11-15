@@ -3,23 +3,33 @@
       <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
       <div v-if="result==='correct'" id="correct-next-flag">
         <p v-if="result==='correct'">Great job!!</p>
-        <button id= "next-flag" v-on:click.prevent="getRandomCountry(countriesRemaining); scrollTop();">Next Flag</button>
+        <button id= "next-flag" v-on:click.prevent="getRandomCountry(); scrollTop();">Next Flag</button>
         <button id= "details-answers" v-on:click="scrollBottom()">Check your answers</button>
       </div>
-      <checkbox-svg-map @click="selectCountry" @mouseenter="hoverCountry" :location-class="isCorrect" :map="world"/>
+      <svg-pan-zoom
+        style="width: 100%; height: 90%;"
+        :zoomEnabled="true"
+        :controlIconsEnabled="true"
+        :fit="false"
+        :center="true"
+        :minZoom="1">
+        <checkbox-svg-map @click="selectCountry" @mouseenter="hoverCountry" :location-class="isCorrect" :map="world"/>
+      </svg-pan-zoom>
     </section>
 </template>
 
 <script>
 import { CheckboxSvgMap } from "vue-svg-map";
-import World from "@svg-maps/world"
-import { eventBus } from "@/main.js"
+import World from "@svg-maps/world";
+import { eventBus } from "@/main.js";
+import SvgPanZoom from "vue-svg-pan-zoom";
 
 export default {
     name: 'play-map',
     props: ['countries', 'correctAnswers', 'countriesRemaining', 'currentUser', 'randomCountry', 'result'],
     components: {
-        'checkbox-svg-map': CheckboxSvgMap
+        'checkbox-svg-map': CheckboxSvgMap,
+        'svg-pan-zoom': SvgPanZoom
     },
     data() {
         return {
@@ -52,6 +62,10 @@ export default {
         }
       },
 
+      getRandomCountry() {
+        eventBus.$emit('change-flag-pressed')
+      },
+
       scrollTop () {
         window.scrollTo({
             top: 200,
@@ -76,6 +90,7 @@ export default {
     background-color: rgb(172,237,243);
     width: 100%;
     height:80vh;
+    position: relative;
 }
 
 /* section > p {
@@ -84,8 +99,8 @@ export default {
 .svg-map {
     stroke: #b6b6b6;
     stroke-width: 1;
-    max-height: 90%;
-    max-width: 100%;
+    height: 100%;
+    width: 100%;
     stroke-linecap: round;
     stroke-linejoin: round;
     outline: 0;
@@ -125,12 +140,13 @@ export default {
 #correct-next-flag {
     border: solid;
     position: absolute;
-    margin: 50vh 35vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 6px 25px;
     text-align: center;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5)
-    /* margin: 0 auto; */
 }
 
 #next-flag, #details-answers {
