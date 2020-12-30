@@ -42,6 +42,8 @@ article {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    align-items: center;
+    overflow: auto;
 }
 
 p {
@@ -54,6 +56,9 @@ p {
     flex-flow: row nowrap;
     justify-content: space-around;
     cursor: pointer;
+    /* overflow: auto; */
+    width: 100%;
+    height: 80%;
   }
 
 * {

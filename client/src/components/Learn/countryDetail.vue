@@ -62,6 +62,7 @@ img {
     width: 20%;
     padding: 20px;
     border: solid black 1px;
+    overflow: auto;
 
 }
 
