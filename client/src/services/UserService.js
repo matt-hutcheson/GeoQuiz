@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000/api/results/';
+const baseURL = 'api/results/';
 
 export default {
     getUsers() {
