@@ -7,8 +7,8 @@
                 <li>Correct answers will turn green!</li>
                 <li>Click 'next flag' to continue playing</li>
             </ul>
-        <p>Keep going until you paint the whole globe green!</p>        
-        <button id="back" v-if="currentMode!=='play'" v-on:click='handleClick("play")'>Back to the game</button>
+        <p>Keep going until you paint the whole globe green!</p>
+        <button id="back" v-if="currentMode === 'instructions'" v-on:click='handleClick("play")'>Back to the game</button>
     </article>
 </template>
 
@@ -21,7 +21,7 @@ export default {
 
     methods: {
         handleClick: function(change) {
-            eventBus.$emit('mode-changed', change);
+            eventBus.$emit('swap-mode', change);
         }
     }
 }
