@@ -53,15 +53,18 @@ export default {
 }
 
 img {
-  width: 30vh;
+  width: 25vh;
   background: no-repeat contain;
   border: solid black 2px;
 }
 
 #right-side {
-    width: 20%;
+    /* width: 20vw;
+    height: 100%; */
     padding: 20px;
     border: solid black 1px;
+    overflow-y: scroll;
+    font-size: medium;
 
 }
 

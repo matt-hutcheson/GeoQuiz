@@ -1,9 +1,11 @@
 <template>
     <article>
-        <p>Instruction: Click on a country to display some information</p>
         <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
+            <section id="right-side" v-if="!apiSelectedCountry">
+                <p>Instruction: Click on a country to display some information</p>
+            </section>
         </div>
     </article>
 </template>
@@ -37,11 +39,13 @@ export default {
 <style scoped>
 
 article {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
+    height: 90vh;
+    width: 90vw;
+    /* display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    align-items: center; */
+    /* overflow: auto; */
 }
 
 p {
@@ -50,10 +54,13 @@ p {
 }
 
 #container {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    column-gap: 5px;
     cursor: pointer;
+    /* overflow: auto; */
+    width: 100%;
+    height: 100%;
   }
 
 * {
@@ -64,6 +71,14 @@ p {
 
 
 p {
-    margin-bottom: 20px;
+    width: 100%;
 }
+
+#right-side {
+    /* min-width: 20vw; */
+    /* padding: 20px; */
+    border: solid black 1px;
+    /* overflow: auto; */
+}
+
 </style>
