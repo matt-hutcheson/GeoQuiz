@@ -1,10 +1,11 @@
 <template>
     <article>
-        <p>Instruction: Click on a country to display some information</p>
-        
         <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
+            <section id="right-side" v-if="!apiSelectedCountry">
+                <p>Instruction: Click on a country to display some information</p>
+            </section>
         </div>
     </article>
 </template>
@@ -21,8 +22,8 @@ export default {
         return {
             mapSelectedCountry: null,
             apiSelectedCountry: null
-        } 
-    },   
+        }
+    },
     components: {
         'learn-map': learnMap,
         'country-detail': countryDetail,
@@ -31,17 +32,35 @@ export default {
         eventBus.$on('learn-country-selected', (selectedCountry) => {
             this.apiSelectedCountry = selectedCountry
         })
-    },                                                    
-}           
+    },
+}
 </script>
 
 <style scoped>
 
+article {
+    height: 90vh;
+    width: 90vw;
+    /* display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center; */
+    /* overflow: auto; */
+}
+
+p {
+    text-align: center;
+    margin-top: 1em;
+}
+
 #container {
-    display: flex;
-    justify-content: space-between;
-    display: flex-wrap;
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    column-gap: 5px;
     cursor: pointer;
+    /* overflow: auto; */
+    width: 100%;
+    height: 100%;
   }
 
 * {
@@ -52,6 +71,14 @@ export default {
 
 
 p {
-    margin-bottom: 20px;
+    width: 100%;
 }
+
+#right-side {
+    /* min-width: 20vw; */
+    /* padding: 20px; */
+    border: solid black 1px;
+    /* overflow: auto; */
+}
+
 </style>

@@ -24,6 +24,10 @@ export default {
 
 <style scoped>
 
+article {
+    width: 100%;
+}
+
 article > h2 {
     margin-left: 1em;
 }
@@ -37,6 +41,7 @@ img{
 ul {
     list-style-type: none;
     display: flex;
+    flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
     padding-left: 1em;
