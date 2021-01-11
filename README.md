@@ -35,6 +35,7 @@ Install dependencies in both the client and server folders:
 
 Run express server (leave running in a terminal window). Within the **server** folder:
     $ npm run server:dev
+
 Run Vue development environment (leave running in a terminal window). Within **client** folder:
     $ npm run serve
 
