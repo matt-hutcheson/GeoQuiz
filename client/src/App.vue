@@ -174,7 +174,7 @@ export default {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 h1 {

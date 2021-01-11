@@ -59,10 +59,11 @@ img {
 }
 
 #right-side {
-    width: 20%;
+    width: 20vw;
+    height: 100%;
     padding: 20px;
     border: solid black 1px;
-    overflow: auto;
+    /* overflow: auto; */
 
 }
 

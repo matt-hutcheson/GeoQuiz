@@ -2,7 +2,7 @@
     <section id='left-side'>
         <p class="tooltip">Currently hovering: {{ tooltip }}</p>
         <svg-pan-zoom
-        style="width: 100%; height: 80%;"
+        style="width:100%; height: 80%;"
         :zoomEnabled="true"
         :controlIconsEnabled="true"
         :fit="true"
@@ -61,11 +61,11 @@ export default {
 }
 
 #left-side {
-    width: 80%;
+    width: 100%;
     height: 100%;
-    padding: 10px;
+    /* padding: 10px; */
     border: solid black 1px;
-    margin-right: 5px;
+    /* margin-right: 5px; */
     background-color: rgb(172,237,243);
 }
 
@@ -77,6 +77,8 @@ export default {
     stroke-linecap: round;
     stroke-linejoin: round;
     outline: 0;
+    border-top: solid black 1px;
+    border-bottom: solid black 1px;
 }
 
 .svg-map >>> .svg-map__location {
