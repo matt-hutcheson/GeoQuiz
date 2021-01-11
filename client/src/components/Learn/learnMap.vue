@@ -2,10 +2,10 @@
     <section id='left-side'>
         <p class="tooltip">Currently hovering: {{ tooltip }}</p>
         <svg-pan-zoom
-        style="width:100%; height: 80%;"
+        style="width: 100%; height: 80%;"
         :zoomEnabled="true"
         :controlIconsEnabled="true"
-        :fit="true"
+        :fit="false"
         :center="true"
         :minZoom="1">
             <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
@@ -62,23 +62,24 @@ export default {
 
 #left-side {
     width: 100%;
-    height: 100%;
+    height: 90vh;
     /* padding: 10px; */
     border: solid black 1px;
+    position: relative;
     /* margin-right: 5px; */
-    background-color: rgb(172,237,243);
 }
 
 .svg-map {
     stroke: #b6b6b6;
     stroke-width: 1;
-    width: 100%;
     height: 100%;
+    width: 100%;
     stroke-linecap: round;
     stroke-linejoin: round;
     outline: 0;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
+    background-color: rgb(172,237,243);
 }
 
 .svg-map >>> .svg-map__location {
@@ -104,5 +105,6 @@ export default {
     background-color: rgba(255, 255, 255, 0.5);
     margin: 10px;
 }
+
 </style>
 
