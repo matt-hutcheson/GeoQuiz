@@ -27,6 +27,7 @@ The app should:
 
 ## Setup/Installation
 Install dependencies in both the client and server folders:
+
     $ cd client
     $ npm install
 
@@ -34,9 +35,11 @@ Install dependencies in both the client and server folders:
     $ npm install
 
 Run express server (leave running in a terminal window). Within the **server** folder:
+
     $ npm run server:dev
 
 Run Vue development environment (leave running in a terminal window). Within **client** folder:
+
     $ npm run serve
 
 ## API, Libraries, Resources
