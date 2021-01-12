@@ -10,7 +10,7 @@ const createRouter = require('./helpers/create_router');
 app.use(cors());
 app.use(bodyParser.json());
 
-MongoClient.connect('mongodb://localhost:27017')
+MongoClient.connect('mongodb+srv://geoquizUser9:7AvLT5YDSQYVtAJs@cluster0.q4ebb.mongodb.net/geoquiz?retryWrites=true&w=majority', { useNewUrlParser: true})
     .then((client) => {
         const db = client.db('geoquiz');
         const resultsCollection = db.collection('results');
