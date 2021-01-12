@@ -6,6 +6,8 @@ server/node_modules
 /client/tests/e2e/videos/
 /client/tests/e2e/screenshots/
 
+/server/helpers/server_key.js
+
 
 # local env files
 .env.local

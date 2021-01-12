@@ -6,11 +6,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const createRouter = require('./helpers/create_router');
+const server_url = require('./helpers/server_key');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-MongoClient.connect('mongodb+srv://geoquizUser9:7AvLT5YDSQYVtAJs@cluster0.q4ebb.mongodb.net/geoquiz?retryWrites=true&w=majority', { useNewUrlParser: true})
+MongoClient.connect(server_url, { useNewUrlParser: true})
     .then((client) => {
         const db = client.db('geoquiz');
         const resultsCollection = db.collection('results');
@@ -20,7 +21,7 @@ MongoClient.connect('mongodb+srv://geoquizUser9:7AvLT5YDSQYVtAJs@cluster0.q4ebb.
     .catch(console.error);
 
     if(process.env.NODE_ENV === 'production') {
-        app.use(express.static(__dirname + '/public'));
+        app.use(express.static(__dirname + '/public/'));
         app.get(/.*/, (req, res) => res.sendFile(__dirname + 'public/index.html'));
     }
 
