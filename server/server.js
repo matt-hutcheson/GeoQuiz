@@ -20,7 +20,7 @@ MongoClient.connect('mongodb://localhost:27017')
     .catch(console.error);
 
     if(process.env.NODE_ENV === 'production') {
-        app.use(exporess.static(__dirname + '/public'));
+        app.use(express.static(__dirname + '/public'));
         app.get(/.*/, (req, res) => res.sendFile(__dirname + 'public/index.html'));
     }
 
