@@ -11,7 +11,7 @@ const server_url = require('./helpers/server_key');
 app.use(cors());
 app.use(bodyParser.json());
 
-MongoClient.connect(server_url, { useNewUrlParser: true})
+MongoClient.connect(server_url, { useUnifiedTopology: true})
     .then((client) => {
         const db = client.db('geoquiz');
         const resultsCollection = db.collection('results');
@@ -22,7 +22,7 @@ MongoClient.connect(server_url, { useNewUrlParser: true})
 
     if(process.env.NODE_ENV === 'production') {
         app.use(express.static(__dirname + '/public/'));
-        app.get(/.*/, (req, res) => res.sendFile(__dirname + 'public/index.html'));
+        app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
     }
 
     app.listen(PORT, function() {
