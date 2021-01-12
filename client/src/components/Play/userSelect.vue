@@ -40,7 +40,7 @@ export default {
 select {
   padding: 0 1em 0 0;
   margin: 40px;
-  width: 15%;
+  width: 15em;
   text-align: center;
 }
 
