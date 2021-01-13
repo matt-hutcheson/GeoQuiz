@@ -11,7 +11,7 @@ const createRouter = require('./helpers/create_router');
 app.use(cors());
 app.use(bodyParser.json());
 
-MongoClient.connect(process.env.SERVER_KEY, { useUnifiedTopology: true})
+MongoClient.connect(process.env.SERVER_KEY, { useNewUrlParser: true})
     .then((client) => {
         const db = client.db('geoquiz');
         const resultsCollection = db.collection('results');
