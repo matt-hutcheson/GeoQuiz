@@ -5,7 +5,6 @@
   "main": "/server/server.js",
   "scripts": {
     "start": "cd server && npm install && node server.js",
-    "build": "cd client && npm install && npm run build",
     "server:dev": "nodemon server/server.js",
     "seeds": "mongo < ./db/seeds_data.js"
   },
