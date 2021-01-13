@@ -2,6 +2,7 @@ const port = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
 const cors = require('cors');
+require('dotenv').config()
 
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
@@ -10,7 +11,7 @@ const createRouter = require('./helpers/create_router');
 app.use(cors());
 app.use(bodyParser.json());
 
-MongoClient.connect(process.env.SERVER_URL, { useUnifiedTopology: true})
+MongoClient.connect(process.env.SERVER_KEY, { useUnifiedTopology: true})
     .then((client) => {
         const db = client.db('geoquiz');
         const resultsCollection = db.collection('results');
