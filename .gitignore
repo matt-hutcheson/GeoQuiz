@@ -13,6 +13,7 @@ client/
 # local env files
 .env.local
 .env.*.local
+server/.env
 
 # Log files
 npm-debug.log*
