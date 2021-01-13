@@ -22,9 +22,10 @@ MongoClient.connect(process.env.SERVER_KEY, { useUnifiedTopology: true})
 
     if(process.env.NODE_ENV === 'production') {
         app.use(express.static(__dirname + '/public/'));
-        app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+        app.get("/", (req, res) => res.sendFile(__dirname + '/public/index.html'));
     }
 
     app.listen(port, function() {
+        console.log(process.env.NODE_ENV)
         console.log(`Listening on port ${ this.address().port }`);
     });
