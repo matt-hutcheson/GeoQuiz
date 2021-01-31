@@ -26,15 +26,15 @@ The app should:
 * Manage top scores lists
 
 ## Setup/Installation
-Install dependencies in both the client and server folders:
+Install dependencies in both the client and root folders:
 
     $ cd client
     $ npm install
 
-    $ cd ../server
+    $ cd ..
     $ npm install
 
-Run express server (leave running in a terminal window). Within the **server** folder:
+Run express server (leave running in a terminal window). Within the **root** folder:
 
     $ npm run server:dev
 
