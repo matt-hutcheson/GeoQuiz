@@ -1,0 +1,32 @@
+{
+  "name": "cc_jsvue_fullstack_geo_quiz",
+  "version": "1.0.0",
+  "description": "Geoquiz is an educational web app and game. It comprises of two different modes: * Learn mode * Play mode",
+  "main": "/server/server.js",
+  "scripts": {
+    "start": "cd server && npm install && node server.js",
+    "server:dev": "nodemon server/server.js",
+    "seeds": "mongo < ./db/seeds_data.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.2",
+    "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": "14.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matt-hutcheson/cc_jsvue_fullstack_geo_quiz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matt-hutcheson/cc_jsvue_fullstack_geo_quiz/issues"
+  },
+  "homepage": "https://github.com/matt-hutcheson/cc_jsvue_fullstack_geo_quiz#readme"
+}
