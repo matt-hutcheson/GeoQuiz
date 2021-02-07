@@ -1,10 +1,15 @@
 <template>
     <section id="map-section">
       <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
-      <div v-if="result==='correct'" id="correct-next-flag">
+      <div v-if="result==='correct'" class="player-guess-feedback">
         <p v-if="result==='correct'">Great job!!</p>
         <button id= "next-flag" v-on:click.prevent="getRandomCountry(); scrollTop();">Next Flag</button>
         <button id= "details-answers" v-on:click="scrollBottom()">Check your answers</button>
+      </div>
+      <div v-if="result==='incorrect'" class="player-guess-feedback">
+        <p>Incorrect... Try again.</p>
+        <button id="try-again" v-on:click.prevent="tryAgain()">Try Again</button>
+        <button id="get-hint" v-on:click.prevent="getHint()">Hint?</button>
       </div>
       <svg-pan-zoom
         style="width: 100%; height: 90%;"
@@ -73,13 +78,21 @@ export default {
             behavior: 'smooth'
         })
     },
-        scrollBottom () {
-            window.scrollTo({
-                top: 1000,
-                left: 100,
-                behavior: 'smooth'
-            })
-        },
+      scrollBottom () {
+          window.scrollTo({
+              top: 1000,
+              left: 100,
+              behavior: 'smooth'
+          })
+      },
+
+      tryAgain() {
+        eventBus.$emit('try-again-pressed')
+      },
+
+      getHint() {
+        eventBus.$emit('get-hint-pressed')
+      },
     }
 }
 </script>
@@ -137,7 +150,7 @@ export default {
     margin: 10px;
 }
 
-#correct-next-flag {
+.player-guess-feedback {
     border: solid;
     position: absolute;
     top: 50%;
@@ -149,7 +162,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.5)
 }
 
-#next-flag, #details-answers {
+#next-flag, #details-answers, #try-again, #get-hint {
     margin: 10px;
     border-radius: 5px;
     text-align: center;
@@ -159,7 +172,7 @@ export default {
     border: #ebb810 solid 2px;
 }
 
-#next-flag:hover, #details-answers:hover {
+#next-flag:hover, #details-answers:hover, #try-again:hover, #get-hint:hover {
     background-color: #ffc811;
     border: #ffdb12 solid 2px;
 }

@@ -96,6 +96,10 @@ export default {
         this.getRandomCountry(this.countriesRemaining)
       });
 
+      eventBus.$on('try-again-pressed', () => {
+        this.result = null
+      })
+
       eventBus.$on('request-user-change', (previousUser) => {
         this.currentUser = null
       });
