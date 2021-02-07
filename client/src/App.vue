@@ -29,6 +29,7 @@ import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
 import Intructions from "./components/Play/instructions";
+import mapCountries from "../node_modules/@svg-maps/world/index.js"
 
 export default {
   name: 'App',
@@ -67,7 +68,7 @@ export default {
         .then(userWithId => this.currentUser = userWithId)
         .then( () => this.allUsers.push(this.currentUser))
         .then( () => this.countriesCorrect = [])
-        .then( () => this.countriesRemaining = this.countries.slice())
+        .then( () => this.countriesRemaining = this.removeImpossibleCountries())
         .then( () => this.getRandomCountry(this.countriesRemaining))
       });
 
@@ -146,6 +147,33 @@ export default {
 
       handleClick(newMode) {
         this.currentMode = newMode
+      },
+
+      removeImpossibleCountries() {
+        const svgMapCountries = mapCountries.locations
+        const filteredCountries = []
+        svgMapCountries.forEach((mapCountry) => {
+          this.countries.forEach((apiCountry) => {
+            if (apiCountry.alpha2Code.toLowerCase()===mapCountry.id){
+              filteredCountries.push(apiCountry)
+            }
+          })
+        })
+        return filteredCountries
+      },
+
+// sort by name
+      sortByName(arrayToSort) {
+        arrayToSort.sort(function(a, b) {
+          var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+          var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+        })
       }
     },
 
