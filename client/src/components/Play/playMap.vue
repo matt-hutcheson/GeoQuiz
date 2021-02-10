@@ -51,8 +51,10 @@ export default {
 
     methods: {
       isCorrect: function(location) {
+        let continent = "";
         if (this.correctAnswers.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
-          return "correct"
+          continent = this.correctAnswers.find(country => country.alpha2Code.toLowerCase() === location.id).region.toLowerCase()
+          return "correct-"+continent
         }
       },
       selectCountry(event) {
@@ -120,22 +122,42 @@ export default {
 }
 
 .svg-map >>> .svg-map__location {
-  fill: #FFBDED;
+  fill: #ffffff;
   outline: 0;
 }
 
 .svg-map >>> .svg-map__location:hover{
-    fill: palevioletred;
+    fill: rgb(0, 0, 0);
     outline: 0;
 }
 
 .svg-map >>> [aria-checked="true"] {
-  fill: palevioletred;
+  fill: rgb(255, 251, 2);
   outline: 0
 }
 
-.svg-map >>> .correct {
+.svg-map >>> .correct-europe {
+  fill: #a534e7;
+  outline: 0
+}
+
+.svg-map >>> .correct-asia {
   fill: #34e734;
+  outline: 0
+}
+
+.svg-map >>> .correct-oceania {
+  fill: #e73a34;
+  outline: 0
+}
+
+.svg-map >>> .correct-americas {
+  fill: #346de7;
+  outline: 0
+}
+
+.svg-map >>> .correct-africa {
+  fill: #e77634;
   outline: 0
 }
 
