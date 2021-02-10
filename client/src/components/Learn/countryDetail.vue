@@ -63,7 +63,7 @@ img {
     height: 100%; */
     padding: 20px;
     border: solid black 1px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: medium;
 
 }

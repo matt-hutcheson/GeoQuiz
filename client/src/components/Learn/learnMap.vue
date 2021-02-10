@@ -8,7 +8,7 @@
         :fit="false"
         :center="true"
         :minZoom="1">
-            <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
+            <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :location-class='getContinent' :map='World'/>
         </svg-pan-zoom>
     </section>
 </template>
@@ -49,6 +49,13 @@ export default {
             if (country) {
                 this.tooltip = country.name
             }
+        },
+        getContinent: function(location){
+            let continent = "";
+            if (this.countries.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
+            continent = this.countries.find(country => country.alpha2Code.toLowerCase() === location.id).region.toLowerCase()
+            return "correct-"+continent
+            }
         }
     }
 }
@@ -87,11 +94,36 @@ export default {
   outline: 0;
 }
 .svg-map >>> .svg-map__location:hover {
-    fill: palevioletred;
+    fill: rgb(0, 0, 0);
 }
 
 .svg-map >>> .svg-map__location[aria-checked='true'] {
+  fill: #fffb00;
+  outline: 0
+}
+
+.svg-map >>> .correct-europe {
+  fill: #a534e7;
+  outline: 0
+}
+
+.svg-map >>> .correct-asia {
   fill: #34e734;
+  outline: 0
+}
+
+.svg-map >>> .correct-oceania {
+  fill: #e73a34;
+  outline: 0
+}
+
+.svg-map >>> .correct-americas {
+  fill: #346de7;
+  outline: 0
+}
+
+.svg-map >>> .correct-africa {
+  fill: #e77634;
   outline: 0
 }
 

@@ -4,10 +4,12 @@
         <p>You’ll see a flag in the top left of your screen.</p>
             <ul>
                 <li>Click a country on the map to make your guess</li>
-                <li>Correct answers will turn green!</li>
+                <li>Correct answers will get coloured in!</li>
                 <li>Click 'next flag' to continue playing</li>
+                <li>If you get stuck use the hints</li>
+                <li>You can zoom in on the map to find small countries</li>
             </ul>
-        <p>Keep going until you paint the whole globe green!</p>
+        <p>Keep going until you paint the whole globe!</p>
         <button id="back" v-if="currentMode === 'instructions'" v-on:click='handleClick("play")'>Back to the game</button>
     </article>
 </template>
