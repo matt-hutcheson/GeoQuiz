@@ -87,7 +87,7 @@ export default {
       eventBus.$on('user-selected', (user) => {
         this.currentUser = user;
         this.countriesCorrect = [];
-        this.countriesRemaining = this.countries.slice();
+        this.countriesRemaining = this.removeImpossibleCountries();
         this.getRandomCountry(this.countriesRemaining)
         this.setCorrectCountries();
       });
@@ -139,7 +139,7 @@ export default {
       },
 
       setCorrectCountries () {
-        for (const country of this.countries) {
+        for (const country of this.removeImpossibleCountries()) {
           if (this.currentUser[country.alpha3Code]["flagGame"] === "true") {
             const index = this.countriesRemaining.indexOf(country)
             if (index > -1) {
