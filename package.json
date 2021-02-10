@@ -4,7 +4,7 @@
   "description": "Geoquiz is an educational web app and game. It comprises of two different modes: * Learn mode * Play mode",
   "main": "/server/server.js",
   "scripts": {
-    "start": "cd client && npm run build && cd .. && cd server && npm install && node server.js",
+    "start": "cd server && npm install && node server.js",
     "server:dev": "nodemon server/server.js",
     "seeds": "mongo < ./db/seeds_data.js"
   },
