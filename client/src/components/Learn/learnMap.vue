@@ -92,8 +92,8 @@ export default {
     outline: 0;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
-    background-color: rgb(255, 255, 255);
-    /* background-color: rgb(172,237,243); */
+    /* background-color: rgb(255, 255, 255); */
+    background-color: rgb(172,237,243);
 }
 
 .svg-map >>> .svg-map__location {

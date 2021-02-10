@@ -108,8 +108,8 @@ export default {
 <style scoped>
 #map-section {
     border: solid black 1px;
-    background-color: rgb(255, 255, 255);
-    /* background-color: rgb(172,237,243); */
+    /* background-color: rgb(255, 255, 255); */
+    background-color: rgb(172,237,243);
     width: 100%;
     height:70vh;
     position: relative;
