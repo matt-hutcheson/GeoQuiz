@@ -139,7 +139,7 @@ export default {
 }
 
 .svg-map >>> [aria-checked="true"] {
-  fill: rgb(255, 251, 2);
+  fill: rgb(0, 0, 0);
   outline: 0
 }
 

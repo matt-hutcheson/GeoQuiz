@@ -105,7 +105,7 @@ export default {
 }
 
 .svg-map >>> .svg-map__location[aria-checked='true'] {
-  fill: #fffb00;
+  fill: #000000;
   outline: 0
 }
 
