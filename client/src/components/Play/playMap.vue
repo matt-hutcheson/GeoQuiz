@@ -53,7 +53,13 @@ export default {
       isCorrect: function(location) {
         let continent = "";
         if (this.correctAnswers.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
-          continent = this.correctAnswers.find(country => country.alpha2Code.toLowerCase() === location.id).region.toLowerCase()
+          const country = this.correctAnswers.find(country => country.alpha2Code.toLowerCase() === location.id)
+          continent = country.region.toLowerCase()
+          if (continent === "americas"){
+            if (country.subregion === "South America"){
+              return "correct-south-america"
+            }
+          }
           return "correct-"+continent
         }
       },
@@ -102,9 +108,10 @@ export default {
 <style scoped>
 #map-section {
     border: solid black 1px;
-    background-color: rgb(172,237,243);
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(172,237,243); */
     width: 100%;
-    height:80vh;
+    height:70vh;
     position: relative;
 }
 
@@ -147,7 +154,7 @@ export default {
 }
 
 .svg-map >>> .correct-oceania {
-  fill: #e73a34;
+  fill: rgb(255, 255, 0);
   outline: 0
 }
 
@@ -158,6 +165,11 @@ export default {
 
 .svg-map >>> .correct-africa {
   fill: #e77634;
+  outline: 0
+}
+
+.svg-map >>> .correct-south-america {
+  fill: #ee1f1f;
   outline: 0
 }
 

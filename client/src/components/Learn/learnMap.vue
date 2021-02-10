@@ -53,8 +53,14 @@ export default {
         getContinent: function(location){
             let continent = "";
             if (this.countries.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
-            continent = this.countries.find(country => country.alpha2Code.toLowerCase() === location.id).region.toLowerCase()
-            return "correct-"+continent
+                const country = this.countries.find(country => country.alpha2Code.toLowerCase() === location.id)
+                continent = country.region.toLowerCase()
+                if (continent === "americas"){
+                    if (country.subregion === "South America"){
+                    return "south-america"
+                    }
+                }
+                return continent
             }
         }
     }
@@ -86,7 +92,8 @@ export default {
     outline: 0;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
-    background-color: rgb(172,237,243);
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(172,237,243); */
 }
 
 .svg-map >>> .svg-map__location {
@@ -102,28 +109,33 @@ export default {
   outline: 0
 }
 
-.svg-map >>> .correct-europe {
+.svg-map >>> .europe {
   fill: #a534e7;
   outline: 0
 }
 
-.svg-map >>> .correct-asia {
+.svg-map >>> .asia {
   fill: #34e734;
   outline: 0
 }
 
-.svg-map >>> .correct-oceania {
-  fill: #e73a34;
+.svg-map >>> .oceania {
+  fill: yellow;
   outline: 0
 }
 
-.svg-map >>> .correct-americas {
+.svg-map >>> .americas {
   fill: #346de7;
   outline: 0
 }
 
-.svg-map >>> .correct-africa {
+.svg-map >>> .africa {
   fill: #e77634;
+  outline: 0
+}
+
+.svg-map >>> .south-america {
+  fill: #ee1f1f;
   outline: 0
 }
 
