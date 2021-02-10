@@ -8,7 +8,7 @@
         :fit="false"
         :center="true"
         :minZoom="1">
-            <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :map='World'/>
+            <radio-svg-map @mouseenter="hoverCountry" @click='getCountryDetails()' v-model='mapSelectedCountry' :location-class='getContinent' :map='World'/>
         </svg-pan-zoom>
     </section>
 </template>
@@ -49,6 +49,19 @@ export default {
             if (country) {
                 this.tooltip = country.name
             }
+        },
+        getContinent: function(location){
+            let continent = "";
+            if (this.countries.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
+                const country = this.countries.find(country => country.alpha2Code.toLowerCase() === location.id)
+                continent = country.region.toLowerCase()
+                if (continent === "americas"){
+                    if (country.subregion === "South America"){
+                    return "south-america"
+                    }
+                }
+                return continent
+            }
         }
     }
 }
@@ -79,7 +92,8 @@ export default {
     outline: 0;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
-    background-color: rgb(172,237,243);
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(172,237,243); */
 }
 
 .svg-map >>> .svg-map__location {
@@ -87,11 +101,41 @@ export default {
   outline: 0;
 }
 .svg-map >>> .svg-map__location:hover {
-    fill: palevioletred;
+    fill: rgb(0, 0, 0);
 }
 
 .svg-map >>> .svg-map__location[aria-checked='true'] {
+  fill: #fffb00;
+  outline: 0
+}
+
+.svg-map >>> .europe {
+  fill: #a534e7;
+  outline: 0
+}
+
+.svg-map >>> .asia {
   fill: #34e734;
+  outline: 0
+}
+
+.svg-map >>> .oceania {
+  fill: yellow;
+  outline: 0
+}
+
+.svg-map >>> .americas {
+  fill: #346de7;
+  outline: 0
+}
+
+.svg-map >>> .africa {
+  fill: #e77634;
+  outline: 0
+}
+
+.svg-map >>> .south-america {
+  fill: #ee1f1f;
   outline: 0
 }
 

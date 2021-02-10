@@ -51,8 +51,16 @@ export default {
 
     methods: {
       isCorrect: function(location) {
+        let continent = "";
         if (this.correctAnswers.map(country => country.alpha2Code.toLowerCase()).includes(location.id)) {
-          return "correct"
+          const country = this.correctAnswers.find(country => country.alpha2Code.toLowerCase() === location.id)
+          continent = country.region.toLowerCase()
+          if (continent === "americas"){
+            if (country.subregion === "South America"){
+              return "correct-south-america"
+            }
+          }
+          return "correct-"+continent
         }
       },
       selectCountry(event) {
@@ -100,9 +108,10 @@ export default {
 <style scoped>
 #map-section {
     border: solid black 1px;
-    background-color: rgb(172,237,243);
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(172,237,243); */
     width: 100%;
-    height:80vh;
+    height:70vh;
     position: relative;
 }
 
@@ -120,22 +129,47 @@ export default {
 }
 
 .svg-map >>> .svg-map__location {
-  fill: #FFBDED;
+  fill: #ffffff;
   outline: 0;
 }
 
 .svg-map >>> .svg-map__location:hover{
-    fill: palevioletred;
+    fill: rgb(0, 0, 0);
     outline: 0;
 }
 
 .svg-map >>> [aria-checked="true"] {
-  fill: palevioletred;
+  fill: rgb(255, 251, 2);
   outline: 0
 }
 
-.svg-map >>> .correct {
+.svg-map >>> .correct-europe {
+  fill: #a534e7;
+  outline: 0
+}
+
+.svg-map >>> .correct-asia {
   fill: #34e734;
+  outline: 0
+}
+
+.svg-map >>> .correct-oceania {
+  fill: rgb(255, 255, 0);
+  outline: 0
+}
+
+.svg-map >>> .correct-americas {
+  fill: #346de7;
+  outline: 0
+}
+
+.svg-map >>> .correct-africa {
+  fill: #e77634;
+  outline: 0
+}
+
+.svg-map >>> .correct-south-america {
+  fill: #ee1f1f;
   outline: 0
 }
 

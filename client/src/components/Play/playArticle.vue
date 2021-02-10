@@ -48,7 +48,7 @@ article {
 }
 
 #game-area {
-	height: 100vh;
+	height: 90vh;
 }
 
 </style>
