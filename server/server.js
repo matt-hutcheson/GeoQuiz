@@ -23,7 +23,7 @@ mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true })
         console.log({ database_error: err })
     })
 
-const resultsRouter = require("./helpers/UserRouter.js")
+// const resultsRouter = require("./helpers/UserModel.js")
 app.use('/api/results', resultsRouter)
 
 if(process.env.NODE_ENV === 'production') {
