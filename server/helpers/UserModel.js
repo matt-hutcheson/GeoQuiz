@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userSchema = mongoose.Schema({
-  name: {
+  username: {
     type: String,
-    required: [true, "Please Include your name"]
+    required: [true, "Please Include your username"]
   },
   password: {
     type: String,
@@ -33,14 +33,14 @@ userSchema.pre("save", async function(next) {
 
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
-  const token = jwt.sign({ _id: user._id, name: user.name, results: user.results}, "secret");
+  const token = jwt.sign({ _id: user._id, username: user.username, results: user.results}, "secret");
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
 }
 
-userSchema.statics.findByCredentials = async (email, password) => {
-  const user = await user.findOne({ email });
+userSchema.statics.findByCredentials = async (username, password) => {
+  const user = await User.findOne({ username });
   if (!user) {
     throw new Error({ error: "Invalid login details" });
   }
@@ -49,6 +49,15 @@ userSchema.statics.findByCredentials = async (email, password) => {
     throw new Error({ error: "Invalid login details" })
   }
   return user;
+}
+
+userSchema.statics.isUsernameInUse = async (username) => {
+  const user = await User.findOne({ username });
+  if (!user) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 const User = mongoose.model("User", userSchema);

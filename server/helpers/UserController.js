@@ -2,13 +2,17 @@ const User = require("./UserModel.js");
 
 exports.registerNewUser = async (req, res) => {
   try {
-    // if (isUser.length >= 1) {
-    //   return res.status(409).json({
-    //     message: "username already in use"
-    //   })
-    // }
+    const username = req.body.username;
+    const isUser = await User.isUsernameInUse(username);
+    console.log(username);
+    console.log(isUser)
+    if (isUser) {
+      return res.status(409).json({
+        message: "username already in use"
+      })
+    }
     const user = new User({
-      name: req.body.name,
+      username: req.body.username,
       password: req.body.password
     })
     let data = await user.save();
