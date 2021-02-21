@@ -24,39 +24,66 @@ const userSchema = mongoose.Schema({
 })
 
 userSchema.pre("save", async function(next) {
-  const user = this;
-  if (user.isModified("password")) {
-    user.password = await bcrypt.hash(user.password, 8);
+  try {
+    const user = this;
+    if (user.isModified("password")) {
+      user.password = await bcrypt.hash(user.password, 8);
+    }
+    next();
+  } catch (err) {
+    console.log(err)
   }
-  next();
 })
 
+// userSchema.pre("findByIdAndUpdate", async function(next) {
+//   try {
+//     const user = this.body;
+//     console.log("password is " + user.password)
+//     user.password = await bcrypt.hash(user.password, 8);
+//     next();
+//   } catch (err) {
+//     console.log(err)
+//   }
+// })
+
 userSchema.methods.generateAuthToken = async function() {
-  const user = this;
-  const token = jwt.sign({ _id: user._id, username: user.username, results: user.results}, "secret");
-  user.tokens = user.tokens.concat({ token });
-  await user.save();
-  return token;
+  try {
+    const user = this;
+    const token = jwt.sign({ _id: user._id, username: user.username, results: user.results}, "secret");
+    user.tokens = user.tokens.concat({ token });
+    await user.save();
+    return token;
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 userSchema.statics.findByCredentials = async (username, password) => {
-  const user = await User.findOne({ username });
-  if (!user) {
-    throw new Error({ error: "Invalid login details" });
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      throw new Error({ error: "Invalid login details" });
+    }
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      throw new Error({ error: "Invalid login details" })
+    }
+    return user;
+  } catch (err) {
+    console.log(err)
   }
-  const isPasswordMatch = await bcrypt.compare(password, user.password);
-  if (!isPasswordMatch) {
-    throw new Error({ error: "Invalid login details" })
-  }
-  return user;
 }
 
 userSchema.statics.isUsernameInUse = async (username) => {
-  const user = await User.findOne({ username });
-  if (!user) {
-    return false;
-  } else {
-    return true;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return false;
+    } else {
+      return true;
+    }
+  } catch (err) {
+    console.log(err)
   }
 }
 

@@ -1,4 +1,6 @@
+const { findByIdAndUpdate } = require("./UserModel.js");
 const User = require("./UserModel.js");
+const bcrypt = require("bcrypt")
 
 exports.registerNewUser = async (req, res) => {
   try {
@@ -35,5 +37,23 @@ exports.loginUser = async (req, res) => {
   }
 };
 exports.getUserDetails = async (req, res) => {
-  await res.json(req.userData);
+  try {
+    const user = await User.findById(req.body._id);
+    return res.status(200).json({ user })
+  } catch (err) {
+    res.status(400).json({ err: err });
+  }
 };
+exports.updateUserDetails = async (req, res) => {
+  try {
+    const { _id, username, results} = req.body;
+    const password = await bcrypt.hash(req.body.password, 8)
+    const user = await User.findByIdAndUpdate(_id, {username, password, results})
+    const updatedUser = await User.findById(_id)
+    console.log(updatedUser)
+    res.status(200).send(updatedUser);
+  } catch (err) {
+    res.status(500).send(err)
+  }
+};
+
