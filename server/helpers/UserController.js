@@ -34,4 +34,6 @@ exports.loginUser = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
-exports.getUserDetails = async (req, res) => {};
+exports.getUserDetails = async (req, res) => {
+  await res.json(req.userData);
+};
