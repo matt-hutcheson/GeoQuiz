@@ -39,21 +39,45 @@ exports.loginUser = async (req, res) => {
 exports.getUserDetails = async (req, res) => {
   try {
     const user = await User.findById(req.body._id);
-    return res.status(200).json({ user })
+    if (!user) {
+      return res.status(500).send({ message: "user not found", id: req.body._id })
+    }
+    res.status(200).json({ user })
   } catch (err) {
-    res.status(400).json({ err: err });
+    res.status(500).json({ err: err });
   }
 };
 exports.updateUserDetails = async (req, res) => {
   try {
     const { _id, username, results} = req.body;
-    const password = await bcrypt.hash(req.body.password, 8)
-    const user = await User.findByIdAndUpdate(_id, {username, password, results})
-    const updatedUser = await User.findById(_id)
-    console.log(updatedUser)
-    res.status(200).send(updatedUser);
+    const password = await bcrypt.hash(req.body.password, 8);
+    await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, function(err, user) {
+      if (err) {
+        res.status(500).send({ err: err })
+      }
+      if (user) {
+        res.status(200).send(user)
+      } else {
+        res.status(500).send({ message: "Update failed. User not found", id: _id})
+      }
+    });
   } catch (err) {
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 };
-
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndRemove(req.body._id, function(err, user){
+      if (err) {
+        res.status(500).send({ err: err })
+      }
+      if (user) {
+        res.status(200).send({ message: "User successfully deleted", id: req.body._id })
+      } else {
+        res.status(500).send({ message: "Delete failed. User not found" });
+      }
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+}

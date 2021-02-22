@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 mongoose.set("useCreateIndex", true);
-mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true })
+mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true, useFindAndModify: false })
     .then(() => {
         console.log("Database is connected");
     })
