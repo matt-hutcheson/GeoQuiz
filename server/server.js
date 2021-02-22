@@ -4,18 +4,18 @@ const app = express();
 const cors = require('cors');
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 require('dotenv').config();
 
 const bodyParser = require('body-parser');
-const createRouter = require('./helpers/create_router');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
+app.use(cookieParser())
 app.use(morgan("dev"));
 
-mongoose.set("useCreateIndex", true);
-mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true, useFindAndModify: false })
+mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => {
         console.log("Database is connected");
     })
@@ -24,7 +24,7 @@ mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true, useFindAndModi
     })
 
 const resultsRouter = require("./helpers/UserRouter.js")
-app.use('/api/results', resultsRouter)
+app.use('/api', resultsRouter)
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'));

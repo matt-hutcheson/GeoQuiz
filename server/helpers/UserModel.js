@@ -4,20 +4,19 @@ const jwt = require("jsonwebtoken");
 const userSchema = mongoose.Schema({
   username: {
     type: String,
-    required: [true, "Please Include your username"]
+    required: [true, "Please Include your username"],
+    // unique: 1,
+    maxLength: 20
   },
   password: {
     type: String,
-    required: [true, "Please Include your password"]
+    required: [true, "Please Include your password"],
+    minlength: 4
   },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true
-      }
-    }
-  ],
+  token: {
+    type: String,
+    // required: true
+  },
   results: {
     type: Array
   }
@@ -35,22 +34,11 @@ userSchema.pre("save", async function(next) {
   }
 })
 
-// userSchema.pre("findByIdAndUpdate", async function(next) {
-//   try {
-//     const user = this.body;
-//     console.log("password is " + user.password)
-//     user.password = await bcrypt.hash(user.password, 8);
-//     next();
-//   } catch (err) {
-//     console.log(err)
-//   }
-// })
-
 userSchema.methods.generateAuthToken = async function() {
   try {
     const user = this;
     const token = jwt.sign({ _id: user._id, username: user.username, results: user.results}, "secret");
-    user.tokens = user.tokens.concat({ token });
+    user.token = token;
     await user.save();
     return token;
   } catch (err) {

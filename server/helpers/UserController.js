@@ -11,10 +11,7 @@ exports.registerNewUser = async (req, res) => {
         message: "username already in use"
       })
     }
-    const user = new User({
-      username: req.body.username,
-      password: req.body.password
-    })
+    const user = new User(req.body)
     let data = await user.save();
     const token = await user.generateAuthToken();
     res.status(201).json({ data, token });
