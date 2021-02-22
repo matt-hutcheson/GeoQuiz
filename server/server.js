@@ -12,7 +12,6 @@ const bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
-app.use(cookieParser())
 app.use(morgan("dev"));
 
 mongoose.connect(process.env.SERVER_KEY, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })

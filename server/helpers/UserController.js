@@ -1,6 +1,9 @@
 const { findByIdAndUpdate } = require("./UserModel.js");
 const User = require("./UserModel.js");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+let refreshTokens = [];
 
 exports.registerNewUser = async (req, res) => {
   try {
@@ -27,10 +30,43 @@ exports.loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Login failed! Check authentication credentials" });
     }
-    const token = await user.generateAuthToken();
-    res.status(201).json({ user, token });
+    const accessToken = await user.generateAuthToken();
+    console.log("here");
+    const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
+    refreshTokens.push(refreshToken);
+    res.status(201).json({ user, accessToken, refreshToken });
   } catch (err) {
     res.status(400).json({ err: err });
+  }
+};
+exports.refreshToken = async (req,res) => {
+  try {
+    const {token} = req.body;
+    if (!token) {
+      return res.sendStatus(401);
+    }
+    if (!refreshTokens.includes(token)) {
+      return res.sendStatus(403);
+    }
+    jwt.verify(token, process.env.REFRESHSECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      const accessToken = jwt.sign({ _id: user._id, username: user.username, results: user.results}, process.env.SECRET, { expiresIn:'60m'});
+      res.status(201).json({accessToken});
+    })
+  } catch (err) {
+    res.status(400).json({err: err});
+  }
+};
+exports.logoutUser = async (req,res) => {
+  try {
+    const {token} = req.body;
+    refreshTokens = refreshTokens.filter(token => t !== token);
+    res.send("Logout successful");
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({err:err});
   }
 };
 exports.getUserDetails = async (req, res) => {
