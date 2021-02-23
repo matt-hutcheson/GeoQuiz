@@ -17,7 +17,7 @@ exports.registerNewUser = async (req, res) => {
     const user = new User(req.body)
     let data = await user.save();
     const token = await user.generateAuthToken();
-    return res.status(201).json({ data, token });
+    return res.status(201).json({ token });
   } catch (err) {
     return res.status(400).json({ err: err });
   }
@@ -33,7 +33,7 @@ exports.loginUser = async (req, res) => {
     const accessToken = await user.generateAuthToken();
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
-    return res.status(202).json({ user, accessToken, refreshToken });
+    return res.status(202).json({ accessToken, refreshToken });
   } catch (err) {
     return res.status(400).json({ err: err });
   }
@@ -67,12 +67,7 @@ exports.logoutUser = async (req,res) => {
   try {
     const {_id, token} = req.body;
     refreshTokens = refreshTokens.filter(t => t !== token);
-    // User.findByIdAndUpdate( _id, {token: ""}, function(err, user){
-    //   if (err) {
-    //     return res.status(500).send({ message: "Logout failed.", err: err })
-    //   }
     return res.status(200).send({ message: "logout successful", id: _id })
-    // })
   } catch (err) {
     console.log(err)
     return res.status(400).json({err:err});
@@ -80,27 +75,18 @@ exports.logoutUser = async (req,res) => {
 };
 exports.getUserDetails = (req, res) => {
   return res.status(200).send(req.user)
-  // try {
-  //   const user = res.json(req.user);
-  //   if (!user) {
-  //     return res.status(500).send({ message: "user not found", id: req.body._id });
-  //   } else {
-  //     return res.status(200).send(user);
-  //   }
-  // } catch (err) {
-  //    return res.status(400).send(err);
-  // }
 };
 exports.updateUserDetails = async (req, res) => {
   try {
     const { _id, username, results} = req.body;
     const password = await bcrypt.hash(req.body.password, 8);
-    await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, function(err, user) {
+    await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, async function(err, user) {
       if (err) {
         return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
       }
       if (user) {
-        return res.status(200).send(user)
+        const accessToken = await user.generateAuthToken();
+        return res.status(200).json({accessToken: accessToken})
       } else {
         return res.status(400).json({ err: err })
       }
