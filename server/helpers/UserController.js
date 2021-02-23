@@ -62,7 +62,7 @@ exports.refreshToken = async (req,res) => {
 exports.logoutUser = async (req,res) => {
   try {
     const {token} = req.body;
-    refreshTokens = refreshTokens.filter(token => t !== token);
+    refreshTokens = refreshTokens.filter(t => t !== token);
     res.status(202).send({message: "Logout successful", id: req.body._id});
   } catch (err) {
     console.log(err)
