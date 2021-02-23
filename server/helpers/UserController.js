@@ -34,7 +34,7 @@ exports.loginUser = async (req, res) => {
     console.log("here");
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
-    res.status(201).json({ user, accessToken, refreshToken });
+    res.status(202).json({ user, accessToken, refreshToken });
   } catch (err) {
     res.status(400).json({ err: err });
   }
@@ -63,7 +63,7 @@ exports.logoutUser = async (req,res) => {
   try {
     const {token} = req.body;
     refreshTokens = refreshTokens.filter(token => t !== token);
-    res.send("Logout successful");
+    res.status(202).send({message: "Logout successful", id: req.body._id});
   } catch (err) {
     console.log(err)
     res.status(400).json({err:err});
@@ -77,7 +77,7 @@ exports.getUserDetails = async (req, res) => {
     }
     res.status(200).json({ user })
   } catch (err) {
-    res.status(500).json({ err: err });
+    res.status(400).json({ err: err });
   }
 };
 exports.updateUserDetails = async (req, res) => {
@@ -86,16 +86,16 @@ exports.updateUserDetails = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, 8);
     await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, function(err, user) {
       if (err) {
-        res.status(500).send({ err: err })
+        res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
       }
       if (user) {
         res.status(200).send(user)
       } else {
-        res.status(500).send({ message: "Update failed. User not found", id: _id})
+        res.status(400).json({ err: err })
       }
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(400).json({ err: err });
   }
 };
 exports.deleteUser = async (req, res) => {
@@ -111,6 +111,6 @@ exports.deleteUser = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(400).json({ err: err });
   }
 }
