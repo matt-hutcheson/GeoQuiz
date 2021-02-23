@@ -17,9 +17,9 @@ exports.registerNewUser = async (req, res) => {
     const user = new User(req.body)
     let data = await user.save();
     const token = await user.generateAuthToken();
-    res.status(201).json({ data, token });
+    return res.status(201).json({ data, token });
   } catch (err) {
-    res.status(400).json({ err: err });
+    return res.status(400).json({ err: err });
   }
 };
 exports.loginUser = async (req, res) => {
@@ -31,54 +31,65 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: "Login failed! Check authentication credentials" });
     }
     const accessToken = await user.generateAuthToken();
-    console.log("here");
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
-    res.status(202).json({ user, accessToken, refreshToken });
+    return res.status(202).json({ user, accessToken, refreshToken });
   } catch (err) {
-    res.status(400).json({ err: err });
+    return res.status(400).json({ err: err });
   }
 };
 exports.refreshToken = async (req,res) => {
   try {
-    const {token} = req.body;
-    if (!token) {
+    const {refreshToken} = req.body;
+    if (!refreshToken) {
       return res.sendStatus(401);
     }
-    if (!refreshTokens.includes(token)) {
+    if (!refreshTokens.includes(refreshToken)) {
       return res.sendStatus(403);
     }
-    jwt.verify(token, process.env.REFRESHSECRET, (err, user) => {
+    jwt.verify(refreshToken, process.env.REFRESHSECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
       const accessToken = jwt.sign({ _id: user._id, username: user.username, results: user.results}, process.env.SECRET, { expiresIn:'60m'});
-      res.status(201).json({accessToken});
+      User.findByIdAndUpdate( user._id, {token: accessToken}, function(err, user){
+        if (err) {
+          return res.status(400).json({err: err})
+        }
+      })
+      return res.status(201).json({accessToken: accessToken});
     })
   } catch (err) {
-    res.status(400).json({err: err});
+    return res.status(400).json({err: err});
   }
 };
 exports.logoutUser = async (req,res) => {
   try {
-    const {token} = req.body;
+    const {_id, token} = req.body;
     refreshTokens = refreshTokens.filter(t => t !== token);
-    res.status(202).send({message: "Logout successful", id: req.body._id});
+    // User.findByIdAndUpdate( _id, {token: ""}, function(err, user){
+    //   if (err) {
+    //     return res.status(500).send({ message: "Logout failed.", err: err })
+    //   }
+    return res.status(200).send({ message: "logout successful", id: _id })
+    // })
   } catch (err) {
     console.log(err)
-    res.status(400).json({err:err});
+    return res.status(400).json({err:err});
   }
 };
-exports.getUserDetails = async (req, res) => {
-  try {
-    const user = await User.findById(req.body._id);
-    if (!user) {
-      return res.status(500).send({ message: "user not found", id: req.body._id })
-    }
-    res.status(200).json({ user })
-  } catch (err) {
-    res.status(400).json({ err: err });
-  }
+exports.getUserDetails = (req, res) => {
+  return res.status(200).send(req.user)
+  // try {
+  //   const user = res.json(req.user);
+  //   if (!user) {
+  //     return res.status(500).send({ message: "user not found", id: req.body._id });
+  //   } else {
+  //     return res.status(200).send(user);
+  //   }
+  // } catch (err) {
+  //    return res.status(400).send(err);
+  // }
 };
 exports.updateUserDetails = async (req, res) => {
   try {
@@ -86,31 +97,31 @@ exports.updateUserDetails = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, 8);
     await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, function(err, user) {
       if (err) {
-        res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
+        return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
       }
       if (user) {
-        res.status(200).send(user)
+        return res.status(200).send(user)
       } else {
-        res.status(400).json({ err: err })
+        return res.status(400).json({ err: err })
       }
     });
   } catch (err) {
-    res.status(400).json({ err: err });
+    return res.status(400).json({ err: err });
   }
 };
 exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndRemove(req.body._id, function(err, user){
       if (err) {
-        res.status(500).send({ err: err })
+        return res.status(500).send({ err: err })
       }
       if (user) {
-        res.status(200).send({ message: "User successfully deleted", id: req.body._id })
+        return res.status(200).send({ message: "User successfully deleted", id: req.body._id })
       } else {
-        res.status(500).send({ message: "Delete failed. User not found" });
+        return res.status(500).send({ message: "Delete failed. User not found" });
       }
     });
   } catch (err) {
-    res.status(400).json({ err: err });
+    return res.status(400).json({ err: err });
   }
 }
