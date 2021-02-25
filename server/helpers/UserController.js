@@ -33,7 +33,7 @@ exports.loginUser = async (req, res) => {
     const accessToken = await user.generateAuthToken();
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
-    return res.status(202).json({ accessToken, refreshToken });
+    return res.status(202).json({ user, accessToken, refreshToken });
   } catch (err) {
     return res.status(400).json({ err: err });
   }
@@ -85,8 +85,7 @@ exports.updateUserDetails = async (req, res) => {
         return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
       }
       if (user) {
-        const accessToken = await user.generateAuthToken();
-        return res.status(200).json({accessToken: accessToken})
+        return res.status(200).send({_id: user._id, username: user.username, results: user.results})
       } else {
         return res.status(400).json({ err: err })
       }

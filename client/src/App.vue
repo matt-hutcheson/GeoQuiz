@@ -52,7 +52,7 @@ export default {
         .then(res => res.json())
         .then((countries) => (this.countries = countries))
 
-      this.fetchUsers();
+      // this.fetchUsers();
 
       eventBus.$on('mode-changed', (change) => {
         this.currentMode = change;
@@ -106,10 +106,10 @@ export default {
     },
 
     methods: {
-      fetchUsers() {
-        UserService.getUsers()
-        .then((users) => this.allUsers = users)
-      },
+      // fetchUsers() {
+      //   UserService.getUsers()
+      //   .then((users) => this.allUsers = users)
+      // },
 
       returnHomepageClick() {
         this.currentMode = null

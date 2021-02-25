@@ -1,13 +1,13 @@
-const baseURL = 'api/results/';
+const baseURL = 'api/';
 
 export default {
-    getUsers() {
-        return fetch(baseURL)
-        .then(res => res.json());
-    },
+    // getUsers() {
+    //     return fetch(baseURL)
+    //     .then(res => res.json());
+    // },
 
     addUser(user) {
-        return fetch(baseURL, {
+        return fetch(baseURL + "register", {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
@@ -17,9 +17,19 @@ export default {
         .then(res => res.json());
     },
 
+    loginUser(user) {
+        return fetch(baseURL + "login", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    },
+
     updateUser(user) {
-        return fetch(baseURL + user._id, {
-            method: 'PUT',
+        return fetch(baseURL + "me/update", {
+            method: 'POST',
             body: JSON.stringify(user),
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +39,7 @@ export default {
     },
 
     deleteUser(id) {
-        return fetch(baseURL + id, {
+        return fetch(baseURL + "me/delete", {
             method: 'DELETE'
         });
     }
