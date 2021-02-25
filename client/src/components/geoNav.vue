@@ -1,8 +1,12 @@
 <template>
 <nav id='img-and-btn-container'>
   <div id='btn-container'>
-    <button v-on:click='handleClick("learn")'>Learn About the Countries of the World!</button>
-    <button v-on:click='handleClick("play")'>Test Your Knowledge!</button>
+    <router-link to="/learn">
+      <button>Learn About the Countries of the World!</button>
+    </router-link>
+    <router-link to="/play">
+      <button>Test Your Knowledge!</button>
+    </router-link>
     <div id='img-container'>
       <img id="world-map" v-if='!imageIsHidden' src='@/components/world_map.png' alt='world_map'>
     </div>
