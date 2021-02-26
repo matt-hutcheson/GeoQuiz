@@ -1,6 +1,6 @@
 <template>
 	<article>
-		<choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers" :countries='countries'></choose-user>
+		<!-- <choose-user v-if="!currentUser" :currentUser="currentUser" :allUsers="allUsers" :countries='countries'></choose-user> -->
         <div id="user-instructions-container">
             <!-- <div id="current-user">
                 <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
@@ -10,7 +10,7 @@
                 <button class="button-instructions" v-if="currentMode==='play' && currentUser" v-on:click='handleClick("instructions")'>Instructions</button>
             </div>
         </div>
-        <instructions v-if="currentMode==='instructions'" :currentMode="currentMode"></instructions>
+        <!-- <instructions v-if="currentMode==='instructions'" :currentMode="currentMode"></instructions> -->
 		<div id="game-area">
 			<map-header v-if="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :correctAnswers="countriesCorrect" :result="result"></map-header>
 			<play-map v-if="currentUser" :currentUser="currentUser" :countries="countries" :correctCountry="randomCountry" :correctAnswers="countriesCorrect" :countriesRemaining="countriesRemaining" :randomCountry="randomCountry" :result="result"></play-map>
@@ -23,7 +23,6 @@
 import playMap from './playMap';
 import { eventBus } from '@/main.js';
 import UserService from '../../services/UserService';
-import instructions from './instructions'
 import listCountries from './listCountries'
 import chooseUser from './chooseUser'
 import mapHeader from './mapHeader'
@@ -33,7 +32,6 @@ export default {
     props: ['currentMode', 'countries', 'allUsers', 'currentUser', 'randomCountry', 'countriesRemaining', 'countriesCorrect', 'countryListSelected', 'result'],
     components: {
         'play-map': playMap,
-        'instructions' : instructions,
         'list-countries': listCountries,
         'choose-user': chooseUser,
         'map-header': mapHeader

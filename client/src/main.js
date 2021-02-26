@@ -3,7 +3,8 @@ import App from './App.vue';
 import Learn from './components/Learn/learnArticle.vue';
 import Home from './components/Home/home.vue'
 import Play from './components/Play/playArticle.vue';
-// import Instructions from './components/Instructions';
+import Instructions from './components/Instructions/instructions.vue';
+import Register from './components/Register/registerUserForm.vue'
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
@@ -40,6 +41,16 @@ const router = new VueRouter({
       name: 'Play',
       component: Play,
       props: true
+    },
+    {
+      path: '/instructions',
+      name: 'Instructions',
+      component: Instructions
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ]
 })

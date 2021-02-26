@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import userForm from './userForm';
+import userForm from '../Register/registerUserForm';
 import userSelect from './userSelect';
 
 export default {

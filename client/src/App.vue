@@ -4,12 +4,9 @@
 
 <script>
 
-import learnArticle from './components/Learn/learnArticle';
-import playArticle from './components/Play/playArticle';
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-import Intructions from "./components/Play/instructions";
 import mapCountries from "../node_modules/@svg-maps/world/index.js"
 
 export default {
@@ -18,7 +15,6 @@ export default {
       return{
         currentMode: null,
         countries: [],
-        allUsers: [],
         currentUser: null,
         randomCountry: null,
         countriesRemaining: [],
@@ -87,10 +83,6 @@ export default {
     },
 
     methods: {
-      // fetchUsers() {
-      //   UserService.getUsers()
-      //   .then((users) => this.allUsers = users)
-      // },
 
       changeUser() {
         eventBus.$emit('request-user-change', this.currentUser)
@@ -159,9 +151,7 @@ export default {
     },
 
     components: {
-      // 'play-article': playArticle,
-      // 'learn-article': learnArticle,
-      // 'instructions': Intructions,
+
     }
   }
 </script>

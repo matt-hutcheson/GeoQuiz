@@ -1,9 +1,19 @@
 <template>
   <main id='main-container'>
-    <div id="nav-container" class="modeActive">
+    <div id="nav-container">
       <h1 v-on:click="returnHomepageClick">GeoQuiz</h1>
-      <geo-nav v-if="!currentMode"></geo-nav>
-      <swap-mode v-if="currentMode" :currentMode="currentMode"></swap-mode>
+      <div id='img-and-btn-container'>
+        <div id='btn-container'>
+          <router-link to="/learn">
+            <button>Learn About the Countries of the World!</button>
+          </router-link>
+          <router-link to="/play">
+            <button>Test Your Knowledge!</button>
+          </router-link>
+        </div>
+        <img id="world-map" src='@/components/world_map.png' alt='world_map'>
+      </div>
+      <swap-mode ></swap-mode>
     </div>
     <!-- <div id="user-instructions-container">
       <div id="current-user">
@@ -41,7 +51,8 @@ export default {
 </script>
 
 <style scoped>
-  #main-container {
+
+#main-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -59,10 +70,50 @@ h1:hover {
   cursor: pointer;
 }
 
-.modeActive {
+#nav-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
 }
+
+#img-and-btn-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+#btn-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+* {
+  font-family: Tahoma, Verdana;
+  font-size: 18px;
+  margin: 0;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  width: 30vh;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+#world-map{
+  margin-top: 1em;
+  height: 65vh;
+  width: auto;
+}
+
 </style>
