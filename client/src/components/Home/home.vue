@@ -1,7 +1,7 @@
 <template>
   <main id='main-container'>
-    <div id="nav-container">
-      <h1 v-on:click="returnHomepageClick">GeoQuiz</h1>
+    <div id="home-container">
+      <geo-header></geo-header>
       <div id='img-and-btn-container'>
         <div id='btn-container'>
           <router-link to="/learn">
@@ -13,7 +13,6 @@
         </div>
         <img id="world-map" src='@/components/world_map.png' alt='world_map'>
       </div>
-      <swap-mode ></swap-mode>
     </div>
     <!-- <div id="user-instructions-container">
       <div id="current-user">
@@ -31,21 +30,18 @@
 </template>
 
 <script>
-import geoNav from '../geoNav';
-import swapMode from '../swapMode';
+import geoHeader from '../Header/header'
 
 export default {
+  name: 'home',
   components: {
-    'geo-nav': geoNav,
-    'swap-mode': swapMode
+    'geo-header': geoHeader
   },
 
-  props: ['currentMode', "countries"],
+  props: [],
 
   methods: {
-    returnHomepageClick() {
-      this.currentMode = null
-    },
+
   }
 }
 </script>
@@ -57,30 +53,25 @@ export default {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  /* overflow: auto; */
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
 
-h1 {
-    font-family: 'Fredericka the Great', cursive;
-    font-size: 60px;
-    padding: 10px;
-}
-
-h1:hover {
-  cursor: pointer;
-}
-
-#nav-container {
+#home-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 #img-and-btn-container {
   display: flex;
   flex-flow: column;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 #btn-container {
@@ -88,6 +79,7 @@ h1:hover {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 * {
@@ -112,8 +104,8 @@ button:hover {
 
 #world-map{
   margin-top: 1em;
-  height: 65vh;
-  width: auto;
+  /* height: 65vh; */
+  width: 100%;
 }
 
 </style>
