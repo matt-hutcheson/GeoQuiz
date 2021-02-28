@@ -3,7 +3,7 @@
     <div id="home-container">
       <geo-header></geo-header>
       <learn-play-buttons></learn-play-buttons>
-      <img id="world-map" src='@/components/world_map.png' alt='world_map'>
+      <div id="world-map"></div>
     </div>
     <!-- <div id="user-instructions-container">
       <div id="current-user">
@@ -47,8 +47,8 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  overflow-y: auto;
+  height: 95vh;
+  /* overflow-y: auto; */
 }
 
 #home-container {
@@ -57,13 +57,16 @@ export default {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 95vh;
 }
 
 #world-map{
-    max-width: 100%;
-    max-height: 60%;
+    width: 100%;
     vertical-align: middle;
+    flex-grow: 1;
+    background-image: url('../world_map.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 </style>

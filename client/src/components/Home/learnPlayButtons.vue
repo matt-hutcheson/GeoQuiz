@@ -109,7 +109,7 @@ div a:after, div a:before {
 	width: 1px;
 	position: absolute;
 	height: 8px;
-	background: #0f1923;
+	background: white;
 	left: 0;
 	top: 50%;
 	transform: translateY(-50%);
