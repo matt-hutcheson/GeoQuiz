@@ -26,7 +26,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: space-evenly;
     align-items: center; */
-    width: 60%;
+    width: 90%;
   }
 
 </style>

@@ -71,6 +71,7 @@ export default {
   list-style-type: none;
   width: 100%;
   padding-inline-start: 0;
+  margin: 0;
 }
 
 .nav-link {

@@ -1,5 +1,7 @@
 <template>
-  <router-view v-if="countries" :countries="countries" :currentMode="currentMode" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></router-view>
+  <div id="app">
+    <router-view v-if="countries" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></router-view>
+  </div>
 </template>
 
 <script>
@@ -13,7 +15,6 @@ export default {
   name: 'App',
     data(){
       return{
-        currentMode: null,
         countries: [],
         currentUser: null,
         randomCountry: null,
@@ -159,6 +160,11 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,400;1,300&display=swap');
+
+#app {
+  height: 100%;
+  width: 100%;
+}
 
 * {
   font-family: Tahoma, Verdana;

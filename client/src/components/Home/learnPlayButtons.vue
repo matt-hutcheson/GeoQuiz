@@ -35,32 +35,6 @@ export default {
 
 <style scoped>
 
-/* #btn-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background: #0f1923;
-  font-family: "Muli";
-} */
-
-/* * {
-  font-family: Tahoma, Verdana;
-  font-size: 18px;
-  margin: 0;
-}
-
-.mode-button {
-  font-size: 18px;
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 30px;
-  border-radius: 5px;
-  width: 30vh;
-  min-height: 70px;
-} */
-
 .buttons-container {
   display: flex;
   flex-flow: row;
@@ -85,7 +59,7 @@ div {
 
 div a {
 	width: 100%;
-	max-width: 240px;
+	max-width: 180px;
 	height: 54px;
 	padding: 8px;
 	font-size: 0.8rem;
