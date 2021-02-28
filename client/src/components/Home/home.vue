@@ -3,14 +3,7 @@
     <div id="home-container">
       <geo-header></geo-header>
       <div id='img-and-btn-container'>
-        <div id='btn-container'>
-          <router-link to="/learn">
-            <button>Learn About the Countries of the World!</button>
-          </router-link>
-          <router-link to="/play">
-            <button>Test Your Knowledge!</button>
-          </router-link>
-        </div>
+        <learn-play-buttons></learn-play-buttons>
         <img id="world-map" src='@/components/world_map.png' alt='world_map'>
       </div>
     </div>
@@ -30,12 +23,14 @@
 </template>
 
 <script>
-import geoHeader from '../Header/header'
+import geoHeader from '../Header/header';
+import learnPlayButtons from "./learnPlayButtons.vue";
 
 export default {
   name: 'home',
   components: {
-    'geo-header': geoHeader
+    'geo-header': geoHeader,
+    'learn-play-buttons': learnPlayButtons
   },
 
   props: [],
@@ -72,34 +67,6 @@ export default {
   flex-flow: column;
   justify-content: flex-start;
   width: 100%;
-}
-
-#btn-container {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-* {
-  font-family: Tahoma, Verdana;
-  font-size: 18px;
-  margin: 0;
-}
-
-button {
-  font-size: 20px;
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 30px;
-  border-radius: 5px;
-  width: 30vh;
-}
-
-button:hover {
-  background-color: black;
-  color: white;
 }
 
 #world-map{
