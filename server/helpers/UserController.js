@@ -11,13 +11,14 @@ exports.registerNewUser = async (req, res) => {
     const isUser = await User.isUsernameInUse(username);
     if (isUser) {
       return res.status(409).json({
-        message: "username already in use"
+        message: "username already in use",
+        status:409
       })
     }
     const user = new User(req.body)
     let data = await user.save();
     const token = await user.generateAuthToken();
-    return res.status(201).json({ token });
+    return res.status(201).json({ token: token, status: 201 });
   } catch (err) {
     return res.status(400).json({ err: err });
   }

@@ -67,6 +67,7 @@ export default {
     background-image: url('../world_map.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 </style>

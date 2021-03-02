@@ -3,35 +3,70 @@
         <form v-on:submit.prevent='handleSubmit'>
             <title>Create new user</title>
             <label for='username'>Username: </label>
-            <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required></input>
-            <input type='submit' name='submit' value='Add'/>
+            <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required>
+            <input v-model='password' name='password' id='password' type='password' placeholder="Password" required>
+            <input type='submit' name='submit' value='Register'/>
         </form>
     </section>
 </template>
 
 <script>
 import User from '../../assets/user';
-import { eventBus } from '@/main'
+import { eventBus } from '@/main';
+import UserService from '../../services/UserService';
+import swal from 'sweetalert2';
 
 export default {
     name: 'user-form',
     props: ['countries'],
     data () {
         return {
-            newUser: null,
             userName: "",
+            password: "",
             currentUser: null,
+            status: null
         }
     },
     methods: {
         handleSubmit() {
             this.createUser()
-            eventBus.$emit('add-user', this.currentUser);
-            this.userName='';
+            // eventBus.$emit('add-user', this.currentUser);
+            UserService.addUser(this.currentUser)
+            .then((response) => {
+                if (response.status===201) {
+                    // localStorage.setItem("jwt", response.data.token);
+                    swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Registration successful',
+                    }).then( (result) => {
+                        this.clearForm();
+                    } )
+                } else if (response.status===409){
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Registration failed. Username is already in use. Please pick another username'
+                    })
+                }
+            })
+            .catch(function (error) {
+                swal.fire({
+                    icon:'error',
+                    title: 'Error',
+                    text: 'Internal server error'
+                })
+            })
         },
         createUser() {
-            const newUser = new User(this.userName, this.countries)
+            const newUser = new User(this.userName, this.password, this.countries)
             this.currentUser = newUser
+        },
+
+        clearForm() {
+            this.userName = "";
+            this.password = "";
+            this.$router.push("/login");
         }
     }
 }

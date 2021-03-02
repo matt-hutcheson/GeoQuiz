@@ -25,6 +25,7 @@ export default {
                 'Content-Type': 'application/json'
             }
         })
+        .then(res => res.json());
     },
 
     updateUser(user) {
