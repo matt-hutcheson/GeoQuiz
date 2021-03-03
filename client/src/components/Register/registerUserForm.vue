@@ -1,12 +1,14 @@
 <template>
     <section>
-        <form v-on:submit.prevent='handleSubmit'>
+        <form v-on:submit.prevent='handleSubmit' id="register-form">
             <title>Create new user</title>
             <label for='username'>Username: </label>
             <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required>
+            <label for="password">Password: </label>
             <input v-model='password' name='password' id='password' type='password' placeholder="Password" required>
-            <input type='submit' name='submit' value='Register'/>
+            <input type='submit' name='submit' value='Register' id="register-button"/>
         </form>
+        <p>Already have an account? <router-link to="/login">Login here</router-link></p>
     </section>
 </template>
 
@@ -86,26 +88,36 @@ export default {
 section {
     font-family: Tahoma, Verdana;
     font-size: 1.1em;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 60%;
+}
+
+#register-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
 }
 
 input {
   padding: 8px;
-  margin:30px 5px;
+  margin:30px;
   border-radius: 3%;
 }
 
-input[type='submit'] {
+#register-button {
     padding: 8px 10px;
     margin:5px px;
     border-radius: 5%;
     border: solid 2px;
-    width: 20vh;
+    width: 8em;
 }
 
-input[type='submit']:hover {
+#register-button:hover {
     background-color: black;
     color: white;
-
 }
 
 </style>
