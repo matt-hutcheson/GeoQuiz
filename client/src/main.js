@@ -4,7 +4,8 @@ import Learn from './components/Learn/learnArticle.vue';
 import Home from './components/Home/home.vue'
 import Play from './components/Play/playArticle.vue';
 import Instructions from './components/Instructions/instructions.vue';
-import Register from './components/Register/registerArticle.vue'
+import Register from './components/Register/registerArticle.vue';
+import Login from './components/Login/loginArticle.vue';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
@@ -51,6 +52,11 @@ const router = new VueRouter({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
