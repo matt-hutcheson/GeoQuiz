@@ -33,12 +33,13 @@ export default {
             .then((response) => {
                 if (response.status===202) {
                     // localStorage.setItem("jwt", response.data.token);
+                    eventBus.$emit("user-loggedin", response.user)
+                    console.log(response.user)
                     swal.fire({
                         icon: 'success',
                         title: 'Success',
                         text: 'Login successful',
                     }).then( (result) => {
-                        eventBus.$emit("user-loggedin", result)
                         this.clearForm();
                     } )
                 } else if (response.status===401){

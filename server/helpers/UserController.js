@@ -31,6 +31,7 @@ exports.loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Login failed! Check authentication credentials", status: 401 });
     }
+    user.password = "";
     const accessToken = await user.generateAuthToken();
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
