@@ -34,7 +34,6 @@ export default {
                 if (response.status===202) {
                     // localStorage.setItem("jwt", response.data.token);
                     eventBus.$emit("user-loggedin", response.user)
-                    console.log(response.user)
                     swal.fire({
                         icon: 'success',
                         title: 'Success',

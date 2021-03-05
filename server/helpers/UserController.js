@@ -31,10 +31,11 @@ exports.loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Login failed! Check authentication credentials", status: 401 });
     }
-    user.password = "";
     const accessToken = await user.generateAuthToken();
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
+    user.password = "";
+    user.token = "";
     return res.status(202).json({ user:user, accessToken:accessToken, refreshToken:refreshToken, status: 202 });
   } catch (err) {
     return res.status(400).json({ err: err });

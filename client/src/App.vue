@@ -22,6 +22,7 @@ export default {
         countriesCorrect: [],
         countryListSelected: null,
         result: null,
+        loggedIn: false
       }
     },
 
@@ -32,15 +33,6 @@ export default {
 
       // this.fetchUsers();
 
-      eventBus.$on('mode-changed', (change) => {
-        this.currentMode = change;
-        this.currentUser = null
-      }),
-
-      eventBus.$on('swap-mode', (mode) => {
-        this.currentMode = mode;
-      }),
-
       eventBus.$on('add-user', (user) => {
         UserService.addUser(user)
         .then(userWithId => this.currentUser = userWithId)
@@ -49,6 +41,11 @@ export default {
         .then( () => this.countriesRemaining = this.removeImpossibleCountries())
         .then( () => this.getRandomCountry(this.countriesRemaining))
       });
+
+      eventBus.$on('user-loggedin', (user) => {
+        this.currentUser = user;
+        this.loggedIn = true;
+      })
 
       eventBus.$on('country-correct', (currentUser) => {
         this.fetchUsers();
