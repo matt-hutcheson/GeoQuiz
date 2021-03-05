@@ -30,6 +30,8 @@ export default {
       fetch('https://restcountries.eu/rest/v2/all') //API
         .then(res => res.json())
         .then((countries) => (this.countries = countries))
+        .then(() => this.removeImpossibleCountries())
+        .then(() => this.generateGuest())
 
       // this.fetchUsers();
 
@@ -82,6 +84,13 @@ export default {
 
     methods: {
 
+      generateGuest() {
+        this.currentUser = new User("guest", null, this.countries);
+        this.countriesRemaining = this.countries;
+        this.countriesCorrect = [];
+        this.getRandomCountry(this.countriesRemaining);
+      },
+
       changeUser() {
         eventBus.$emit('request-user-change', this.currentUser)
         this.currentUser = null
@@ -130,7 +139,7 @@ export default {
             }
           })
         })
-        return filteredCountries
+        this.countries = filteredCountries;
       },
 
 // sort by name
