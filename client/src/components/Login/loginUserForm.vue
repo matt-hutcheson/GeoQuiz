@@ -32,7 +32,8 @@ export default {
             UserService.loginUser(this.login)
             .then((response) => {
                 if (response.status===202) {
-                    // localStorage.setItem("jwt", response.data.token);
+                    localStorage.setItem("jwt", response.accessToken);
+                    localStorage.setItem("refreshjwt", response.refreshToken);
                     eventBus.$emit("user-loggedin", response.user)
                     swal.fire({
                         icon: 'success',
