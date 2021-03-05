@@ -29,12 +29,12 @@ exports.loginUser = async (req, res) => {
     const password = req.body.password;
     const user = await User.findByCredentials(username, password);
     if (!user) {
-      return res.status(401).json({ error: "Login failed! Check authentication credentials" });
+      return res.status(401).json({ error: "Login failed! Check authentication credentials", status: 401 });
     }
     const accessToken = await user.generateAuthToken();
     const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
-    return res.status(202).json({ user, accessToken, refreshToken });
+    return res.status(202).json({ user:user, accessToken:accessToken, refreshToken:refreshToken, status: 202 });
   } catch (err) {
     return res.status(400).json({ err: err });
   }

@@ -17,10 +17,10 @@ export default {
         .then(res => res.json());
     },
 
-    loginUser(user) {
+    loginUser(login) {
         return fetch(baseURL + "login", {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(login),
             headers: {
                 'Content-Type': 'application/json'
             }

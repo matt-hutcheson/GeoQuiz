@@ -1,20 +1,33 @@
 <template>
-  <article>
+  <article id="login-container">
     <geo-header></geo-header>
+    <login-user-form></login-user-form>
   </article>
 </template>
 
 <script>
 import geoHeader from '../Header/header';
+import loginUserForm from './loginUserForm';
+import LoginUserForm from './loginUserForm.vue';
 
 export default {
   name: 'loginArticle',
   components: {
-    'geo-header': geoHeader
+    'geo-header': geoHeader,
+    'login-user-form': loginUserForm
   }
 }
 </script>
 
-<style>
+<style scoped>
+
+#login-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 95vh;
+}
 
 </style>

@@ -1,54 +1,51 @@
 <template>
     <section>
-        <h3>Register new account:</h3>
-        <form v-on:submit.prevent='handleSubmit' id="register-form">
+        <h3>Login:</h3>
+        <form v-on:submit.prevent='handleSubmit' id="login-form">
             <label id="label-username" for='username'>Username: </label>
-            <input v-model='userName' name='username' id='username' type='text' placeholder='Enter username' required>
+            <input v-model='login.username' name='username' id='username' type='text' placeholder='Enter username' required>
             <label for="password">Password: </label>
-            <input v-model='password' name='password' id='password' type='password' placeholder="Password" required>
-            <input type='submit' name='submit' value='Register' id="register-button"/>
+            <input v-model='login.password' name='password' id='password' type='password' placeholder="Password" required>
+            <input type='submit' name='submit' value='Login' id="login-button"/>
         </form>
-        <p>Already have an account? <router-link to="/login">Login here</router-link></p>
+        <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
     </section>
 </template>
 
 <script>
-import User from '../../assets/user';
 import { eventBus } from '@/main';
 import UserService from '../../services/UserService';
 import swal from 'sweetalert2';
 
 export default {
-    name: 'register-user-form',
-    props: ['countries'],
+    name: 'login-user-form',
     data () {
         return {
-            userName: "",
-            password: "",
-            currentUser: null,
-            status: null
+            login: {
+                username: "",
+                password: "",
+            }
         }
     },
     methods: {
         handleSubmit() {
-            this.createUser()
-            // eventBus.$emit('add-user', this.currentUser);
-            UserService.addUser(this.currentUser)
+            UserService.loginUser(this.login)
             .then((response) => {
-                if (response.status===201) {
+                if (response.status===202) {
                     // localStorage.setItem("jwt", response.data.token);
                     swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: 'Registration successful',
+                        text: 'Login successful',
                     }).then( (result) => {
+                        eventBus.$emit("user-loggedin", result)
                         this.clearForm();
                     } )
-                } else if (response.status===409){
+                } else if (response.status===401){
                     swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Registration failed. Username is already in use. Please pick another username'
+                        text: 'Login failed. Please check your username and password are correct.'
                     })
                 }
             })
@@ -60,15 +57,11 @@ export default {
                 })
             })
         },
-        createUser() {
-            const newUser = new User(this.userName, this.password, this.countries)
-            this.currentUser = newUser
-        },
 
         clearForm() {
-            this.userName = "";
+            this.username = "";
             this.password = "";
-            this.$router.push("/login");
+            this.$router.push("/");
         }
     }
 }
@@ -94,7 +87,7 @@ section {
     /* height: 60%; */
 }
 
-#register-form {
+#login-form {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -110,7 +103,7 @@ input {
   border-radius: 3%;
 }
 
-#register-button {
+#login-button {
     padding: 8px 10px;
     margin:5px px;
     border-radius: 5%;
@@ -118,7 +111,7 @@ input {
     width: 8em;
 }
 
-#register-button:hover {
+#login-button:hover {
     background-color: black;
     color: white;
 }
