@@ -1,5 +1,5 @@
 <template>
-    <section id="map-section">
+    <section id="map-section" ref="map">
       <p class="tooltip" >Currently hovering: {{ tooltip }}</p>
       <div v-if="result==='correct'" class="player-guess-feedback">
         <p v-if="result==='correct'">Great job!!</p>
@@ -80,12 +80,12 @@ export default {
       },
 
       scrollTop () {
-        window.scrollTo({
-            top: 200,
-            left: 100,
-            behavior: 'smooth'
-        })
-    },
+        // window.scrollTo({
+        //     top: 200,
+        //     left: 100,
+        //     behavior: 'smooth'
+        // })
+      },
       scrollBottom () {
           window.scrollTo({
               top: 1000,

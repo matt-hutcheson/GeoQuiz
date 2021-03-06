@@ -125,10 +125,6 @@ export default {
         }
       },
 
-      handleClick(newMode) {
-        this.currentMode = newMode
-      },
-
       removeImpossibleCountries() {
         const svgMapCountries = mapCountries.locations
         const filteredCountries = []

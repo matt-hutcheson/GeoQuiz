@@ -19,7 +19,7 @@ import {eventBus} from '@/main.js';
 
 export default {
     name: 'learnArticle',
-    props: ['currentMode', 'countries'],
+    props: ['countries'],
     data() {
         return {
             mapSelectedCountry: null,

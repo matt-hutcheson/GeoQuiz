@@ -26,16 +26,9 @@ import geoHeader from '../Header/header';
 
 export default {
     name: 'instructions',
-    props: ['currentMode'],
     components: {
         'geo-header': geoHeader
     },
-
-    methods: {
-        handleClick: function(change) {
-            eventBus.$emit('swap-mode', change);
-        }
-    }
 }
 </script>
 
