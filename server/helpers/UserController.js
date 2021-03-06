@@ -32,12 +32,13 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: "Login failed! Check authentication credentials", status: 401 });
     }
     const accessToken = await user.generateAuthToken();
-    const refreshToken = jwt.sign( { _id: user._id, username: user.username, results: user.results}, process.env.REFRESHSECRET );
+    const refreshToken = jwt.sign( { _id: user._id, username: user.username}, process.env.REFRESHSECRET );
     refreshTokens.push(refreshToken);
     user.password = "";
     user.token = "";
     return res.status(202).json({ user:user, accessToken:accessToken, refreshToken:refreshToken, status: 202 });
   } catch (err) {
+    console.log(err)
     return res.status(400).json({ err: err });
   }
 };
@@ -54,7 +55,7 @@ exports.refreshToken = async (req,res) => {
       if (err) {
         return res.sendStatus(403);
       }
-      const accessToken = jwt.sign({ _id: user._id, username: user.username, results: user.results}, process.env.SECRET, { expiresIn:'60m'});
+      const accessToken = jwt.sign({ _id: user._id, username: user.username}, process.env.SECRET, { expiresIn:'60m'});
       User.findByIdAndUpdate( user._id, {token: accessToken}, function(err, user){
         if (err) {
           return res.status(400).json({err: err})
@@ -97,6 +98,23 @@ exports.updateUserDetails = async (req, res) => {
     return res.status(400).json({ err: err });
   }
 };
+exports.updateUserResults = async (req, res) => {
+  try {
+    const { _id, results } = req.body;
+    await User.findByIdAndUpdate(_id, {results}, {new: true}, async function( err, user) {
+      if (err) {
+        return res.status(500).send({ message: "Update results failed. User not found or bad request.", err: err})
+      }
+      if (user) {
+        return res.status(200).send({_id: user._id, username: user.username, results: user.results})
+      } else {
+        return res.status(400).json({err: err})
+      }
+    })
+  } catch (err) {
+    return res.status(400).json({err: err})
+  }
+}
 exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndRemove(req.body._id, function(err, user){

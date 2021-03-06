@@ -47,7 +47,7 @@ export default {
       eventBus.$on('user-loggedin', (user) => {
         this.currentUser = user;
         this.countriesCorrect = [];
-        this.countriesRemaining = this.countries;
+        this.countriesRemaining = [...this.countries];
         this.setCorrectCountries();
         this.getRandomCountry(this.countriesRemaining);
         this.loggedIn = true;
@@ -113,7 +113,7 @@ export default {
           this.result = "correct"
           this.currentUser.results[this.randomCountry.alpha3Code]["flagGame"] = "true"
           if (this.loggedIn && localStorage.getItem("jwt")){
-            UserService.updateUser(this.currentUser, localStorage.getItem("jwt"))
+            UserService.updateUserResults(this.currentUser, localStorage.getItem("jwt"))
             .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
             .catch( error => {
               console.log(error);

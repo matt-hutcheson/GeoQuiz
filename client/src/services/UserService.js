@@ -22,7 +22,7 @@ export default {
             method: 'POST',
             body: JSON.stringify(login),
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             }
         })
         .then(res => res.json());
@@ -38,6 +38,17 @@ export default {
             }
         })
         .then(res => res.json());
+    },
+
+    updateUserResults(user, token) {
+        return fetch(baseURL + "me/update/results", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json());
     },
 
     deleteUser(id) {
