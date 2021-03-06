@@ -107,9 +107,11 @@ export default {
           const index = this.countriesRemaining.indexOf(this.countryListSelected)
           this.countriesRemaining.splice(index, 1)
           this.result = "correct"
-          this.currentUser[this.randomCountry.alpha3Code]["flagGame"] = "true"
-          UserService.updateUser(this.currentUser)
-          .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+          this.currentUser.results[this.randomCountry.alpha3Code]["flagGame"] = "true"
+          if (this.loggedIn){
+            UserService.updateUser(this.currentUser)
+            .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+          }
           this.countryListSelected = null
         } else {this.result = "incorrect"}
       },

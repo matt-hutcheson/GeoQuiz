@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
     // required: true
   },
   results: {
-    type: Array
+    type: Object
   }
 })
 

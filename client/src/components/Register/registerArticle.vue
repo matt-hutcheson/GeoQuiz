@@ -1,7 +1,7 @@
 <template>
   <article id="register-container">
     <geo-header></geo-header>
-    <register-user-form :countries="countries"></register-user-form>
+    <register-user-form :countries="countries" :currentUser="currentUser" :loggedIn="loggedIn"></register-user-form>
   </article>
 </template>
 
@@ -11,7 +11,7 @@ import registerUserForm from './registerUserForm.vue';
 
 export default {
   name: 'registerArticle',
-  props: ['countries'],
+  props: ['countries', 'currentUser', 'loggedIn'],
   components: {
     'geo-header': geoHeader,
     'register-user-form': registerUserForm
