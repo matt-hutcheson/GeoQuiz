@@ -22,18 +22,19 @@ export default {
             method: 'POST',
             body: JSON.stringify(login),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             }
         })
         .then(res => res.json());
     },
 
-    updateUser(user) {
+    updateUser(user, token) {
         return fetch(baseURL + "me/update", {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
             }
         })
         .then(res => res.json());

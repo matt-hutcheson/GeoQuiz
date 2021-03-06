@@ -2,7 +2,7 @@
 	<article id="play-container">
         <geo-header></geo-header>
         <div id="user-instructions-container">
-            <div id="current-user" v-if="currentUser && loggedIn">
+            <div id="current-user" v-if="loggedIn">
                 <p>Player: {{ currentUser.username }}</p>
                 <button id="change-user-button" v-on:click.prevent="">Change player</button>
             </div>

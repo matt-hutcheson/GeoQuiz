@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="countries" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></router-view>
+    <router-view v-if="countries" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result" :loggedIn="loggedIn"></router-view>
   </div>
 </template>
 
@@ -46,11 +46,15 @@ export default {
 
       eventBus.$on('user-loggedin', (user) => {
         this.currentUser = user;
+        this.countriesCorrect = [];
+        this.countriesRemaining = this.countries;
+        this.setCorrectCountries();
+        this.getRandomCountry(this.countriesRemaining);
         this.loggedIn = true;
       })
 
-      eventBus.$on('country-correct', (currentUser) => {
-        this.fetchUsers();
+      eventBus.$on('country-correct', (updatedUser) => {
+        this.currentUser = updatedUser;
       });
 
       eventBus.$on('map-country-selected', (alpha2Code) => {
@@ -108,17 +112,20 @@ export default {
           this.countriesRemaining.splice(index, 1)
           this.result = "correct"
           this.currentUser.results[this.randomCountry.alpha3Code]["flagGame"] = "true"
-          if (this.loggedIn){
-            UserService.updateUser(this.currentUser)
+          if (this.loggedIn && localStorage.getItem("jwt")){
+            UserService.updateUser(this.currentUser, localStorage.getItem("jwt"))
             .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+            .catch( error => {
+              console.log(error);
+            })
           }
           this.countryListSelected = null
         } else {this.result = "incorrect"}
       },
 
       setCorrectCountries () {
-        for (const country of this.removeImpossibleCountries()) {
-          if (this.currentUser[country.alpha3Code]["flagGame"] === "true") {
+        for (const country of this.countries) {
+          if (this.currentUser.results[country.alpha3Code]["flagGame"] === "true") {
             const index = this.countriesRemaining.indexOf(country)
             if (index > -1) {
               this.countriesCorrect.push(this.countriesRemaining.splice(index, 1)[0])
