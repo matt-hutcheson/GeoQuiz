@@ -115,8 +115,8 @@ export default {
           if (this.loggedIn && localStorage.getItem("jwt")){
             UserService.updateUserResults(this.currentUser, localStorage.getItem("jwt"))
             .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
-            .catch( error => {
-              console.log(error);
+            .catch( response => {
+              console.log(response.status);
             })
           }
           this.countryListSelected = null

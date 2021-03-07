@@ -20,7 +20,7 @@ exports.registerNewUser = async (req, res) => {
     const token = await user.generateAuthToken();
     return res.status(201).json({ token: token, status: 201 });
   } catch (err) {
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ err: err, status:400 });
   }
 };
 exports.loginUser = async (req, res) => {
@@ -39,7 +39,7 @@ exports.loginUser = async (req, res) => {
     return res.status(202).json({ user:user, accessToken:accessToken, refreshToken:refreshToken, status: 202 });
   } catch (err) {
     console.log(err)
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ err: err, status:400 });
   }
 };
 exports.refreshToken = async (req,res) => {
@@ -58,27 +58,27 @@ exports.refreshToken = async (req,res) => {
       const accessToken = jwt.sign({ _id: user._id, username: user.username}, process.env.SECRET, { expiresIn:'60m'});
       User.findByIdAndUpdate( user._id, {token: accessToken}, function(err, user){
         if (err) {
-          return res.status(400).json({err: err})
+          return res.status(400).json({err: err, status:400})
         }
       })
-      return res.status(201).json({accessToken: accessToken});
+      return res.status(201).json({accessToken: accessToken, status:201 });
     })
   } catch (err) {
-    return res.status(400).json({err: err});
+    return res.status(400).json({err: err, status:400});
   }
 };
 exports.logoutUser = async (req,res) => {
   try {
     const {_id, token} = req.body;
     refreshTokens = refreshTokens.filter(t => t !== token);
-    return res.status(200).send({ message: "logout successful", id: _id })
+    return res.status(200).send({ message: "logout successful", id: _id, status:200 })
   } catch (err) {
     console.log(err)
-    return res.status(400).json({err:err});
+    return res.status(400).json({err:err, status:400});
   }
 };
 exports.getUserDetails = (req, res) => {
-  return res.status(200).send(req.user)
+  return res.status(200).json({status:200, message:"authenticated successfully", user:req.user})
 };
 exports.updateUserDetails = async (req, res) => {
   try {
@@ -86,16 +86,16 @@ exports.updateUserDetails = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, 8);
     await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, async function(err, user) {
       if (err) {
-        return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err })
+        return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err, status:500 })
       }
       if (user) {
-        return res.status(200).send({_id: user._id, username: user.username, results: user.results})
+        return res.status(200).send({_id: user._id, username: user.username, results: user.results, status:200})
       } else {
-        return res.status(400).json({ err: err })
+        return res.status(400).json({ err: err, status:400})
       }
     });
   } catch (err) {
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ err: err, status:400 });
   }
 };
 exports.updateUserResults = async (req, res) => {
@@ -103,31 +103,31 @@ exports.updateUserResults = async (req, res) => {
     const { _id, results } = req.body;
     await User.findByIdAndUpdate(_id, {results}, {new: true}, async function( err, user) {
       if (err) {
-        return res.status(500).send({ message: "Update results failed. User not found or bad request.", err: err})
+        return res.status(500).send({ message: "Update results failed. User not found or bad request.", err: err, status:500})
       }
       if (user) {
-        return res.status(200).send({_id: user._id, username: user.username, results: user.results})
+        return res.status(200).send({_id: user._id, username: user.username, results: user.results, status:200})
       } else {
-        return res.status(400).json({err: err})
+        return res.status(400).json({err: err, status:400})
       }
     })
   } catch (err) {
-    return res.status(400).json({err: err})
+    return res.status(400).json({err: err, status:400})
   }
 }
 exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndRemove(req.body._id, function(err, user){
       if (err) {
-        return res.status(500).send({ err: err })
+        return res.status(500).send({ err: err, status:500 })
       }
       if (user) {
-        return res.status(200).send({ message: "User successfully deleted", id: req.body._id })
+        return res.status(200).send({ message: "User successfully deleted", id: req.body._id, status:200 })
       } else {
-        return res.status(500).send({ message: "Delete failed. User not found" });
+        return res.status(500).send({ message: "Delete failed. User not found", status:500 });
       }
     });
   } catch (err) {
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ err: err, status:400 });
   }
 }

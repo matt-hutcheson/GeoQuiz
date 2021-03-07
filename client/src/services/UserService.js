@@ -51,6 +51,16 @@ export default {
         }).then(res => res.json());
     },
 
+    checkAuth(token) {
+        return fetch(baseURL + "me", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json());
+    },
+
     deleteUser(id) {
         return fetch(baseURL + "me/delete", {
             method: 'DELETE'
