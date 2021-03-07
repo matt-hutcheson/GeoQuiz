@@ -51,12 +51,22 @@ export default {
         }).then(res => res.json());
     },
 
-    checkAuth(token) {
+    getUserDetails(token) {
         return fetch(baseURL + "me", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json());
+    },
+
+    refreshToken(refreshToken){
+        return fetch(baseURL + "me/token", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + refreshToken
             }
         }).then(res => res.json());
     },

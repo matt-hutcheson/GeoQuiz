@@ -31,9 +31,15 @@ export default {
         .then(res => res.json())
         .then((countries) => (this.countries = countries))
         .then(() => this.removeImpossibleCountries())
-        .then(() => this.generateGuest())
-
-      // this.fetchUsers();
+        .then(() => {
+          if (localStorage.getItem("jwt")){
+            this.checkToken()
+          } else {
+            console.log("App mounted guest")
+            this.generateGuest()
+          }
+        }
+      )
 
       eventBus.$on('add-user', (user) => {
         UserService.addUser(user)
@@ -51,6 +57,10 @@ export default {
         this.setCorrectCountries();
         this.getRandomCountry(this.countriesRemaining);
         this.loggedIn = true;
+      });
+
+      eventBus.$on('check-token', () => {
+        this.checkToken();
       })
 
       eventBus.$on('country-correct', (updatedUser) => {
@@ -65,14 +75,6 @@ export default {
         }
       });
 
-      eventBus.$on('user-selected', (user) => {
-        this.currentUser = user;
-        this.countriesCorrect = [];
-        this.countriesRemaining = this.removeImpossibleCountries();
-        this.getRandomCountry(this.countriesRemaining)
-        this.setCorrectCountries();
-      });
-
       eventBus.$on('change-flag-pressed', (array) => {
         this.getRandomCountry(this.countriesRemaining)
       });
@@ -81,9 +83,6 @@ export default {
         this.result = null
       })
 
-      eventBus.$on('request-user-change', (previousUser) => {
-        this.currentUser = null
-      });
     },
 
     methods: {
@@ -93,11 +92,65 @@ export default {
         this.countriesRemaining = this.countries;
         this.countriesCorrect = [];
         this.getRandomCountry(this.countriesRemaining);
+        this.loggedIn = false;
       },
 
-      changeUser() {
-        eventBus.$emit('request-user-change', this.currentUser)
-        this.currentUser = null
+      checkToken () {
+        UserService.getUserDetails(localStorage.getItem("jwt"))
+        .then(res => {
+          if (res.status===200){
+            const user = {_id:res._id, username:res.username, results:res.results};
+            eventBus.$emit('user-loggedin', user)
+            return true;
+          } else if (res.status===401) {
+            console.log("refreshing token")
+            UserService.refreshToken(localStorage.getItem("refreshjwt"))
+            .then(res => {
+              if (res.status===201){
+                localStorage.setItem("jwt", res.accessToken);
+                console.log("token refreshed")
+                this.checkToken();
+              } else {
+                console.log("refresh failed")
+                this.logoutUser()
+              }
+            })
+            .catch(err => {
+              console.log("refresh error");
+              this.logoutUser
+            })
+          }
+        })
+        .catch(response => {
+          return false;
+        })
+      },
+
+      refreshToken() {
+        console.log("refreshing token")
+        UserService.refreshToken(localStorage.getItem("refreshjwt"))
+        .then(res => {
+          if (res.status===201){
+            localStorage.setItem("jwt", res.accessToken);
+            console.log("token refreshed")
+            return true;
+          } else {
+            return false
+          }
+        })
+        .catch(err => {
+          return false
+        })
+      },
+
+      logoutUser () {
+        // UserService.logoutUser()
+        // .then( res => {
+
+        // })
+        // .catch( err => console.log(err))
+        localStorage.clear();
+        this.generateGuest();
       },
 
       getRandomCountry(countriesRemaining) {
@@ -113,6 +166,7 @@ export default {
           this.result = "correct"
           this.currentUser.results[this.randomCountry.alpha3Code]["flagGame"] = "true"
           if (this.loggedIn && localStorage.getItem("jwt")){
+            // this.checkToken();
             UserService.updateUserResults(this.currentUser, localStorage.getItem("jwt"))
             .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
             .catch( response => {

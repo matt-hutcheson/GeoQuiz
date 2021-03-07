@@ -44,18 +44,20 @@ exports.loginUser = async (req, res) => {
 };
 exports.refreshToken = async (req,res) => {
   try {
-    const {refreshToken} = req.body;
+    const refreshToken = req.headers.authorization.replace("Bearer ", "");
     if (!refreshToken) {
       return res.sendStatus(401);
     }
     if (!refreshTokens.includes(refreshToken)) {
+      console.log("failed refresh")
       return res.sendStatus(403);
     }
     jwt.verify(refreshToken, process.env.REFRESHSECRET, (err, user) => {
       if (err) {
+        console.log("failed verify")
         return res.sendStatus(403);
       }
-      const accessToken = jwt.sign({ _id: user._id, username: user.username}, process.env.SECRET, { expiresIn:'60m'});
+      const accessToken = jwt.sign({ _id: user._id, username: user.username}, process.env.SECRET, { expiresIn:'20m'});
       User.findByIdAndUpdate( user._id, {token: accessToken}, function(err, user){
         if (err) {
           return res.status(400).json({err: err, status:400})
@@ -77,8 +79,23 @@ exports.logoutUser = async (req,res) => {
     return res.status(400).json({err:err, status:400});
   }
 };
-exports.getUserDetails = (req, res) => {
+exports.checkAuthToken = (req, res) => {
   return res.status(200).json({status:200, message:"authenticated successfully", user:req.user})
+};
+exports.getUserDetails = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    await User.findById(_id, function(err, user){
+      if (err) {
+        return res.status(500).send({ message: "User not found", status:500})
+      }
+      if (user) {
+        return res.status(200).send({ _id: user._id, username:user.username, results: user.results, status:200 });
+      }
+    })
+  } catch (err) {
+    return res.status(400).json({err:err, status:400});
+  }
 };
 exports.updateUserDetails = async (req, res) => {
   try {

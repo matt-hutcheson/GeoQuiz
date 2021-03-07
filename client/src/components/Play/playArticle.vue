@@ -39,19 +39,15 @@ export default {
         'geo-header': geoHeader
     },
 
-    mounted () {
-        this.checkToken();
-    },
+    // mounted () {
+    //     this.checkToken();
+    // },
 
-    methods: {
-        checkToken () {
-            if (this.loggedIn) {
-                UserService.checkAuth(localStorage.getItem("jwt"))
-                .then(response => console.log("then" + response.status))
-                .catch(response => console.log("catch" + response.status))
-            }
-        }
-    },
+    // methods: {
+    //     checkToken () {
+    //         eventBus.$emit('check-token');
+    //     }
+    // },
 }
 </script>
 
