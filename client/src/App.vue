@@ -117,7 +117,7 @@ export default {
             })
             .catch(err => {
               console.log("refresh error");
-              this.logoutUser
+              this.logoutUser();
             })
           }
         })
