@@ -6,6 +6,8 @@ import Play from './components/Play/playArticle.vue';
 import Instructions from './components/Instructions/instructions.vue';
 import Register from './components/Register/registerArticle.vue';
 import Login from './components/Login/loginArticle.vue';
+import Logout from './components/Logout/logoutArticle';
+import Me from './components/Me/meArticle.vue';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
@@ -57,6 +59,17 @@ const router = new VueRouter({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout
+    },
+    {
+      path: '/me',
+      name: 'Me',
+      component: Me,
+      props: true
     }
   ]
 })

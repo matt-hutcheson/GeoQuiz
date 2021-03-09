@@ -1,7 +1,7 @@
 <template>
   <main id='main-container'>
     <div id="home-container">
-      <geo-header></geo-header>
+      <geo-header :loggedIn="loggedIn" :currentUser="currentUser"></geo-header>
       <learn-play-buttons></learn-play-buttons>
       <div id="world-map"></div>
     </div>
@@ -31,7 +31,7 @@ export default {
     'learn-play-buttons': learnPlayButtons
   },
 
-  props: [],
+  props: ['currentUser', 'loggedIn'],
 
   methods: {
 

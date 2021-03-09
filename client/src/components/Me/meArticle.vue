@@ -1,28 +1,27 @@
 <template>
-  <article id="login-container">
+  <article id="me-container">
     <geo-header :loggedIn="loggedIn" :currentUser="currentUser"></geo-header>
-    <login-user-form></login-user-form>
+    <me-details :currentUser="currentUser"></me-details>
   </article>
 </template>
 
 <script>
 import geoHeader from '../Header/header';
-import loginUserForm from './loginUserForm';
-import LoginUserForm from './loginUserForm.vue';
+import meDetails from './meDetails';
 
 export default {
-  name: 'loginArticle',
+  name: 'meArticle',
   props: ['currentUser', 'loggedIn'],
   components: {
     'geo-header': geoHeader,
-    'login-user-form': loginUserForm
+    'me-details': meDetails
   }
 }
 </script>
 
 <style scoped>
 
-#login-container {
+#me-container {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;

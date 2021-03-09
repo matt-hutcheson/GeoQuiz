@@ -1,6 +1,6 @@
 <template>
 	<article id="play-container">
-        <geo-header></geo-header>
+        <geo-header :loggedIn="loggedIn" :currentUser="currentUser"></geo-header>
         <div id="user-instructions-container">
             <div id="current-user" v-if="loggedIn">
                 <p>Player: {{ currentUser.username }}</p>

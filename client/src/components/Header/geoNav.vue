@@ -6,14 +6,24 @@
           Home
         </li>
       </router-link>
-      <router-link to="/login">
+      <router-link v-if="!loggedIn" to="/login">
         <li class="nav-link">
           Login
         </li>
       </router-link>
-      <router-link to="/register">
+      <router-link v-if="loggedIn" to="/me">
+        <li class="nav-link">
+          My Account
+        </li>
+      </router-link>
+      <router-link v-if="!loggedIn" to="/register">
         <li class="nav-link">
           Register
+        </li>
+      </router-link>
+      <router-link v-if="loggedIn" to="/logout">
+        <li class="nav-link">
+          Logout
         </li>
       </router-link>
       <router-link to="/">
@@ -45,7 +55,7 @@ import { eventBus } from '../../main'
 
 export default {
   name: 'geoNav',
-  // props: ['currentUser'],
+  props: ['currentUser', 'loggedIn'],
 
   // methods: {
 

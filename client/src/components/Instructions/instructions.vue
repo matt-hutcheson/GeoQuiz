@@ -26,6 +26,7 @@ import geoHeader from '../Header/header';
 
 export default {
     name: 'instructions',
+    props: ['currentUser', 'loggedIn'],
     components: {
         'geo-header': geoHeader
     },

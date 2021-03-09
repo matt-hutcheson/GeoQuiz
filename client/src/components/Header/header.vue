@@ -1,7 +1,7 @@
 <template>
   <section id="geo-header">
     <!-- <h1>GeoQuiz</h1> -->
-    <geo-nav></geo-nav>
+    <geo-nav :currentUser="currentUser" :loggedIn="loggedIn"></geo-nav>
   </section>
 </template>
 
@@ -10,6 +10,7 @@ import geoNav from '../Header/geoNav'
 
 export default {
   name: 'geo-header',
+  props: ['currentUser', 'loggedIn'],
 
   components: {
     'geo-nav': geoNav
