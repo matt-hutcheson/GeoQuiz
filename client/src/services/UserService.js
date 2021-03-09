@@ -71,6 +71,17 @@ export default {
         }).then(res => res.json());
     },
 
+    logoutUser(user, token){
+        return fetch(baseURL + "me/logout", {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " +  token
+            }
+        }).then(res => res.json());
+    },
+
     deleteUser(id) {
         return fetch(baseURL + "me/delete", {
             method: 'DELETE'

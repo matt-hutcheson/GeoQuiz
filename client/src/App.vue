@@ -61,6 +61,10 @@ export default {
 
       eventBus.$on('check-token', () => {
         this.checkToken();
+      });
+
+      eventBus.$on('logout-requested', () => {
+        this.logoutUser();
       })
 
       eventBus.$on('country-correct', (updatedUser) => {
@@ -144,13 +148,22 @@ export default {
       },
 
       logoutUser () {
-        // UserService.logoutUser()
-        // .then( res => {
-
-        // })
-        // .catch( err => console.log(err))
+        if (this.loggedIn && localStorage.getItem("jwt") && localStorage.getItem("refreshjwt") && this.currentUser){
+          const payload = {
+            _id: this.currentUser._id,
+            token: localStorage.getItem("refreshjwt")
+          }
+          UserService.logoutUser(payload, localStorage.getItem("jwt"))
+          .then(res => {
+            localStorage.clear()
+            this.generateGuest()
+            this.$router.push("/")
+          })
+          .catch(err => console.log(err))
+        } else {
         localStorage.clear();
         this.generateGuest();
+        }
       },
 
       getRandomCountry(countriesRemaining) {
