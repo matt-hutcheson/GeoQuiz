@@ -1,16 +1,16 @@
 <template>
   <section id="account-details-container" v-if="currentUser">
     <h3>Account Details:</h3>
-    <p id="username" v-if="!usernameEdit">Username: {{ username }}</p>
+    <p id="username" v-if="!usernameEdit">Username: {{ currentUser.username }}</p>
     <form v-if="usernameEdit">
       <label for="username">Username: </label>
       <input type="text" :placeholder="username" v-model="username">
-      <input v-on:click.prevent="handleEditUsername" type="submit" value="Update">
+      <input class="submit-button" v-on:click.prevent="handleEditUsername" type="submit" value="Update">
     </form>
     <p id="score">Score: {{ score }} out of 248</p>
     <button id="button-username" v-on:click.prevent="handleUsername">Change Username</button>
     <button id="button-password">Change Password</button>
-    <button id="button-reset">Reset Game Results</button>
+    <button id="button-reset" v-on:click.prevent="handleResetClicked">Reset Game Results</button>
     <button id="button-delete">Delete Account</button>
   </section>
 </template>
@@ -18,7 +18,8 @@
 <script>
 import { eventBus} from '@/main';
 import UserService from '@/services/UserService';
-import swal from 'sweetalert2'
+import User from '../../assets/user';
+import swal from 'sweetalert2';
 
 export default {
   name: 'meDetails',
@@ -72,6 +73,64 @@ export default {
           console.log("Update failed. Server error.")
           console.log(err)
         })
+    },
+    handleResetClicked() {
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset my scores!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.handleReset();
+          swal.fire(
+            'Scores reset!',
+            'Your scores have been reset.',
+            'success'
+          )
+        }
+      })
+    },
+    handleReset() {
+      const blankResults = {}
+      for (const key in this.currentUser.results) {
+        blankResults[key] = {
+          flagGame: "false",
+          allGame: "false",
+          capitalGame: "false"
+        }
+      }
+      const updatedUser = {
+        username: this.currentUser.username,
+        _id: this.currentUser._id,
+        results: blankResults
+      }
+      UserService.updateUserResults(updatedUser, localStorage.getItem("jwt"))
+      .then( res => {
+        if (res.status === 200){
+          eventBus.$emit('user-reset', res.results)
+          swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Results successfully reset'
+          })
+        } else {
+          swal.fire({
+            icon: 'error',
+            title: 'error',
+            text: 'Reset failed'
+          })
+        }
+      }).catch( err => {
+        swal.fire({
+          icon: 'error',
+          title: 'error',
+          text: 'Server error'
+        })
+      })
     }
   }
 }
@@ -86,7 +145,7 @@ export default {
   align-items: center;
 }
 
-button {
+button, .submit-button {
     font-size: 15px;
     width: 10em;
     border-radius: 5px;
@@ -106,7 +165,7 @@ button {
   background-color: red;
 }
 
-button:hover, #button-delete:hover, #button-reset:hover {
+button:hover, #button-delete:hover, #button-reset:hover, .submit-button:hover {
     background-color: #0a0a09;
     color: aliceblue;
     border: #ffdb12 solid 2px;

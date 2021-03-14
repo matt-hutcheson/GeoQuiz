@@ -70,6 +70,13 @@ export default {
 
       eventBus.$on('username-updated', (username) => {
         this.currentUser.username = username;
+      });
+
+      eventBus.$on('user-reset', (blankResults) => {
+        this.currentUser.results = blankResults;
+        this.countriesCorrect = [];
+        this.countriesRemaining = [...this.countries];
+        this.getRandomCountry();
       })
 
       eventBus.$on('country-correct', (updatedUser) => {
