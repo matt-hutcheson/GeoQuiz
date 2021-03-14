@@ -77,6 +77,11 @@ export default {
         this.countriesCorrect = [];
         this.countriesRemaining = [...this.countries];
         this.getRandomCountry();
+      });
+
+      eventBus.$on('user-deleted', () => {
+        localStorage.clear();
+        this.generateGuest();
       })
 
       eventBus.$on('country-correct', (updatedUser) => {

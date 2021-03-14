@@ -82,9 +82,14 @@ export default {
         }).then(res => res.json());
     },
 
-    deleteUser(id) {
+    deleteUser(_id, token) {
         return fetch(baseURL + "me/delete", {
-            method: 'DELETE'
-        });
+            method: 'POST',
+            body: JSON.stringify({_id: _id}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            }
+        }).then(res => res.json());
     }
 };

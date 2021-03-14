@@ -11,7 +11,7 @@
     <button id="button-username" v-on:click.prevent="handleUsername">Change Username</button>
     <button id="button-password">Change Password</button>
     <button id="button-reset" v-on:click.prevent="handleResetClicked">Reset Game Results</button>
-    <button id="button-delete">Delete Account</button>
+    <button id="button-delete" v-on:click.prevent="handleDelete">Delete Account</button>
   </section>
 </template>
 
@@ -130,6 +130,40 @@ export default {
           title: 'error',
           text: 'Server error'
         })
+      })
+    },
+    handleDelete(){
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, reset my scores!'
+      }).then((result) => {
+        if (result.isConfirmed){
+          UserService.deleteUser(this.currentUser._id, localStorage.getItem('jwt'))
+          .then( res => {
+            if (res.status === 200){
+              swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "User successfully deleted"
+              }).then( () => {
+                eventBus.$emit('user-deleted');
+                this.$router.push('/');
+              })
+            }
+          }).catch( err => {
+            swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Server error. Failed to delete account'
+            })
+            console.log(err)
+          })
+        }
       })
     }
   }
