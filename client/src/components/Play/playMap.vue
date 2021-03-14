@@ -209,6 +209,7 @@ export default {
 #next-flag:hover, #details-answers:hover, #try-again:hover, #get-hint:hover {
     background-color: #ffc811;
     border: #ffdb12 solid 2px;
+    cursor: pointer;
 }
 
 </style>

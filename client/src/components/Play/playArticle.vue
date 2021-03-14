@@ -86,6 +86,7 @@ export default {
 #change-user-button:hover {
     background-color: #ffc811;
     border: #ffdb12 solid 2px;
+    cursor: pointer;
 }
 
 .button-instructions {
@@ -103,6 +104,7 @@ export default {
 .button-instructions:hover {
     background-color: #ebb810;
     border: #ebb810 solid 2px;
+    cursor: pointer;
 }
 
 #user-instructions-container {
