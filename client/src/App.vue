@@ -9,7 +9,8 @@
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-import mapCountries from "../node_modules/@svg-maps/world/index.js"
+import mapCountries from "../node_modules/@svg-maps/world/index.js";
+import swal from 'sweetalert2';
 
 export default {
   name: 'App',
@@ -157,7 +158,13 @@ export default {
           .then(res => {
             localStorage.clear()
             this.generateGuest()
-            this.$router.push("/")
+            swal.fire({
+              icon:'success',
+              title: "Success",
+              text: 'Logout successful'
+            }).then( () => {
+              this.$router.push("/");
+            })
           })
           .catch(err => console.log(err))
         } else {
