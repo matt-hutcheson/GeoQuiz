@@ -66,6 +66,10 @@ export default {
 
       eventBus.$on('logout-requested', () => {
         this.logoutUser();
+      });
+
+      eventBus.$on('username-updated', (username) => {
+        this.currentUser.username = username;
       })
 
       eventBus.$on('country-correct', (updatedUser) => {

@@ -99,18 +99,50 @@ exports.getUserDetails = async (req, res) => {
 };
 exports.updateUserDetails = async (req, res) => {
   try {
-    const { _id, username, results} = req.body;
-    const password = await bcrypt.hash(req.body.password, 8);
-    await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, async function(err, user) {
-      if (err) {
-        return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err, status:500 })
-      }
-      if (user) {
-        return res.status(200).send({_id: user._id, username: user.username, results: user.results, status:200})
+    const { _id, username, password, results} = req.body;
+    let nameCheck;
+    await User.findById(_id, function(err, result){
+      if (err){
+        return res.status(500).send({ message: "Update failed. User not found or bad request"})
       } else {
-        return res.status(400).json({ err: err, status:400})
+        nameCheck = result.username
       }
-    });
+    })
+    if (nameCheck){
+      if (nameCheck !== username){
+        const isUser = await User.isUsernameInUse(username);
+        if (isUser) {
+          return res.status(409).json({
+            message: "username already in use",
+            status:409
+          })
+        }
+      }
+    }
+    if (password !== ""){
+      password = await bcrypt.hash(req.body.password, 8);
+      await User.findByIdAndUpdate(_id, {username, password, results}, {new: true}, async function(err, user) {
+        if (err) {
+          return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err, status:500 })
+        }
+        if (user) {
+          return res.status(200).send({_id: user._id, username: user.username, results: user.results, status:200})
+        } else {
+          return res.status(400).json({ err: err, status:400})
+        }
+      });
+    } else {
+      await User.findByIdAndUpdate(_id, {username, results}, {new: true}, async function(err, user) {
+        if (err) {
+          return res.status(500).send({ message: "Update failed. User not found or bad request.", err: err, status:500 })
+        }
+        if (user) {
+          return res.status(200).send({_id: user._id, username: user.username, results: user.results, status:200})
+        } else {
+          return res.status(400).json({ err: err, status:400})
+        }
+      });
+    }
   } catch (err) {
     return res.status(400).json({ err: err, status:400 });
   }
