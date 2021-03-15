@@ -7,9 +7,18 @@
       <input type="text" :placeholder="username" v-model="username">
       <input class="submit-button" v-on:click.prevent="handleEditUsername" type="submit" value="Update">
     </form>
+    <form v-if="passwordEdit">
+      <label for="oldPassword">Current Password</label>
+      <input name="oldPassword" type="password" v-model="oldPassword">
+      <label for="newPassword">New Password</label>
+      <input name="newPassword" type="password" v-model="newPassword">
+      <label for="newPassword2">Retype Password</label>
+      <input type="password" name="newPassword2" v-model="newPassword2">
+      <input class="submit-button" v-on:click.prevent="handleEditPassword" type="submit" value="Update">
+    </form>
     <p id="score">Score: {{ score }} out of 248</p>
     <button id="button-username" v-on:click.prevent="handleUsername">Change Username</button>
-    <button id="button-password">Change Password</button>
+    <button id="button-password" v-on:click.prevent="handlePassword" >Change Password</button>
     <button id="button-reset" v-on:click.prevent="handleResetClicked">Reset Game Results</button>
     <button id="button-delete" v-on:click.prevent="handleDelete">Delete Account</button>
   </section>
@@ -27,7 +36,9 @@ export default {
   data() {
     return {
       username: "",
-      password: "",
+      oldPassword: "",
+      newPassword: "",
+      newPassword2: "",
       usernameEdit: false,
       passwordEdit: false
     }
@@ -40,6 +51,9 @@ export default {
   methods: {
     handleUsername() {
       this.usernameEdit = true;
+    },
+    handlePassword() {
+      this.passwordEdit = true;
     },
     handleEditUsername(){
         const updatedUser = {
@@ -165,6 +179,9 @@ export default {
           })
         }
       })
+    },
+    handleEditPassword() {
+
     }
   }
 }
