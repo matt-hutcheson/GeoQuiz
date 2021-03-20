@@ -4,16 +4,21 @@
   "description": "Geoquiz is an educational web app and game. It comprises of two different modes: * Learn mode * Play mode",
   "main": "/server/server.js",
   "scripts": {
-    "start": "cd server && npm install && node server.js",
+    "start": "npm install && node server/server.js",
     "server:dev": "nodemon server/server.js",
     "seeds": "mongo < ./db/seeds_data.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
+    "mongoose": "^5.11.16",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.6"
   },
   "engines": {

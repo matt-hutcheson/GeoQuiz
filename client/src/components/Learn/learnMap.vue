@@ -75,7 +75,7 @@ export default {
 
 #left-side {
     width: 100%;
-    height: 90vh;
+    height: inherit;
     /* padding: 10px; */
     border: solid black 1px;
     position: relative;
@@ -148,6 +148,7 @@ export default {
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
     margin: 10px;
+    font-size: 14px;
 }
 
 </style>

@@ -200,9 +200,10 @@ export default {
     border: #ebb810 solid 2px;
 }
 
-#change-flag-button > button:hover {
+button:hover {
     background-color: #ffc811;
     border: #ffdb12 solid 2px;
+    cursor: pointer;
 }
 
 </style>

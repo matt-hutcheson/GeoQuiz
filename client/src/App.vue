@@ -1,49 +1,29 @@
 <template>
-  <main id='main-container'>
-    <div id="nav-container" class="modeActive">
-      <h1 v-on:click="returnHomepageClick">GeoQuiz</h1>
-      <geo-nav v-if="!currentMode"></geo-nav>
-      <swap-mode v-if="currentMode" :currentMode="currentMode"></swap-mode>
-    </div>
-    <div id="user-instructions-container">
-      <div id="current-user">
-        <p v-if="currentUser && currentMode==='play'">Player: {{ currentUser.username }}</p>
-        <button id="change-user-button" v-if="currentUser && currentMode==='play'" v-on:click.prevent="changeUser()">Change player</button>
-      </div>
-      <div id="instructions-button-container">
-        <button class="button-instructions" v-if="currentMode==='play' && currentUser" v-on:click='handleClick("instructions")'>Instructions</button>
-      </div>
-    </div>
-    <instructions v-if="currentMode==='instructions'" :currentMode="currentMode"></instructions>
-    <play-article v-if="currentMode==='play'" :currentMode="currentMode" :allUsers="allUsers" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result"></play-article>
-    <learn-article v-if="currentMode==='learn'" :countries="countries"></learn-article>
-  </main>
+  <div id="app">
+    <router-view v-if="countries" :countries="countries" :currentUser="currentUser" :randomCountry="randomCountry" :countriesRemaining="countriesRemaining" :countriesCorrect="countriesCorrect" :countryListSelected="countryListSelected" :result="result" :loggedIn="loggedIn"></router-view>
+  </div>
 </template>
 
 <script>
-import geoNav from './components/geoNav';
-import swapMode from './components/swapMode';
-import learnArticle from './components/Learn/learnArticle';
-import playArticle from './components/Play/playArticle';
+
 import { eventBus } from './main';
 import UserService from '../../client/src/services/UserService';
 import User from './assets/user';
-import Intructions from "./components/Play/instructions";
-import mapCountries from "../node_modules/@svg-maps/world/index.js"
+import mapCountries from "../node_modules/@svg-maps/world/index.js";
+import swal from 'sweetalert2';
 
 export default {
   name: 'App',
     data(){
       return{
-        currentMode: null,
         countries: [],
-        allUsers: [],
         currentUser: null,
         randomCountry: null,
         countriesRemaining: [],
         countriesCorrect: [],
         countryListSelected: null,
         result: null,
+        loggedIn: false
       }
     },
 
@@ -51,17 +31,16 @@ export default {
       fetch('https://restcountries.eu/rest/v2/all') //API
         .then(res => res.json())
         .then((countries) => (this.countries = countries))
-
-      this.fetchUsers();
-
-      eventBus.$on('mode-changed', (change) => {
-        this.currentMode = change;
-        this.currentUser = null
-      }),
-
-      eventBus.$on('swap-mode', (mode) => {
-        this.currentMode = mode;
-      }),
+        .then(() => this.removeImpossibleCountries())
+        .then(() => {
+          if (localStorage.getItem("jwt")){
+            this.checkToken()
+          } else {
+            console.log("App mounted guest")
+            this.generateGuest()
+          }
+        }
+      )
 
       eventBus.$on('add-user', (user) => {
         UserService.addUser(user)
@@ -72,8 +51,41 @@ export default {
         .then( () => this.getRandomCountry(this.countriesRemaining))
       });
 
-      eventBus.$on('country-correct', (currentUser) => {
-        this.fetchUsers();
+      eventBus.$on('user-loggedin', (user) => {
+        this.currentUser = user;
+        this.countriesCorrect = [];
+        this.countriesRemaining = [...this.countries];
+        this.setCorrectCountries();
+        this.getRandomCountry(this.countriesRemaining);
+        this.loggedIn = true;
+      });
+
+      eventBus.$on('check-token', () => {
+        this.checkToken();
+      });
+
+      eventBus.$on('logout-requested', () => {
+        this.logoutUser();
+      });
+
+      eventBus.$on('username-updated', (username) => {
+        this.currentUser.username = username;
+      });
+
+      eventBus.$on('user-reset', (blankResults) => {
+        this.currentUser.results = blankResults;
+        this.countriesCorrect = [];
+        this.countriesRemaining = [...this.countries];
+        this.getRandomCountry();
+      });
+
+      eventBus.$on('user-deleted', () => {
+        localStorage.clear();
+        this.generateGuest();
+      })
+
+      eventBus.$on('country-correct', (updatedUser) => {
+        this.currentUser = updatedUser;
       });
 
       eventBus.$on('map-country-selected', (alpha2Code) => {
@@ -84,14 +96,6 @@ export default {
         }
       });
 
-      eventBus.$on('user-selected', (user) => {
-        this.currentUser = user;
-        this.countriesCorrect = [];
-        this.countriesRemaining = this.removeImpossibleCountries();
-        this.getRandomCountry(this.countriesRemaining)
-        this.setCorrectCountries();
-      });
-
       eventBus.$on('change-flag-pressed', (array) => {
         this.getRandomCountry(this.countriesRemaining)
       });
@@ -100,24 +104,89 @@ export default {
         this.result = null
       })
 
-      eventBus.$on('request-user-change', (previousUser) => {
-        this.currentUser = null
-      });
     },
 
     methods: {
-      fetchUsers() {
-        UserService.getUsers()
-        .then((users) => this.allUsers = users)
+
+      generateGuest() {
+        this.currentUser = new User("guest", null, this.countries);
+        this.countriesRemaining = this.countries;
+        this.countriesCorrect = [];
+        this.getRandomCountry(this.countriesRemaining);
+        this.loggedIn = false;
       },
 
-      returnHomepageClick() {
-        this.currentMode = null
+      checkToken () {
+        UserService.getUserDetails(localStorage.getItem("jwt"))
+        .then(res => {
+          if (res.status===200){
+            const user = {_id:res._id, username:res.username, results:res.results};
+            eventBus.$emit('user-loggedin', user)
+            return true;
+          } else if (res.status===401) {
+            console.log("refreshing token")
+            UserService.refreshToken(localStorage.getItem("refreshjwt"))
+            .then(res => {
+              if (res.status===201){
+                localStorage.setItem("jwt", res.accessToken);
+                console.log("token refreshed")
+                this.checkToken();
+              } else {
+                console.log("refresh failed")
+                this.logoutUser()
+              }
+            })
+            .catch(err => {
+              console.log("refresh error");
+              this.logoutUser();
+            })
+          }
+        })
+        .catch(response => {
+          return false;
+        })
       },
 
-      changeUser() {
-        eventBus.$emit('request-user-change', this.currentUser)
-        this.currentUser = null
+      refreshToken() {
+        console.log("refreshing token")
+        UserService.refreshToken(localStorage.getItem("refreshjwt"))
+        .then(res => {
+          if (res.status===201){
+            localStorage.setItem("jwt", res.accessToken);
+            console.log("token refreshed")
+            return true;
+          } else {
+            return false
+          }
+        })
+        .catch(err => {
+          return false
+        })
+      },
+
+      logoutUser () {
+        if (this.loggedIn && localStorage.getItem("jwt") && localStorage.getItem("refreshjwt") && this.currentUser){
+          const payload = {
+            _id: this.currentUser._id,
+            token: localStorage.getItem("refreshjwt")
+          }
+          UserService.logoutUser(payload, localStorage.getItem("jwt"))
+          .then(res => {
+            localStorage.clear()
+            this.generateGuest()
+            swal.fire({
+              icon:'success',
+              title: "Success",
+              text: 'Logout successful'
+            }).then( () => {
+              this.$router.push("/");
+            })
+          })
+          .catch(err => console.log(err))
+        } else {
+        localStorage.clear();
+        this.generateGuest();
+        }
       },
 
       getRandomCountry(countriesRemaining) {
@@ -131,26 +200,28 @@ export default {
           const index = this.countriesRemaining.indexOf(this.countryListSelected)
           this.countriesRemaining.splice(index, 1)
           this.result = "correct"
-          this.currentUser[this.randomCountry.alpha3Code]["flagGame"] = "true"
-          UserService.updateUser(this.currentUser)
-          .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+          this.currentUser.results[this.randomCountry.alpha3Code]["flagGame"] = "true"
+          if (this.loggedIn && localStorage.getItem("jwt")){
+            // this.checkToken();
+            UserService.updateUserResults(this.currentUser, localStorage.getItem("jwt"))
+            .then((updatedUser) => eventBus.$emit('country-correct', updatedUser))
+            .catch( response => {
+              console.log(response.status);
+            })
+          }
           this.countryListSelected = null
         } else {this.result = "incorrect"}
       },
 
       setCorrectCountries () {
-        for (const country of this.removeImpossibleCountries()) {
-          if (this.currentUser[country.alpha3Code]["flagGame"] === "true") {
+        for (const country of this.countries) {
+          if (this.currentUser.results[country.alpha3Code]["flagGame"] === "true") {
             const index = this.countriesRemaining.indexOf(country)
             if (index > -1) {
               this.countriesCorrect.push(this.countriesRemaining.splice(index, 1)[0])
             }
           }
         }
-      },
-
-      handleClick(newMode) {
-        this.currentMode = newMode
       },
 
       removeImpossibleCountries() {
@@ -163,7 +234,7 @@ export default {
             }
           })
         })
-        return filteredCountries
+        this.countries = filteredCountries;
       },
 
 // sort by name
@@ -182,11 +253,7 @@ export default {
     },
 
     components: {
-      'geo-nav': geoNav,
-      'play-article': playArticle,
-      'learn-article': learnArticle,
-      'instructions': Intructions,
-      'swap-mode': swapMode
+
     }
   }
 </script>
@@ -195,35 +262,15 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,400;1,300&display=swap');
 
+#app {
+  height: 100%;
+  width: 100%;
+}
+
 * {
   font-family: Tahoma, Verdana;
   font-size: 20px;
   margin: 0;
-}
-
-#main-container {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  /* overflow: auto; */
-}
-
-h1 {
-    font-family: 'Fredericka the Great', cursive;
-    font-size: 60px;
-    padding: 10px;
-}
-
-h1:hover {
-  cursor: pointer;
-}
-
-.modeActive {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 #current-user {

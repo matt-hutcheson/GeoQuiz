@@ -59,8 +59,8 @@ img {
 }
 
 #right-side {
-    /* width: 20vw;
-    height: 100%; */
+    /* width: 20vw; */
+    height: inherit;
     padding: 20px;
     border: solid black 1px;
     overflow-y: auto;

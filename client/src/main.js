@@ -1,20 +1,82 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+import Learn from './components/Learn/learnArticle.vue';
+import Home from './components/Home/home.vue'
+import Play from './components/Play/playArticle.vue';
+import Instructions from './components/Instructions/instructions.vue';
+import Register from './components/Register/registerArticle.vue';
+import Login from './components/Login/loginArticle.vue';
+import Logout from './components/Logout/logoutArticle';
+import Me from './components/Me/meArticle.vue';
+import VueRouter from 'vue-router';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.use(VueRouter);
 
-library.add(faTimesCircle, faCheckCircle)
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faPlay, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+// import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// library.add(faTimesCircle, faCheckCircle);
 
-Vue.config.productionTip = false
-export const eventBus = new Vue()
+// Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.config.productionTip = false;
+export const eventBus = new Vue();
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
+      props: true
+    },
+    {
+      path: '/learn',
+      name: 'Learn',
+      component: Learn,
+      props: true
+    },
+    {
+      path: '/play',
+      name: 'Play',
+      component: Play,
+      props: true
+    },
+    {
+      path: '/instructions',
+      name: 'Instructions',
+      component: Instructions
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout
+    },
+    {
+      path: '/me',
+      name: 'Me',
+      component: Me,
+      props: true
+    }
+  ]
+})
 
 new Vue({
-  render: h => h(App),
+  router,
+  render: h => h(App)
 }).$mount('#app')
 
 

@@ -1,5 +1,6 @@
 <template>
-    <article>
+    <article id="learn-container">
+        <geo-header />
         <div id='container'>
             <learn-map :countries="countries"></learn-map>
             <country-detail v-if='apiSelectedCountry' :selectedCountry="apiSelectedCountry"></country-detail>
@@ -13,11 +14,12 @@
 <script>
 import learnMap from './learnMap';
 import countryDetail from './countryDetail';
-import {eventBus} from '@/main.js'
+import geoHeader from '../Header/header.vue';
+import {eventBus} from '@/main.js';
 
 export default {
     name: 'learnArticle',
-    props: ['currentMode', 'countries'],
+    props: ['countries'],
     data() {
         return {
             mapSelectedCountry: null,
@@ -27,6 +29,7 @@ export default {
     components: {
         'learn-map': learnMap,
         'country-detail': countryDetail,
+        'geo-header': geoHeader
     },
     mounted () {
         eventBus.$on('learn-country-selected', (selectedCountry) => {
@@ -38,29 +41,32 @@ export default {
 
 <style scoped>
 
-article {
-    height: 90vh;
-    width: 90vw;
-    /* display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center; */
-    /* overflow: auto; */
+
+
+#learn-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 95vh;
 }
 
 p {
     text-align: center;
     margin-top: 1em;
+    font-size: 16px;
 }
 
 #container {
     display: grid;
     grid-template-columns: 8fr 2fr;
     column-gap: 5px;
-    cursor: pointer;
+    /* cursor: pointer; */
     /* overflow: auto; */
     width: 100%;
-    height: 100%;
+    /* max-height: 90vh; */
+    flex-grow: 1;
   }
 
 * {
@@ -78,7 +84,7 @@ p {
     /* min-width: 20vw; */
     /* padding: 20px; */
     border: solid black 1px;
-    /* overflow: auto; */
+    overflow: auto;
 }
 
 </style>
