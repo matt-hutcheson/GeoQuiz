@@ -169,13 +169,11 @@ exports.deleteUser = async (req, res) => {
     console.log(req.body._id)
     await User.findByIdAndRemove(req.body._id, function(err, user){
       if (err) {
-        console.log("err")
         return res.status(500).send({ err: err, status:500 })
       }
       if (user) {
         return res.status(200).send({ message: "User successfully deleted", id: req.body._id, status:200 })
       } else {
-        console.log("else")
         return res.status(500).send({ message: "Delete failed. User not found", status:500 });
       }
     });
