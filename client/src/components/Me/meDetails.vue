@@ -154,7 +154,7 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, reset my scores!'
+        confirmButtonText: 'Yes, delete account!'
       }).then((result) => {
         if (result.isConfirmed){
           UserService.deleteUser(this.currentUser._id, localStorage.getItem('jwt'))
